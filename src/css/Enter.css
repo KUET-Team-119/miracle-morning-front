@@ -1,0 +1,9 @@
+.enterBody {
+  display: grid;
+  grid-template-columns: 3fr 2fr 3fr;
+}
+
+.enterContainer {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}

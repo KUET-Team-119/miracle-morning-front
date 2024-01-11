@@ -94,44 +94,44 @@ function Login({ setIsMember }) {
 
   return (
     <div>
-      <div className="loginBody">
-        <div className="loginContainer">
-          <div className="logoSpace">
-            <span>Logo</span>
-          </div>
-          <h3>"안녕하세요. 미라클 농장에 오신 것을 환영합니다."</h3>
-          <form className="loginBox" onSubmit={submitPost}>
-            <input
-              type="text"
-              value={name}
-              placeholder="닉네임을 입력하세요."
-              onChange={changeMemberName}
-            ></input>
-            <input
-              type="password"
-              value={pw}
-              placeholder="비밀번호를 입력하세요."
-              onChange={changeMemberPw}
-            ></input>
-            <button
-              className="signUpBtn"
-              disabled={isValid ? false : true}
-              onClick={transformToJson}
-            >
-              로그인
-            </button>
-          </form>
-          <button type="button" className="switchBtn" onClick={setIsMember}>
-            회원가입할래요.
-          </button>
-          <Modal isOpen={errorModalSwitch} style={customModalStyles}>
-            <h3>안내문</h3>
-            <p>로그인 불가!</p>
-            <p>닉네임 또는 비밀번호를 재확인해주세요.</p>
-            <p>비밀번호가 기억나지 않는다면 OOO에 문의하세요.</p>
-            <button onClick={reTry}>닫기</button>
-          </Modal>
+      <div className="loginContainer">
+        <div className="logoSpace">
+          <span>Logo</span>
         </div>
+        <h4>"미라클 농장에 오신 것을 환영합니다."</h4>
+        <form className="loginBox" onSubmit={submitPost}>
+          <input
+            type="text"
+            value={name}
+            placeholder="닉네임을 입력하세요."
+            onChange={changeMemberName}
+          ></input>
+          <input
+            type="password"
+            value={pw}
+            placeholder="비밀번호를 입력하세요."
+            onChange={changeMemberPw}
+          ></input>
+          <button
+            className="loginBtn"
+            disabled={isValid ? false : true}
+            onClick={transformToJson}
+          >
+            로그인
+          </button>
+        </form>
+        <button type="button" className="switchBtn" onClick={setIsMember}>
+          계정을 만들고 싶어요
+        </button>
+        <Modal isOpen={errorModalSwitch} style={customModalStyles}>
+          <h3>안내문</h3>
+          <p>로그인 불가!</p>
+          <p>닉네임 또는 비밀번호를 재확인해주세요.</p>
+          <p>비밀번호가 기억나지 않는다면 OOO에 문의하세요.</p>
+          <button className="modalBtn" onClick={reTry}>
+            닫기
+          </button>
+        </Modal>
       </div>
     </div>
   );

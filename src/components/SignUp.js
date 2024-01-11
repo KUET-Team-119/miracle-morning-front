@@ -99,20 +99,20 @@ function SignUp({ setIsMember }) {
 
   return (
     <div>
-      <div className="signUpBody">
-        <div className="signUpContainer">
-          <div className="logoSpace">
-            <span>Logo</span>
-          </div>
-          <h3>"회원가입이 필요하시군요!"</h3>
-          <form className="signUpBox" onSubmit={submitPost}>
-            <input
-              type="text"
-              name="memberName"
-              value={name}
-              placeholder="닉네임을 입력하세요."
-              onChange={changeMemberName}
-            ></input>
+      <div className="signUpContainer">
+        <div className="logoSpace">
+          <span>Logo</span>
+        </div>
+        <h4>"회원가입이 필요하시군요!"</h4>
+        <form className="signUpBox" onSubmit={submitPost}>
+          <input
+            type="text"
+            name="memberName"
+            value={name}
+            placeholder="닉네임을 입력하세요."
+            onChange={changeMemberName}
+          ></input>
+          <div className="pwContainer">
             <input
               type="text"
               name="password"
@@ -127,32 +127,36 @@ function SignUp({ setIsMember }) {
             >
               비밀번호 생성
             </button>
-            <p>안내: 랜덤 비밀번호가 보안이 좋다~ 이말이야</p>
-            <button
-              type="submit"
-              className="signUpBtn"
-              disabled={isValid ? false : true}
-              onClick={transformToJson}
-            >
-              회원가입
-            </button>
-          </form>
-          <button type="button" className="switchBtn" onClick={setIsMember}>
-            로그인할래요.
+          </div>
+          <p>안내: 랜덤 비밀번호가 보안이 어쩌구~</p>
+          <button
+            type="submit"
+            className="signUpBtn"
+            disabled={isValid ? false : true}
+            onClick={transformToJson}
+          >
+            회원가입
           </button>
-          <Modal isOpen={successModalSwitch} style={customModalStyles}>
-            <h3>안내문</h3>
-            <p>환영, 미라클농장 운영 방식, 관리자 승인 후 이용 가능</p>
-            <p>미라클농장과 함께 하고 싶다면? 참여방법</p>
-            <button onClick={goToEnter}>닫기</button>
-          </Modal>
-          <Modal isOpen={errorModalSwitch} style={customModalStyles}>
-            <h3>안내문</h3>
-            <p>가입 불가!</p>
-            <p>중복된 닉네임입니다.</p>
-            <button onClick={reTry}>닫기</button>
-          </Modal>
-        </div>
+        </form>
+        <button type="button" className="switchBtn" onClick={setIsMember}>
+          이미 계정이 있어요
+        </button>
+        <Modal isOpen={successModalSwitch} style={customModalStyles}>
+          <h3>안내문</h3>
+          <p>환영, 미라클농장 운영 방식, 관리자 승인 후 이용 가능</p>
+          <p>미라클농장과 함께 하고 싶다면? 참여방법</p>
+          <button className="modalBtn" onClick={goToEnter}>
+            닫기
+          </button>
+        </Modal>
+        <Modal isOpen={errorModalSwitch} style={customModalStyles}>
+          <h3>안내문</h3>
+          <p>가입 불가!</p>
+          <p>중복된 닉네임입니다.</p>
+          <button className="modalBtn" onClick={reTry}>
+            닫기
+          </button>
+        </Modal>
       </div>
     </div>
   );

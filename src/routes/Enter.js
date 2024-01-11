@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import "../css/Login.css";
+import "../css/Enter.css";
 
 function Enter() {
   const [isMember, setIsMember] = useState(true);
@@ -12,7 +12,7 @@ function Enter() {
   };
 
   return (
-    <div className="eneterBody">
+    <div className="enterBody">
       <div className="enterContainer">
         {isMember ? (
           <Login setIsMember={switchBox} />
