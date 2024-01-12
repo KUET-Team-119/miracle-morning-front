@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import "../css/Enter.css";
+import styles from "../css/Enter.module.css";
 
 function Enter() {
   const [isMember, setIsMember] = useState(true);
@@ -12,8 +12,8 @@ function Enter() {
   };
 
   return (
-    <div className="enterBody">
-      <div className="enterContainer">
+    <div className={styles.enterBody}>
+      <div className={styles.enterContainer}>
         {isMember ? (
           <Login setIsMember={switchBox} />
         ) : (

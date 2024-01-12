@@ -1,4 +1,4 @@
-import "../css/Login.css";
+import styles from "../css/Login.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
@@ -46,7 +46,8 @@ function Login({ setIsMember }) {
         },
       });
       console.log(response);
-      goToHome();
+      const memberName = response.data.memberName;
+      goToHome(memberName);
     } catch (error) {
       // To-do 배포 시 반드시 삭제!!!, 로그인이 안되는 이유가 닉네임 때문인지 비밀번호 때문인지 유출
       console.error(error);
@@ -56,8 +57,8 @@ function Login({ setIsMember }) {
 
   // 로그인 성공 시 홈 화면으로 이동
   const navigate = useNavigate();
-  const goToHome = () => {
-    navigate("/home");
+  const goToHome = (memberName) => {
+    navigate(`/home/${memberName}`);
   };
 
   // 에러 모달 닫기
@@ -94,12 +95,12 @@ function Login({ setIsMember }) {
 
   return (
     <div>
-      <div className="loginContainer">
-        <div className="logoSpace">
+      <div className={styles.loginContainer}>
+        <div className={styles.logoSpace}>
           <span>Logo</span>
         </div>
         <h4>"미라클 농장에 오신 것을 환영합니다."</h4>
-        <form className="loginBox" onSubmit={submitPost}>
+        <form className={styles.loginBox} onSubmit={submitPost}>
           <input
             type="text"
             value={name}
@@ -113,14 +114,18 @@ function Login({ setIsMember }) {
             onChange={changeMemberPw}
           ></input>
           <button
-            className="loginBtn"
+            className={styles.loginBtn}
             disabled={isValid ? false : true}
             onClick={transformToJson}
           >
             로그인
           </button>
         </form>
-        <button type="button" className="switchBtn" onClick={setIsMember}>
+        <button
+          type="button"
+          className={styles.switchBtn}
+          onClick={setIsMember}
+        >
           계정을 만들고 싶어요
         </button>
         <Modal isOpen={errorModalSwitch} style={customModalStyles}>
@@ -128,7 +133,7 @@ function Login({ setIsMember }) {
           <p>로그인 불가!</p>
           <p>닉네임 또는 비밀번호를 재확인해주세요.</p>
           <p>비밀번호가 기억나지 않는다면 OOO에 문의하세요.</p>
-          <button className="modalBtn" onClick={reTry}>
+          <button className={styles.ModalBtn} onClick={reTry}>
             닫기
           </button>
         </Modal>
