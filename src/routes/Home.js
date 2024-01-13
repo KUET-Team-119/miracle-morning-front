@@ -6,8 +6,9 @@ import axios from "axios";
 
 function Home() {
   const [routines, setRoutines] = useState([]);
-  const { memberName } = useParams();
   const [restRoutine, setRestRoutine] = useState(-1);
+  const [tempToReload, setTempToReload] = useState(true);
+  const { memberName } = useParams();
 
   // To-do 사용자가 {memberName}을 임의로 바꾸면 보안 사고 발생 -> 보완하기
   const getRoutines = async () => {
@@ -23,7 +24,12 @@ function Home() {
 
   useEffect(() => {
     getRoutines();
-  }, []); // 마운트 때만 정보 가져옴 -> 변경해야 함
+  }, [tempToReload]); // 마운트 때만 정보 가져옴 -> 변경해야 함
+
+  // GET 메소드 재호출 유도
+  const reload = () => {
+    setTempToReload((current) => !current);
+  };
 
   return (
     <div>
@@ -53,6 +59,7 @@ function Home() {
                   certification={routine.certification}
                   startTime={routine.startTime}
                   endTime={routine.endTime}
+                  setTempToReload={reload}
                 />
               ))}
             </div>

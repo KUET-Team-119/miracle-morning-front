@@ -182,7 +182,6 @@ function Managing() {
               ))}
             </div>
             <Modal isOpen={addModalSwitch} style={customModalStyles}>
-              {/* To-do 루틴 추가 후 input이 초기화 안됨 */}
               <form className={styles.addBox} onSubmit={submitRoutine}>
                 <input
                   type="text"
