@@ -13,16 +13,16 @@ function TodayRoutineItem({
   endTime,
   setTempToReload,
 }) {
-  const [proof, setProof] = useState("");
   const [proveModalSwitch, setProveModalSwitch] = useState(false);
+  const [data, setData] = useState("");
+  const [file, setFile] = useState(null);
   const { memberName } = useParams();
 
-  // 데이터 객체를 json 형태로 반환
   const transformToJson = () => {
-    setProof(
+    setData(
       JSON.stringify({
-        memberName: memberName, // To-do 보안 취약, 다른 방식으로 바꾸기
         routineName: routineName,
+        memberName: memberName, // To-do 보안 취약, 다른 방식으로 바꾸기
       })
     );
   };
@@ -33,10 +33,19 @@ function TodayRoutineItem({
     postProof();
   };
   const postProof = async () => {
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    const blob = new Blob([data], {
+      type: "application/json",
+    });
+    formData.append("data", blob);
+
     try {
-      const response = await axios.post(`/api/result`, proof, {
+      const response = await axios.post(`/api/result`, formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(response);
@@ -48,10 +57,13 @@ function TodayRoutineItem({
     }
   };
 
+  const handleChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   // 루틴 추가 모달 열기
   const openProveModal = () => {
     setProveModalSwitch(true);
-    transformToJson();
   };
 
   // 인증 모달 닫기
@@ -96,8 +108,14 @@ function TodayRoutineItem({
         <p>종료시간: {endTime}</p>
         <button onClick={openProveModal}>인증</button>
         <Modal isOpen={proveModalSwitch} style={customModalStyles}>
-          <button onClick={submitProof}>확인</button>
-          <button onClick={closeProveModal}>취소</button>
+          <form onSubmit={submitProof}>
+            <h3>루틴명: {routineName}</h3>
+            <input type="file" onChange={handleChange}></input>
+            <button onClick={transformToJson}>확인</button>
+            <button type="button" onClick={closeProveModal}>
+              취소
+            </button>
+          </form>
         </Modal>
       </div>
     </div>
