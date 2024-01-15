@@ -233,7 +233,7 @@ function Managing() {
               <Link to={`/routines/${memberName}`}>루틴관리</Link>
             </div>
             <div className={styles.navContainer}>
-              <Link to={`/statistics/${memberName}`}>루틴현황</Link>
+              <Link to={`/statistics`}>루틴현황</Link>
             </div>
           </div>
         </div>

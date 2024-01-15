@@ -1,29 +1,43 @@
 import styles from "../css/Home.module.css";
-import TodayRoutineItem from "../components/TodayRoutineItem";
+import RestRoutineItem from "../components/RestRoutineItem";
+import ClearRoutineItem from "../components/ClearRoutineItem";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 function Home() {
-  const [routines, setRoutines] = useState([]);
-  const [restRoutine, setRestRoutine] = useState(-1);
+  const [restRoutines, setRestRoutines] = useState([]);
+  const [clearRoutines, setClearRoutines] = useState([]);
+  const [routinesCount, setRoutinesCount] = useState(-1);
   const [tempToReload, setTempToReload] = useState(true);
   const { memberName } = useParams();
 
   // To-do 사용자가 {memberName}을 임의로 바꾸면 보안 사고 발생 -> 보완하기
-  const getRoutines = async () => {
+  const getRestRoutines = async () => {
     try {
-      const response = await axios.get(`/api/routine/${memberName}`);
+      const response = await axios.get(`/api/routines/rest/${memberName}`);
       response.data.sort((a, b) => a.startTime.localeCompare(b.startTime));
-      setRoutines(response.data);
-      setRestRoutine(response.data.length);
+      setRestRoutines(response.data);
+      setRoutinesCount(response.data.length);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // To-do 사용자가 {memberName}을 임의로 바꾸면 보안 사고 발생 -> 보완하기
+  const getClearRoutines = async () => {
+    try {
+      const response = await axios.get(`/api/routines/clear/${memberName}`);
+      response.data.sort((a, b) => a.startTime.localeCompare(b.startTime));
+      setClearRoutines(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    getRoutines();
+    getRestRoutines();
+    getClearRoutines();
   }, [tempToReload]); // 마운트 때만 정보 가져옴 -> 변경해야 함
 
   // GET 메소드 재호출 유도
@@ -47,11 +61,25 @@ function Home() {
           </div>
           <div className={styles.content}>
             <div className={styles.intro}>
-              <p>완벽한 하루까지 {restRoutine}개의 루틴이 남았어요</p>
+              <p>완벽한 하루까지 {routinesCount}개의 루틴이 남았어요</p>
             </div>
             <div className={styles.routineContainer}>
-              {routines.map((routine) => (
-                <TodayRoutineItem
+              {restRoutines.map((routine) => (
+                <RestRoutineItem
+                  key={routine.routineId}
+                  routineId={routine.routineId}
+                  routineName={routine.routineName}
+                  strategy={routine.strategy}
+                  certification={routine.certification}
+                  startTime={routine.startTime}
+                  endTime={routine.endTime}
+                  setTempToReload={reload}
+                />
+              ))}
+            </div>
+            <div className={styles.routineContainer}>
+              {clearRoutines.map((routine) => (
+                <ClearRoutineItem
                   key={routine.routineId}
                   routineId={routine.routineId}
                   routineName={routine.routineName}
@@ -72,7 +100,7 @@ function Home() {
               <Link to={`/routines/${memberName}`}>루틴관리</Link>
             </div>
             <div className={styles.navItem}>
-              <Link to={`/statistics/${memberName}`}>루틴현황</Link>
+              <Link to={`/statistics`}>루틴현황</Link>
             </div>
           </div>
         </div>

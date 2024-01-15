@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-function TodayRoutineItem({
+function RestRoutineItem({
   routineId,
   routineName,
   strategy,
@@ -57,7 +57,10 @@ function TodayRoutineItem({
     }
   };
 
-  const handleChange = (e) => {
+  // 파일을 선택했는지 유효성 검사
+  const isValid = file === null;
+
+  const uploadedFile = (e) => {
     setFile(e.target.files[0]);
   };
 
@@ -110,8 +113,10 @@ function TodayRoutineItem({
         <Modal isOpen={proveModalSwitch} style={customModalStyles}>
           <form onSubmit={submitProof}>
             <h3>루틴명: {routineName}</h3>
-            <input type="file" onChange={handleChange}></input>
-            <button onClick={transformToJson}>확인</button>
+            <input type="file" onChange={uploadedFile}></input>
+            <button onClick={transformToJson} disabled={isValid}>
+              확인
+            </button>
             <button type="button" onClick={closeProveModal}>
               취소
             </button>
@@ -122,7 +127,7 @@ function TodayRoutineItem({
   );
 }
 
-TodayRoutineItem.propTypes = {
+RestRoutineItem.propTypes = {
   routineId: PropTypes.number.isRequired,
   routineName: PropTypes.string.isRequired,
   strategy: PropTypes.string.isRequired,
@@ -131,4 +136,4 @@ TodayRoutineItem.propTypes = {
   endTime: PropTypes.string.isRequired,
 };
 
-export default TodayRoutineItem;
+export default RestRoutineItem;
