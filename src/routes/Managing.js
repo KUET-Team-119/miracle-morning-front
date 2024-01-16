@@ -162,7 +162,7 @@ function Managing() {
               루틴 추가하기
             </button>
             <div>
-              <p>MyPage</p>
+              <Link to={`/mypage/${memberName}`}>MyPage</Link>
             </div>
           </div>
           <div className={styles.content}>
@@ -233,7 +233,7 @@ function Managing() {
               <Link to={`/routines/${memberName}`}>루틴관리</Link>
             </div>
             <div className={styles.navContainer}>
-              <Link to={`/statistics`}>루틴현황</Link>
+              <Link to={`/statistics/${memberName}`}>루틴현황</Link>
             </div>
           </div>
         </div>

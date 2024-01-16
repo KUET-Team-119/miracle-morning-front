@@ -1,0 +1,8 @@
+.react-calendar__tile {
+  text-align: center;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}

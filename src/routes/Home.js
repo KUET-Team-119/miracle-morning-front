@@ -56,7 +56,7 @@ function Home() {
               오늘도 좋은 하루 보내세요~
             </h4>
             <div>
-              <p>MyPage</p>
+              <Link to={`/mypage/${memberName}`}>MyPage</Link>
             </div>
           </div>
           <div className={styles.content}>
@@ -100,7 +100,7 @@ function Home() {
               <Link to={`/routines/${memberName}`}>루틴관리</Link>
             </div>
             <div className={styles.navItem}>
-              <Link to={`/statistics`}>루틴현황</Link>
+              <Link to={`/statistics/${memberName}`}>루틴현황</Link>
             </div>
           </div>
         </div>
