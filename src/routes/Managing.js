@@ -1,45 +1,61 @@
-import styles from "../css/Managing.module.css";
-import RoutineItem from "../components/RoutineItem";
+import MyRoutine from "../components/MyRoutine";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Modal from "react-modal";
-import axios from "axios";
+import useAxiosGet from "../hook/useAxiosGet";
+import useAxiosPost from "../hook/useAxiosPost";
+import useDecodingJwt from "../hook/useDecodingJwt";
+import {
+  Button,
+  Container,
+  Spinner,
+  Stack,
+  Modal,
+  Form,
+  InputGroup,
+  Row,
+  Col,
+} from "react-bootstrap";
 
 function Managing() {
   const [routines, setRoutines] = useState([]);
-  const [addModalSwitch, setAddModalSwitch] = useState(false);
+  const [addModalShow, setAddModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
   const [newStrategy, setNewStrategy] = useState("");
   const [newCertification, setNewCertification] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
-  const [routine, setRoutine] = useState("");
-  const [tempToReload, setTempToReload] = useState(true);
-  const { memberName } = useParams();
+  const [requestData, setRequestData] = useState("");
+  const who = useDecodingJwt();
 
-  // To-do 사용자가 {memberName}을 임의로 바꾸면 보안 사고 발생 -> 보완하기
-  const getRoutines = async () => {
-    try {
-      const response = await axios.get(`/api/routine/${memberName}`);
-      console.log(response.data);
-      const sortByStartTime = response.data.sort(
-        (a, b) => a.startTime.localeCompare(b.startTime) // 시작시간을 기준으로 정렬
-      );
-      const sortByIsActivated = sortByStartTime.sort(
-        (a, b) => b.isActivated - a.isActivated // 활성화여부를 기준으로 정렬
-      );
-      setRoutines(sortByIsActivated);
-    } catch (error) {
-      console.error(error);
+  // 사용자의 루틴 조회
+  const { responseData, error, isLoading, refetch } = useAxiosGet({
+    url: `/api/routine`,
+  });
+  useEffect(() => {
+    if (!isLoading) {
+      if (responseData !== null) {
+        const sortedResponseData = [...responseData]; // 복사본을 만들어 정렬
+        sortedResponseData.sort((a, b) => {
+          // isActivated가 true인 경우를 먼저 정렬, false인 경우는 나중에 정렬
+          if (a.isActivated === b.isActivated) {
+            // isActivated 값이 같은 경우 startTime으로 정렬
+            return a.startTime.localeCompare(b.startTime);
+          } else {
+            return a.isActivated ? -1 : 1; // true가 앞에 오도록 정렬
+          }
+        });
+        setRoutines(sortedResponseData);
+      } else {
+        // console.log(error);
+      }
     }
-  };
+  }, [responseData, error, isLoading]);
 
   // 데이터 객체를 json 형태로 변환
-  const transformToJson = () => {
-    setRoutine(
+  const objToJson = () => {
+    setRequestData(
       JSON.stringify({
         routineName: newRoutineName,
-        memberName: memberName, // To-do 보안 취약, 다른 방식으로 바꾸기
+        memberName: who,
         strategy: newStrategy,
         certification: newCertification,
         startTime: newStartTime,
@@ -49,30 +65,30 @@ function Managing() {
   };
 
   // json 데이터를 서버로 전송
-  const submitRoutine = (e) => {
+  const submitPost = (e) => {
     e.preventDefault();
-    postRoutine();
+    performPost();
   };
-  const postRoutine = async () => {
-    try {
-      const response = await axios.post(`/api/routine`, routine, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response);
-      reload();
-      closeAddModal();
-    } catch (error) {
-      console.error(error);
-      alert("에러 발생!");
-      closeAddModal();
-    }
-  };
-
+  // 사용자 루틴 추가
+  const {
+    responseData: responseDataPost,
+    error: errorPost,
+    isLoading: isLoadingPost,
+    performPost,
+  } = useAxiosPost({
+    url: `/api/routine`,
+    requestData,
+  });
   useEffect(() => {
-    getRoutines();
-  }, [tempToReload]); // 마운트 때만 정보 가져옴 -> 변경해야 함
+    if (!isLoadingPost) {
+      if (responseDataPost !== null) {
+        closeAddModal();
+        refetch();
+      } else {
+        closeAddModal();
+      }
+    }
+  }, [responseDataPost, errorPost, isLoadingPost]);
 
   const changeRoutineName = (e) => {
     setNewRoutineName(e.target.value);
@@ -96,11 +112,6 @@ function Managing() {
     setNewEndTime(toTimeType);
   };
 
-  // GET 메소드 재호출 유도
-  const reload = () => {
-    setTempToReload((current) => !current);
-  };
-
   // 데이터 유효성 검사 -> 공백이 있는지와 시간 순서가 맞는지 구분하기
   const isValid =
     newRoutineName !== "" &&
@@ -112,12 +123,12 @@ function Managing() {
 
   // 루틴 추가 모달 열기
   const openAddModal = () => {
-    setAddModalSwitch(true);
+    setAddModalShow(true);
   };
 
   // 루틴 추가 모달 닫기
   const closeAddModal = () => {
-    setAddModalSwitch(false);
+    setAddModalShow(false);
     setNewRoutineName("");
     setNewStrategy("");
     setNewCertification("");
@@ -125,120 +136,104 @@ function Managing() {
     setNewEndTime("");
   };
 
-  // 모달 스타일 정의
-  const customModalStyles = {
-    overlay: {
-      backgroundColor: " rgba(0, 0, 0, 0.4)",
-      width: "100%",
-      height: "100vh",
-      zIndex: "10",
-      position: "fixed",
-      top: "0",
-      left: "0",
-    },
-    content: {
-      width: "400px",
-      height: "240px",
-      zIndex: "150",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      borderRadius: "10px",
-      boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
-      backgroundColor: "white",
-      justifyContent: "center",
-      overflow: "auto",
-    },
-  };
-
   return (
-    <div>
-      <div className={styles.managingBody}>
-        <div className={styles.managingContainer}>
-          <div className={styles.header}>
-            <h4>{memberName}님의 모든 루틴</h4>
-            <button type="button" onClick={openAddModal}>
-              루틴 추가하기
-            </button>
-            <div>
-              <Link to={`/mypage/${memberName}`}>MyPage</Link>
-            </div>
-          </div>
-          <div className={styles.content}>
-            <div className={styles.routineContainer}>
-              {routines.map((routine) => (
-                <RoutineItem
-                  key={routine.routineId}
-                  routineId={routine.routineId}
-                  routineName={routine.routineName}
-                  strategy={routine.strategy}
-                  certification={routine.certification}
-                  startTime={routine.startTime}
-                  endTime={routine.endTime}
-                  isActivated={routine.isActivated}
-                  setTempToReload={reload}
-                />
-              ))}
-            </div>
-            <Modal isOpen={addModalSwitch} style={customModalStyles}>
-              <form className={styles.addBox} onSubmit={submitRoutine}>
-                <input
-                  type="text"
-                  value={newRoutineName}
-                  placeholder="루틴명을 입력하세요."
-                  onChange={changeRoutineName}
-                ></input>
-                <input
-                  type="text"
-                  value={newStrategy}
-                  placeholder="실천전략을 입력하세요."
-                  onChange={changeStrategy}
-                ></input>
-                <input
-                  type="text"
-                  value={newCertification}
-                  placeholder="인증방법을 입력하세요."
-                  onChange={changeCertification}
-                ></input>
-                <input
-                  type="time"
-                  value={newStartTime}
-                  placeholder="시작시간을 입력하세요."
-                  onChange={changeStartTime}
-                ></input>
-                <input
-                  type="time"
-                  value={newEndTime}
-                  placeholder="종료시간을 입력하세요."
-                  onChange={changeEndTime}
-                ></input>
-                <button
-                  disabled={isValid ? false : true}
-                  onClick={transformToJson}
-                >
-                  추가
-                </button>
-                <button type="button" onClick={closeAddModal}>
-                  취소
-                </button>
-              </form>
-            </Modal>
-          </div>
-          <div className={styles.navContainer}>
-            <div className="navItem">
-              <Link to={`/home/${memberName}`}>홈</Link>
-            </div>
-            <div className={styles.navContainer}>
-              <Link to={`/routines/${memberName}`}>루틴관리</Link>
-            </div>
-            <div className={styles.navContainer}>
-              <Link to={`/statistics/${memberName}`}>루틴현황</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <Stack gap={1}>
+        <Container>
+          <Stack direction="horizontal">
+            <h4>{who}님의 모든 루틴</h4>
+            <Button
+              className="ms-auto rounded-circle"
+              type="button"
+              onClick={openAddModal}
+            >
+              +
+            </Button>
+          </Stack>
+        </Container>
+        <Container>
+          <Row className="justify-content-center">
+            {isLoading ? (
+              <Spinner animation="border" />
+            ) : (
+              routines.map((routine) => (
+                <Col>
+                  <MyRoutine
+                    key={routine.routineId}
+                    routineId={routine.routineId}
+                    routineName={routine.routineName}
+                    strategy={routine.strategy}
+                    certification={routine.certification}
+                    startTime={routine.startTime}
+                    endTime={routine.endTime}
+                    isActivated={routine.isActivated}
+                    setToReload={refetch}
+                  />
+                </Col>
+              ))
+            )}
+          </Row>
+        </Container>
+        <Modal show={addModalShow}>
+          <Form onSubmit={submitPost}>
+            <Modal.Header>루틴 추가</Modal.Header>
+            <Modal.Body>
+              <Stack gap={3}>
+                <InputGroup>
+                  <InputGroup.Text>루틴 이름</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    value={newRoutineName}
+                    onChange={changeRoutineName}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>인증 시간</InputGroup.Text>
+                  <Form.Control
+                    type="time"
+                    value={newStartTime}
+                    onChange={changeStartTime}
+                  />
+                  <Form.Control
+                    type="time"
+                    value={newEndTime}
+                    onChange={changeEndTime}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>실천 전략</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    value={newStrategy}
+                    onChange={changeStrategy}
+                  />
+                </InputGroup>
+                <InputGroup>
+                  <InputGroup.Text>인증 방법</InputGroup.Text>
+                  <Form.Control
+                    type="text"
+                    value={newCertification}
+                    onChange={changeCertification}
+                  />
+                </InputGroup>
+              </Stack>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button type="button" variant="secondary" onClick={closeAddModal}>
+                취소
+              </Button>
+              <Button
+                type="submit"
+                disabled={isValid ? false : true}
+                onClick={objToJson}
+              >
+                추가
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+      </Stack>
+    </>
   );
 }
 

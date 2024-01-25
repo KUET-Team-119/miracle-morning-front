@@ -1,14 +1,16 @@
-import styles from "../css/Login.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Modal from "react-modal";
-import axios from "axios";
+import PropTypes from "prop-types";
+import SingleBtnModal from "./Modal/SingleBtnModal";
+import useAxiosPost from "../hook/useAxiosPost";
+import { Button, Container, Form, InputGroup, Stack } from "react-bootstrap";
 
 function Login({ setIsMember }) {
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
-  const [post, setPost] = useState("");
-  const [errorModalSwitch, setErrorModalSwitch] = useState(false);
+  const [requestData, setRequestData] = useState("");
+  const [errorModalShow, setErrorModalShow] = useState(false);
+  const navigate = useNavigate();
 
   // 닉네임 입력 시 input의 value 변경
   const changeMemberName = (e) => {
@@ -24,8 +26,8 @@ function Login({ setIsMember }) {
   const isValid = name !== "" && pw !== "";
 
   // 닉네임, 비밀번호 담긴 객체를 json 형태로 변환
-  const transformToJson = () => {
-    setPost(
+  const objToJson = () => {
+    setRequestData(
       JSON.stringify({
         memberName: name,
         password: pw,
@@ -36,110 +38,74 @@ function Login({ setIsMember }) {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
-    postData();
+    performPost();
   };
-  const postData = async () => {
-    try {
-      const response = await axios.post(`/api/member/login`, post, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response);
-      const memberName = response.data.memberName;
-      goToHome(memberName);
-    } catch (error) {
-      // To-do 배포 시 반드시 삭제!!!, 로그인이 안되는 이유가 닉네임 때문인지 비밀번호 때문인지 유출
-      console.error(error);
-      setErrorModalSwitch(true);
+  const { responseData, error, isLoading, performPost } = useAxiosPost({
+    url: `/api/auth/member`,
+    requestData,
+  });
+  useEffect(() => {
+    if (!isLoading) {
+      if (responseData !== null) {
+        sessionStorage.setItem("access-token", responseData.accessToken);
+        navigate(`/home`);
+      } else {
+        setErrorModalShow(true);
+      }
     }
-  };
-
-  // 로그인 성공 시 홈 화면으로 이동
-  const navigate = useNavigate();
-  const goToHome = (memberName) => {
-    navigate(`/home/${memberName}`);
-  };
-
-  // 에러 모달 닫기
-  const reTry = () => {
-    setErrorModalSwitch(false); // 모달 닫기
-  };
-
-  // 모달 스타일 정의
-  const customModalStyles = {
-    overlay: {
-      backgroundColor: " rgba(0, 0, 0, 0.4)",
-      width: "100%",
-      height: "100vh",
-      zIndex: "10",
-      position: "fixed",
-      top: "0",
-      left: "0",
-    },
-    content: {
-      width: "400px",
-      height: "240px",
-      zIndex: "150",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      borderRadius: "10px",
-      boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.25)",
-      backgroundColor: "white",
-      justifyContent: "center",
-      overflow: "auto",
-    },
-  };
+  }, [responseData, error, isLoading]);
 
   return (
-    <div>
-      <div className={styles.loginContainer}>
-        <div className={styles.logoSpace}>
-          <span>Logo</span>
-        </div>
-        <h4>"미라클 농장에 오신 것을 환영합니다."</h4>
-        <form className={styles.loginBox} onSubmit={submitPost}>
-          <input
-            type="text"
-            value={name}
-            placeholder="닉네임을 입력하세요."
-            onChange={changeMemberName}
-          ></input>
-          <input
-            type="password"
-            value={pw}
-            placeholder="비밀번호를 입력하세요."
-            onChange={changeMemberPw}
-          ></input>
-          <button
-            className={styles.loginBtn}
+    <Container className="d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <span>Logo</span>
+      </div>
+      <h4>"미라클 농장에 오신 것을 환영합니다."</h4>
+      <Form onSubmit={submitPost}>
+        <Stack gap={3}>
+          <InputGroup>
+            <InputGroup.Text>닉네임</InputGroup.Text>
+            <Form.Control
+              type="text"
+              value={name}
+              placeholder="닉네임을 입력하세요."
+              onChange={changeMemberName}
+            />
+          </InputGroup>
+          <InputGroup>
+            <InputGroup.Text>비밀번호</InputGroup.Text>
+            <Form.Control
+              type="password"
+              value={pw}
+              placeholder="비밀번호를 입력하세요."
+              onChange={changeMemberPw}
+            />
+          </InputGroup>
+          <Button
+            type="submit"
             disabled={isValid ? false : true}
-            onClick={transformToJson}
+            onClick={objToJson}
           >
             로그인
-          </button>
-        </form>
-        <button
-          type="button"
-          className={styles.switchBtn}
-          onClick={setIsMember}
-        >
-          계정을 만들고 싶어요
-        </button>
-        <Modal isOpen={errorModalSwitch} style={customModalStyles}>
-          <h3>안내문</h3>
-          <p>로그인 불가!</p>
-          <p>닉네임 또는 비밀번호를 재확인해주세요.</p>
-          <p>비밀번호가 기억나지 않는다면 OOO에 문의하세요.</p>
-          <button className={styles.ModalBtn} onClick={reTry}>
-            닫기
-          </button>
-        </Modal>
-      </div>
-    </div>
+          </Button>
+        </Stack>
+      </Form>
+      <Button type="button" variant="link" onClick={setIsMember}>
+        계정을 만들고 싶어요
+      </Button>
+      <SingleBtnModal
+        title={"로그인 실패"}
+        content={"아이디 또는 비밀번호를 다시 확인해주세요."}
+        btnContent={"확인"}
+        show={errorModalShow}
+        onHide={() => setErrorModalShow(false)}
+      />
+    </Container>
   );
 }
+
+Login.propTypes = {
+  setIsMember: PropTypes.func.isRequired,
+};
 
 export default Login;

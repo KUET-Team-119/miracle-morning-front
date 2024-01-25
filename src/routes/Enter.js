@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import styles from "../css/Enter.module.css";
+import { Container } from "react-bootstrap";
 
 function Enter() {
   const [isMember, setIsMember] = useState(true);
@@ -12,15 +12,13 @@ function Enter() {
   };
 
   return (
-    <div className={styles.enterBody}>
-      <div className={styles.enterContainer}>
-        {isMember ? (
-          <Login setIsMember={switchBox} />
-        ) : (
-          <SignUp setIsMember={switchBox} />
-        )}
-      </div>
-    </div>
+    <Container>
+      {isMember ? (
+        <Login setIsMember={switchBox} />
+      ) : (
+        <SignUp setIsMember={switchBox} />
+      )}
+    </Container>
   );
 }
 
