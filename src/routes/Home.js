@@ -2,7 +2,7 @@ import TodayRoutine from "../components/TodayRoutine";
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Stack, Spinner, Container, Button } from "react-bootstrap";
+import { Stack, Spinner, Container, Button, Row } from "react-bootstrap";
 
 function Home() {
   const who = useDecodingJwt();
@@ -71,43 +71,47 @@ function Home() {
             <p>오늘도 좋은 하루 보내세요~</p>
           </Stack>
         </Container>
-        {isLoading ? (
-          <Spinner animation="border" />
-        ) : (
-          <Container>
-            {}
-            {console.log(members)}
-            <p>
-              {routinesCount === 0
-                ? "모든 목표를 이뤘어요. 정말 최고에요!"
-                : `완벽한 하루까지 ${routinesCount}개의 루틴이 남았어요`}
-            </p>
-            {members.map((member) => (
-              <Button
-                key={member}
-                value={member}
-                onClick={() => setMemberName(member)}
-                style={{ marginRight: 4, marginBottom: 4 }}
-              >
-                {member === who ? "내 루틴" : member}
-              </Button>
-            ))}
-            {response.map((routine) => (
-              <TodayRoutine
-                key={routine.routineId}
-                routineId={routine.routineId}
-                routineName={routine.routineName}
-                memberName={routine.memberName}
-                strategy={routine.strategy}
-                certification={routine.certification}
-                startTime={routine.startTime}
-                endTime={routine.endTime}
-                complete={routine.complete}
-                setToReload={refetch}
-              />
-            ))}
-          </Container>
-        )}
+        <Container>
+          <Row className="justify-content-center">
+            {isLoading ? (
+              <Spinner animation="border" />
+            ) : (
+              <Container>
+                {}
+                {console.log(members)}
+                <p>
+                  {routinesCount === 0
+                    ? "모든 목표를 이뤘어요. 정말 최고에요!"
+                    : `완벽한 하루까지 ${routinesCount}개의 루틴이 남았어요`}
+                </p>
+                {members.map((member) => (
+                  <Button
+                    key={member}
+                    value={member}
+                    onClick={() => setMemberName(member)}
+                    style={{ marginRight: "4px", marginBottom: "4px" }}
+                  >
+                    {member === who ? "내 루틴" : member}
+                  </Button>
+                ))}
+                {response.map((routine) => (
+                  <TodayRoutine
+                    key={routine.routineId}
+                    routineId={routine.routineId}
+                    routineName={routine.routineName}
+                    memberName={routine.memberName}
+                    strategy={routine.strategy}
+                    certification={routine.certification}
+                    startTime={routine.startTime}
+                    endTime={routine.endTime}
+                    complete={routine.complete}
+                    setToReload={refetch}
+                  />
+                ))}
+              </Container>
+            )}
+          </Row>
+        </Container>
       </Stack>
     </>
   );

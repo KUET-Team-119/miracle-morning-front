@@ -12,7 +12,6 @@ import {
   Form,
   InputGroup,
   Row,
-  Col,
 } from "react-bootstrap";
 
 function Managing() {
@@ -157,19 +156,17 @@ function Managing() {
               <Spinner animation="border" />
             ) : (
               routines.map((routine) => (
-                <Col>
-                  <MyRoutine
-                    key={routine.routineId}
-                    routineId={routine.routineId}
-                    routineName={routine.routineName}
-                    strategy={routine.strategy}
-                    certification={routine.certification}
-                    startTime={routine.startTime}
-                    endTime={routine.endTime}
-                    isActivated={routine.isActivated}
-                    setToReload={refetch}
-                  />
-                </Col>
+                <MyRoutine
+                  key={routine.routineId}
+                  routineId={routine.routineId}
+                  routineName={routine.routineName}
+                  strategy={routine.strategy}
+                  certification={routine.certification}
+                  startTime={routine.startTime}
+                  endTime={routine.endTime}
+                  isActivated={routine.isActivated}
+                  setToReload={refetch}
+                />
               ))
             )}
           </Row>

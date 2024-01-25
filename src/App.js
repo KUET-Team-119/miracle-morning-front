@@ -8,7 +8,8 @@ import Statistics from "./routes/Statistics";
 import Detail from "./routes/Detail";
 import MyPage from "./routes/MyPage";
 import Container from "react-bootstrap/esm/Container";
-import Header from "./css/Header";
+import Header from "./components/Header";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -18,11 +19,26 @@ function App() {
         <Container style={{ marginTop: "72px" }}>
           <Routes>
             <Route path={"/"} element={<Enter />} />
-            <Route path={"/home"} element={<Home />} />
-            <Route path={"/routines"} element={<Managing />} />
-            <Route path={"/statistics"} element={<Statistics />} />
-            <Route path={"/statistics/detail"} element={<Detail />} />
-            <Route path={"/mypage"} element={<MyPage />} />
+            <Route
+              path={"/home"}
+              element={<PrivateRoute component={<Home />} />}
+            />
+            <Route
+              path={"/routines"}
+              element={<PrivateRoute component={<Managing />} />}
+            />
+            <Route
+              path={"/statistics"}
+              element={<PrivateRoute component={<Statistics />} />}
+            />
+            <Route
+              path={"/statistics/detail"}
+              element={<PrivateRoute component={<Detail />} />}
+            />
+            <Route
+              path={"/mypage"}
+              element={<PrivateRoute component={<MyPage />} />}
+            />
           </Routes>
         </Container>
       </Container>

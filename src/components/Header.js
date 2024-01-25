@@ -17,8 +17,10 @@ function Header() {
           <Nav.Link as={Link} to={`/statistics`}>
             루틴 현황
           </Nav.Link>
+          <Nav.Link as={Link} to={`/mypage`}>
+            마이페이지
+          </Nav.Link>
         </Nav>
-        <Button variant="secondary">MyPage</Button>
       </Navbar.Collapse>
     </Navbar>
   );

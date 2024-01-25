@@ -36,7 +36,7 @@ function RoutineCalendar() {
         next2Label={null}
         prev2Label={null}
         maxDate={new Date()}
-        minDate={new Date("2021-01-01")}
+        minDate={new Date("2024-01-01")}
       />
       <div>{moment(value).format("YYYY년 MM월 DD일")}</div>
     </div>
