@@ -5,11 +5,11 @@ import useDecodingJwt from "../hook/useDecodingJwt";
 import { Stack, Spinner, Container, Button, Row } from "react-bootstrap";
 
 function Home() {
-  const who = useDecodingJwt();
+  const { myName } = useDecodingJwt();
   const [response, setResponse] = useState([]);
   const [routinesCount, setRoutinesCount] = useState(0);
   const [members, setMembers] = useState([]);
-  const [memberName, setMemberName] = useState(who);
+  const [memberName, setMemberName] = useState(myName);
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -21,9 +21,9 @@ function Home() {
         const memberList = [
           ...new Set(responseData.map((obj) => obj.memberName)),
         ].sort((a, b) => {
-          if (a === who) {
+          if (a === myName) {
             return -1; // 사용자가 맨 앞으로 오도록 정렬
-          } else if (b === "temp") {
+          } else if (b === myName) {
             return 1; // 사용자가 맨 앞으로 오도록 정렬
           } else {
             return 0; // 그 외 정렬하지 않음
@@ -31,7 +31,7 @@ function Home() {
         });
         setMembers(memberList);
 
-        const myData = responseData.filter((obj) => obj.memberName === who);
+        const myData = responseData.filter((obj) => obj.memberName === myName);
 
         const filteredData = responseData.filter(
           (obj) => obj.memberName === memberName
@@ -67,7 +67,7 @@ function Home() {
       <Stack gap={1}>
         <Container>
           <Stack>
-            <h4>안녕하세요 {who}님!</h4>
+            <h4>안녕하세요 {myName}님!</h4>
             <p>오늘도 좋은 하루 보내세요~</p>
           </Stack>
         </Container>
@@ -91,7 +91,7 @@ function Home() {
                     onClick={() => setMemberName(member)}
                     style={{ marginRight: "4px", marginBottom: "4px" }}
                   >
-                    {member === who ? "내 루틴" : member}
+                    {member === myName ? "내 루틴" : member}
                   </Button>
                 ))}
                 {response.map((routine) => (

@@ -15,6 +15,7 @@ import {
 } from "react-bootstrap";
 
 function Managing() {
+  const { myName } = useDecodingJwt();
   const [routines, setRoutines] = useState([]);
   const [addModalShow, setAddModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
@@ -23,7 +24,6 @@ function Managing() {
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
   const [requestData, setRequestData] = useState("");
-  const who = useDecodingJwt();
 
   // 사용자의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -54,7 +54,7 @@ function Managing() {
     setRequestData(
       JSON.stringify({
         routineName: newRoutineName,
-        memberName: who,
+        memberName: myName,
         strategy: newStrategy,
         certification: newCertification,
         startTime: newStartTime,
@@ -140,7 +140,7 @@ function Managing() {
       <Stack gap={1}>
         <Container>
           <Stack direction="horizontal">
-            <h4>{who}님의 모든 루틴</h4>
+            <h4>{myName}님의 모든 루틴</h4>
             <Button
               className="ms-auto rounded-circle"
               type="button"

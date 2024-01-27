@@ -5,12 +5,12 @@ import { Container } from "react-bootstrap";
 import useQuote from "../hook/useQuote";
 
 function Statistics() {
-  const who = useDecodingJwt();
+  const { myName } = useDecodingJwt();
   const { quote, author } = useQuote();
 
   return (
     <Container>
-      <h4>{who}님의 루틴 현황입니다.</h4>
+      <h4>{myName}님의 루틴 현황입니다.</h4>
       <div>{quote}</div>
       <div>{" - " + author}</div>
       <div>

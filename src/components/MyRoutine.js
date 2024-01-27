@@ -42,6 +42,7 @@ function MyRoutine({
     e.preventDefault();
     performPut();
   };
+  // 루틴 수정
   const { responseData, error, isLoading, performPut } = useAxiosPut({
     url: `/api/routine`,
     requestData,
@@ -57,6 +58,7 @@ function MyRoutine({
     closeUpdateModal();
   }, [responseData, error, isLoading]);
 
+  // 루틴 삭제
   const {
     responseData: responseDataDel,
     error: errorDel,

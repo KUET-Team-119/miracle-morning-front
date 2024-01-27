@@ -15,7 +15,7 @@ function TodayRoutine({
   complete,
   setToReload,
 }) {
-  const who = useDecodingJwt();
+  const { myName } = useDecodingJwt();
   const [proveModalShow, setProveModalShow] = useState(false);
   const [data, setData] = useState("");
   const [file, setFile] = useState(null);
@@ -130,7 +130,7 @@ function TodayRoutine({
     <>
       <Card
         body
-        onClick={complete || memberName !== who ? null : openProveModal}
+        onClick={complete || memberName !== myName ? null : openProveModal}
         border={complete ? "success" : "dark"}
         style={{ marginBottom: "10px" }}
       >

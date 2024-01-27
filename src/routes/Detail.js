@@ -5,17 +5,17 @@ import NavigationBar from "../components/NavigationBar";
 import useDecodingJwt from "../hook/useDecodingJwt";
 
 function Detail() {
-  const who = useDecodingJwt();
+  const { myName } = useDecodingJwt();
   return (
     <div>
       <div className={styles.detailBody}>
         <div className={styles.detailContainer}>
           <div className={styles.header}>
-            <Link to={`/statistics/${who}`}>뒤로 가기</Link>
+            <Link to={`/statistics/${myName}`}>뒤로 가기</Link>
             <h2>{moment(new Date()).format("YYYY년 MM월 루틴별 현황")}</h2>
           </div>
           <div className={styles.content}></div>
-          <NavigationBar memberName={who} />
+          <NavigationBar memberName={myName} />
         </div>
       </div>
     </div>
