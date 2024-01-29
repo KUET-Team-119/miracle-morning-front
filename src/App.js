@@ -19,7 +19,12 @@ function App() {
         <Container style={{ marginTop: "72px" }}>
           <Routes>
             <Route path={"/"} element={<Enter />} />
-            <Route
+            <Route path={"/home"} element={<Home />} />
+            <Route path={"/routines"} element={<Managing />} />
+            <Route path={"/statistics"} element={<Statistics />} />
+            <Route path={"/statistics/detail"} element={<Detail />} />
+            <Route path={"/mypage"} element={<MyPage />} />
+            {/* <Route
               path={"/home"}
               element={<PrivateRoute component={<Home />} />}
             />
@@ -38,7 +43,7 @@ function App() {
             <Route
               path={"/mypage"}
               element={<PrivateRoute component={<MyPage />} />}
-            />
+            /> */}
           </Routes>
         </Container>
       </Container>

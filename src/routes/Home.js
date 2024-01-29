@@ -77,8 +77,6 @@ function Home() {
               <Spinner animation="border" />
             ) : (
               <Container>
-                {}
-                {console.log(members)}
                 <p>
                   {routinesCount === 0
                     ? "모든 목표를 이뤘어요. 정말 최고에요!"
