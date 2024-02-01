@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { Button, Card, Form, InputGroup, Modal, Stack } from "react-bootstrap";
