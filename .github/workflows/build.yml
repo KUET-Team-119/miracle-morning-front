@@ -24,13 +24,14 @@ jobs:
         run: |
           echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> .env
 
-      # 의존 파일 설치
-      - name: Install dependencies
-        run: npm install
+      # 깃허브 액션에서 직접 프로젝트를 빌드하는 경우
+      # # 의존 파일 설치
+      # - name: Install dependencies
+      #   run: npm install
 
-      # 리액트 빌드
-      - name: Build React app
-        run: npm run build
+      # # 리액트 빌드
+      # - name: Build React app
+      #   run: npm run build
 
       # 이미지 빌드 및 도커 허브에 push
       - name: Build docker image and push

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import TodayRoutine from "../components/TodayRoutine";
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";

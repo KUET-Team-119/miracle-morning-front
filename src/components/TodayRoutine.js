@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
@@ -59,7 +58,6 @@ function TodayRoutine({
       });
       setToReload(); // GET 메소드 재호출 유도
       closeProveModal();
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
