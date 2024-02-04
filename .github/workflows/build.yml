@@ -43,7 +43,6 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_KEY }}
           script: |
-            whoami
-            # sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
 
-            # docker image prune -f
+            docker image prune -f
