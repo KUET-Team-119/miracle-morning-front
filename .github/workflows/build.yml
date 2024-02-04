@@ -19,11 +19,6 @@ jobs:
         with:
           node-version: 20
 
-      # .env 설정
-      - name: Create env file
-        run: |
-          echo "REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }}" >> .env
-
       # 깃허브 액션에서 직접 프로젝트를 빌드하는 경우
       # # 의존 파일 설치
       # - name: Install dependencies
@@ -39,3 +34,15 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front .
           docker push ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
+
+      # ssh로 OCI에 접속, 도커 허브에서 이미지 pull
+      - name: Pull docker image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          key: ${{ secrets.REMOTE_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
+
+            docker image prune -f

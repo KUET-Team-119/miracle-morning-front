@@ -29,18 +29,18 @@ function TodayRoutine({
     setData(
       JSON.stringify({
         routineName: routineName,
+        memberName: myName,
         doneAt: fileTime,
       })
     );
   };
 
   // json 데이터를 서버로 전송
-  const submitPost = (e) => {
+  const submitPatch = (e) => {
     e.preventDefault();
-    postProof();
+    patchProof();
   };
-  const postProof = async () => {
-    // TODO useAxiosPost 사용 방법 고민하기
+  const patchProof = async () => {
     const formData = new FormData();
     formData.append("file", file);
 
@@ -50,7 +50,7 @@ function TodayRoutine({
     formData.append("data", blob);
 
     try {
-      const response = await axios.post(`/api/result`, formData, {
+      const response = await axios.patch(`/api/result`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
@@ -70,18 +70,29 @@ function TodayRoutine({
       setFile(fileData);
       const lastModifiedTimestamp = fileData.lastModified;
       const fileDateObj = new Date(lastModifiedTimestamp);
+      const fileYear = fileDateObj.getFullYear();
+      let fileMonth = fileDateObj.getMonth();
+      let fileDate = fileDateObj.getDate();
+      let fileHours = fileDateObj.getHours();
+      let fileMinutes = fileDateObj.getMinutes();
       setFileYear(fileDateObj.getFullYear());
       setFileMonth(fileDateObj.getMonth());
       setFileDay(fileDateObj.getDate());
-      let fileHours = fileDateObj.getHours();
-      let fileMinutes = fileDateObj.getMinutes();
+      if (fileMonth + 1 <= 9) {
+        fileMonth = "0" + (fileMonth + 1);
+      }
+      if (fileDate <= 9) {
+        fileDate = "0" + fileDate;
+      }
       if (fileHours <= 9) {
         fileHours = "0" + fileHours;
       }
       if (fileMinutes <= 9) {
         fileMinutes = "0" + fileMinutes;
       }
-      setFileTime(`${fileHours}:${fileMinutes}`);
+      setFileTime(
+        `${fileYear}-${fileMonth}-${fileDate}T${fileHours}:${fileMinutes}:00`
+      );
     } else {
       setFile(null);
     }
@@ -92,6 +103,7 @@ function TodayRoutine({
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
+    const timeOnly = fileTime.substring(11, 19);
 
     // 인증 버튼 유효성 검사
     setIsValid(false);
@@ -103,7 +115,7 @@ function TodayRoutine({
     ) {
       console.log("1 클리어");
       // 조건 2. 파일 시간 <= 인증 시간
-      if (fileTime <= endTime) {
+      if (timeOnly <= endTime) {
         setIsValid(true);
         console.log("2 클리어");
       }
@@ -143,7 +155,7 @@ function TodayRoutine({
         </Stack>
       </Card>
       <Modal show={proveModalShow}>
-        <Form onSubmit={submitPost}>
+        <Form onSubmit={submitPatch}>
           <Modal.Header>
             <Modal.Title>{routineName}</Modal.Title>
           </Modal.Header>

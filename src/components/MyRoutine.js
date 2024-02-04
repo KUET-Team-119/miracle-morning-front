@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { Button, Card, Form, InputGroup, Modal, Stack } from "react-bootstrap";
 import useAxiosDelete from "../hook/useAxiosDelete";
-import useAxiosPut from "../hook/useAxiosPut";
+import useAxiosPatch from "../hook/useAxiosPatch";
 
 function MyRoutine({
   routineId,
@@ -38,12 +38,12 @@ function MyRoutine({
   };
 
   // json 데이터를 서버로 전송
-  const submitPut = (e) => {
+  const submitPatch = (e) => {
     e.preventDefault();
-    performPut();
+    performPatch();
   };
   // 루틴 수정
-  const { responseData, error, isLoading, performPut } = useAxiosPut({
+  const { responseData, error, isLoading, performPatch } = useAxiosPatch({
     url: `/api/routine`,
     requestData,
   });
@@ -151,7 +151,7 @@ function MyRoutine({
         </Stack>
       </Card>
       <Modal show={updateModalShow}>
-        <Form onSubmit={submitPut}>
+        <Form onSubmit={submitPatch}>
           <Modal.Header>
             <Modal.Title>{routineName}</Modal.Title>
           </Modal.Header>
