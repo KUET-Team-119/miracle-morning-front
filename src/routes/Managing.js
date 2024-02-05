@@ -13,6 +13,7 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
+import Header from "../components/Header";
 
 function Managing() {
   const { myName } = useDecodingJwt();
@@ -137,6 +138,7 @@ function Managing() {
 
   return (
     <>
+      <Header />
       <Stack gap={1}>
         <Container>
           <Stack direction="horizontal">

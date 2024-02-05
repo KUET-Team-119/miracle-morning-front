@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import { Stack, Spinner, Container, Button, Row } from "react-bootstrap";
+import Header from "../components/Header";
 
 function Home() {
   const { myName } = useDecodingJwt();
@@ -64,6 +65,7 @@ function Home() {
 
   return (
     <>
+      <Header />
       <Stack gap={1}>
         <Container>
           <Stack>
@@ -102,6 +104,7 @@ function Home() {
                     certification={routine.certification}
                     startTime={routine.startTime}
                     endTime={routine.endTime}
+                    doneAt={routine.doneAt}
                     complete={routine.complete}
                     setToReload={refetch}
                   />

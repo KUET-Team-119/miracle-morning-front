@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
-import SingleBtnModal from "./Modal/SingleBtnModal";
 import useAxiosPost from "../hook/useAxiosPost";
-import { Button, Container, Form, InputGroup, Stack } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  InputGroup,
+  Modal,
+  Stack,
+} from "react-bootstrap";
 
 function SignUp({ setIsMember }) {
   const [name, setName] = useState("");
@@ -65,61 +72,113 @@ function SignUp({ setIsMember }) {
   };
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center">
-      <div>
-        <span>Logo</span>
+    <Container
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ height: "100%" }}
+    >
+      <div style={{ fontSize: 60, marginBottom: 16 }}>
+        <span>🦙</span>
       </div>
-      <h4>"회원가입이 필요하시군요!"</h4>
+      <h5 style={{ marginBottom: 16 }}>회원가입🌱</h5>
+      <Card
+        className="text-center"
+        style={{
+          marginBottom: 26,
+          background: "#E4F6D2",
+          border: "none",
+          fontWeight: "bold",
+        }}
+      >
+        <Card.Body>
+          <Card.Text>
+            비밀번호 만들기를 누르면
+            <br />
+            자동으로 안전한 비밀번호가 생성돼요
+          </Card.Text>
+          <Card.Text style={{ color: "#E26862" }}>
+            ※ 생성된 비밀번호는 변경이 불가해요.
+            <br />
+            반드시 캡처 후 보관해주세요.
+          </Card.Text>
+        </Card.Body>
+      </Card>
       <Form onSubmit={submitPost}>
         <Stack gap={3}>
           <InputGroup>
-            <InputGroup.Text>닉네임</InputGroup.Text>
+            <InputGroup.Text>🌿</InputGroup.Text>
             <Form.Control
               type="text"
               name="memberName"
               value={name}
-              placeholder="닉네임을 입력하세요."
+              placeholder="사용할 닉네임 (10자 이내)"
               onChange={changeMemberName}
+              maxLength={10}
             ></Form.Control>
           </InputGroup>
           <InputGroup>
-            <Button type="button" onClick={generatePassword}>
-              비밀번호 생성
+            <Button
+              type="button"
+              onClick={generatePassword}
+              style={{ backgroundColor: "#8EC952", border: "none" }}
+              disabled={pw !== "" ? true : false}
+            >
+              {pw !== "" ? "생성 완료" : "비밀번호 만들기"}
             </Button>
-            <Form.Control
-              type="text"
-              value={pw}
-              placeholder="비밀번호 생성을 누르세요."
-              readOnly
-            />
+            <Form.Control type="text" value={pw} readOnly />
           </InputGroup>
-          <p>안내: 랜덤 비밀번호가 보안이 어쩌구~</p>
           <Button
             type="submit"
             disabled={isValid ? false : true}
             onClick={objToJson}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
           >
             회원가입
           </Button>
         </Stack>
       </Form>
-      <Button type="button" variant="link" onClick={setIsMember}>
-        이미 계정이 있어요
+      <div style={{ margin: 16 }}></div>
+      <Button
+        type="button"
+        variant="link"
+        onClick={setIsMember}
+        style={{ fontSize: 12, color: "#8EC952" }}
+      >
+        로그인 화면으로 돌아가기
       </Button>
-      <SingleBtnModal
-        title={"환영합니다."}
-        content={"미라클 농장은 이렇게 운영됩니다."}
-        btnContent={"확인"}
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
         show={successModalShow}
-        onHide={goToEnter}
-      />
-      <SingleBtnModal
-        title={"회원가입 실패"}
-        content={"중복된 닉네임입니다."}
-        btnContent={"확인"}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>✅ 회원가입 신청 완료</p>
+          <p>관리자 승인 완료 후 이용이 가능합니다.</p>
+          <Button
+            variant="primary"
+            onClick={goToEnter}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
+      </Modal>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
         show={errorModalShow}
-        onHide={() => setErrorModalShow(false)}
-      />
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>⛔ 중복된 닉네임입니다.</p>
+          <p>다른 닉네임을 입력해주세요.</p>
+          <Button
+            variant="primary"
+            onClick={() => setErrorModalShow(false)}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }

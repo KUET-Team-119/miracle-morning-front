@@ -15,8 +15,7 @@ function App() {
   return (
     <div style={{ height: "100vh", overflow: "hidden" }}>
       <Container fluid="sm" style={{ height: "100%", overflowY: "auto" }}>
-        <Header />
-        <Container style={{ marginTop: "72px" }}>
+        <Container style={{ height: "100%" }}>
           <Routes>
             <Route path={"/"} element={<Enter />} />
             <Route

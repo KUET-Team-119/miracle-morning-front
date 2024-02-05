@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import SingleBtnModal from "./Modal/SingleBtnModal";
 import useAxiosPost from "../hook/useAxiosPost";
-import { Button, Container, Form, InputGroup, Stack } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Form,
+  InputGroup,
+  Modal,
+  Stack,
+} from "react-bootstrap";
 
 function Login({ setIsMember }) {
   const [name, setName] = useState("");
   const [pw, setPw] = useState("");
   const [requestData, setRequestData] = useState("");
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   // 닉네임 입력 시 input의 value 변경
@@ -50,34 +57,39 @@ function Login({ setIsMember }) {
         sessionStorage.setItem("access-token", responseData.accessToken);
         navigate(`/home`);
       } else {
+        setStatus(error.response.status);
         setErrorModalShow(true);
       }
     }
   }, [responseData, error, isLoading]);
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center">
-      <div>
-        <span>Logo</span>
+    <Container
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ height: "100%" }}
+    >
+      <div style={{ fontSize: 60, marginBottom: 16 }}>
+        <span>🦙</span>
       </div>
-      <h4>"미라클 농장에 오신 것을 환영합니다."</h4>
+      <h5>나를 키우는 공간</h5>
+      <h5 style={{ marginBottom: 16 }}>미라클 농장🌱</h5>
       <Form onSubmit={submitPost}>
         <Stack gap={3}>
           <InputGroup>
-            <InputGroup.Text>닉네임</InputGroup.Text>
+            <InputGroup.Text>🌿</InputGroup.Text>
             <Form.Control
               type="text"
               value={name}
-              placeholder="닉네임을 입력하세요."
+              placeholder="닉네임"
               onChange={changeMemberName}
             />
           </InputGroup>
           <InputGroup>
-            <InputGroup.Text>비밀번호</InputGroup.Text>
+            <InputGroup.Text>🌿</InputGroup.Text>
             <Form.Control
               type="password"
               value={pw}
-              placeholder="비밀번호를 입력하세요."
+              placeholder="비밀번호"
               onChange={changeMemberPw}
             />
           </InputGroup>
@@ -85,21 +97,62 @@ function Login({ setIsMember }) {
             type="submit"
             disabled={isValid ? false : true}
             onClick={objToJson}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
           >
             로그인
           </Button>
         </Stack>
       </Form>
-      <Button type="button" variant="link" onClick={setIsMember}>
-        계정을 만들고 싶어요
-      </Button>
-      <SingleBtnModal
-        title={"로그인 실패"}
-        content={"아이디 또는 비밀번호를 다시 확인해주세요."}
-        btnContent={"확인"}
+      <div style={{ margin: 16 }}></div>
+      <Stack
+        className="justify-content-center align-items-center"
+        direction="horizontal"
+      >
+        <Button
+          type="button"
+          variant="link"
+          style={{ fontSize: 12, color: "#8EC952" }}
+        >
+          미라클 농장이 처음이신가요?
+        </Button>
+        <div
+          className="vr"
+          style={{ maxBlockSize: 12, alignSelf: "center" }}
+        ></div>
+        <Button
+          type="button"
+          variant="link"
+          style={{ fontSize: 12, color: "#8EC952" }}
+          onClick={setIsMember}
+        >
+          회원가입
+        </Button>
+      </Stack>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
         show={errorModalShow}
-        onHide={() => setErrorModalShow(false)}
-      />
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>
+            {status === 401
+              ? "⛔ 닉네임/비밀번호를 다시 확인해주세요!"
+              : "⛔ 승인되지 않은 계정입니다."}
+          </p>
+          <p>
+            {status === 401
+              ? "※ 비밀번호 분실 시, 관리자에게 문의"
+              : "※ 관리자 승인 완료 후 이용 가능합니다."}
+          </p>
+          <Button
+            variant="primary"
+            onClick={() => setErrorModalShow(false)}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }

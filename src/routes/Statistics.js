@@ -3,21 +3,25 @@ import { Link } from "react-router-dom";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import { Container } from "react-bootstrap";
 import useQuote from "../hook/useQuote";
+import Header from "../components/Header";
 
 function Statistics() {
   const { myName } = useDecodingJwt();
   const { quote, author } = useQuote();
 
   return (
-    <Container>
-      <h4>{myName}님의 루틴 현황입니다.</h4>
-      <div>{quote}</div>
-      <div>{" - " + author}</div>
-      <div>
-        <Link to={`/statistics/detail`}>자세히 보기</Link>
-        <RoutineCalendar />
-      </div>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <h4>{myName}님의 루틴 현황입니다.</h4>
+        <div>{quote}</div>
+        <div>{" - " + author}</div>
+        <div>
+          <Link to={`/statistics/detail`}>자세히 보기</Link>
+          <RoutineCalendar />
+        </div>
+      </Container>
+    </>
   );
 }
 

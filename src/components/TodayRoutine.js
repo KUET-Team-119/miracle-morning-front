@@ -13,6 +13,7 @@ function TodayRoutine({
   startTime,
   endTime,
   complete,
+  doneAt,
   setToReload,
 }) {
   const { myName } = useDecodingJwt();
@@ -151,6 +152,7 @@ function TodayRoutine({
           <div>
             {startTime.substring(0, 5)} ~ {endTime.substring(0, 5)}
           </div>
+          <div>{doneAt}</div>
           <div className="ms-auto">{routineName}</div>
         </Stack>
       </Card>

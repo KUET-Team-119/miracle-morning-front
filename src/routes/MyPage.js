@@ -12,6 +12,7 @@ import useDecodingJwt from "../hook/useDecodingJwt";
 import useAxiosPost from "../hook/useAxiosPost";
 import DoubleBtnModal from "../components/Modal/DoubleBtnModal";
 import useAxiosDelete from "../hook/useAxiosDelete";
+import Header from "../components/Header";
 
 function MyPage() {
   const { myId, myName } = useDecodingJwt();
@@ -137,6 +138,7 @@ function MyPage() {
 
   return (
     <>
+      <Header />
       <Container>
         <Stack direction="horizontal">
           <div className="p-2" onClick={goBack}>

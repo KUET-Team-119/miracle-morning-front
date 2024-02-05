@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 function Enter() {
   const [isMember, setIsMember] = useState(true);
@@ -12,7 +12,7 @@ function Enter() {
   };
 
   return (
-    <Container>
+    <Container style={{ height: "100%" }}>
       {isMember ? (
         <Login setIsMember={switchBox} />
       ) : (
