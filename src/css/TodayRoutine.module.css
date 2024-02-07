@@ -1,0 +1,11 @@
+.incompleteRoutine {
+  margin-bottom: 10px;
+  border-color: #8ec952;
+  background-color: #e4f6d2;
+}
+
+.completeRoutine {
+  margin-bottom: 10px;
+  border-color: rgb(190, 190, 190);
+  background-color: lightgray;
+}

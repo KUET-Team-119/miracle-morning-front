@@ -1,8 +1,17 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { Button, Card, Form, InputGroup, Modal, Stack } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Form,
+  InputGroup,
+  Modal,
+  Stack,
+} from "react-bootstrap";
 import useDecodingJwt from "../hook/useDecodingJwt";
+import styles from "../css/TodayRoutine.module.css";
 
 function TodayRoutine({
   routineId,
@@ -25,6 +34,8 @@ function TodayRoutine({
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
   const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {}, []);
 
   const objToJson = () => {
     setData(
@@ -100,11 +111,11 @@ function TodayRoutine({
   };
 
   useEffect(() => {
+    const timeOnly = fileTime.substring(11, 19);
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
-    const timeOnly = fileTime.substring(11, 19);
 
     // 인증 버튼 유효성 검사
     setIsValid(false);
@@ -143,43 +154,143 @@ function TodayRoutine({
     <>
       <Card
         body
+        className={complete ? styles.completeRoutine : styles.incompleteRoutine}
         onClick={complete || memberName !== myName ? null : openProveModal}
-        border={complete ? "success" : "dark"}
-        style={{ marginBottom: "10px" }}
       >
         <Stack direction="horizontal" gap={3}>
-          <div>💚</div>
+          <div>🌱</div>
           <div>
-            {startTime.substring(0, 5)} ~ {endTime.substring(0, 5)}
+            {complete
+              ? `${doneAt.substring(11, 16)}에 완료!`
+              : startTime === "00:00:00" && endTime === "11:59:00"
+              ? "하루종일"
+              : startTime.substring(0, 5)}
           </div>
-          <div>{doneAt}</div>
           <div className="ms-auto">{routineName}</div>
         </Stack>
       </Card>
-      <Modal show={proveModalShow}>
+      <Modal show={proveModalShow} centered>
         <Form onSubmit={submitPatch}>
-          <Modal.Header>
-            <Modal.Title>{routineName}</Modal.Title>
+          <Modal.Header className="d-flex justify-content-center">
+            <Modal.Title className="text-center" style={{ fontSize: 20 }}>
+              🌱 {routineName}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Stack gap={3}>
               <div>
-                ⏰ {startTime.substring(0, 5)} ~ {endTime.substring(0, 5)}
+                <div>🌱 실천 요일</div>
+                <ButtonGroup
+                  className="d-flex"
+                  style={{
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "#8EC952",
+                  }}
+                >
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    월
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    화
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    수
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    목
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    금
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    토
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    일
+                  </Button>
+                </ButtonGroup>
               </div>
-              <div>📸 "{certification}"으로 인증해주세요!</div>
+              <div>
+                <div>🌱 실천 시간</div>
+                <InputGroup>
+                  <Form.Control type="time" value={startTime} readOnly />
+                  <Form.Control type="time" value={endTime} readOnly />
+                </InputGroup>
+              </div>
+              <div>
+                <div>🌱 인증 방법</div>
+                <Card
+                  style={{
+                    background: "#E4F6D2",
+                    border: "none",
+                  }}
+                >
+                  <Card.Body>
+                    <Card.Text>{certification}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </div>
               <Form.Control type="file" onChange={uploadedFile} />
-              <InputGroup>
+              {/* <InputGroup>
                 <InputGroup.Text>사진 시간</InputGroup.Text>
                 <Form.Control value={fileTime} readOnly />
-              </InputGroup>
+              </InputGroup> */}
             </Stack>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="d-flex justify-content-center">
             <Button type="button" variant="secondary" onClick={closeProveModal}>
-              취소
+              닫기
             </Button>
-            <Button type="submit" onClick={objToJson} disabled={!isValid}>
-              확인
+            <Button
+              type="submit"
+              onClick={objToJson}
+              disabled={!isValid}
+              style={{ backgroundColor: "#8EC952", borderColor: "#8EC952" }}
+            >
+              인증하기
             </Button>
           </Modal.Footer>
         </Form>

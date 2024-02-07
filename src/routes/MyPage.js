@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Form,
+  Image,
   InputGroup,
   Modal,
   Stack,
@@ -12,7 +13,7 @@ import useDecodingJwt from "../hook/useDecodingJwt";
 import useAxiosPost from "../hook/useAxiosPost";
 import DoubleBtnModal from "../components/Modal/DoubleBtnModal";
 import useAxiosDelete from "../hook/useAxiosDelete";
-import Header from "../components/Header";
+import backIcon from "../images/back.png";
 
 function MyPage() {
   const { myId, myName } = useDecodingJwt();
@@ -123,6 +124,7 @@ function MyPage() {
   // 탈퇴 모달 닫기
   const closeLeaveModal = () => {
     setLeaveModalShow(false);
+    setMemberName("");
   };
 
   // 탈퇴
@@ -138,21 +140,34 @@ function MyPage() {
 
   return (
     <>
-      <Header />
       <Container>
-        <Stack direction="horizontal">
-          <div className="p-2" onClick={goBack}>
-            {"<"}
-          </div>
+        <div className="d-flex">
+          <Image
+            src={backIcon}
+            width={48}
+            height={48}
+            className="p-2"
+            onClick={goBack}
+            alt="뒤로가기"
+            style={{ cursor: "pointer" }}
+          />
           <div className="p-2">설정</div>
-        </Stack>
-        <div onClick={openComplaintModal}>오류 제보</div>
-        <hr />
-        <div onClick={openLogoutModal}>로그아웃</div>
-        <hr />
-        <div onClick={openLeaveModal}>탈퇴</div>
+        </div>
+        <Container style={{ marginLeft: 24, marginRight: 24 }}>
+          <div onClick={openComplaintModal} style={{ cursor: "pointer" }}>
+            오류 제보
+          </div>
+          <hr />
+          <div onClick={openLogoutModal} style={{ cursor: "pointer" }}>
+            로그아웃
+          </div>
+          <hr />
+          <div onClick={openLeaveModal} style={{ cursor: "pointer" }}>
+            탈퇴
+          </div>
+        </Container>
       </Container>
-      <Modal show={complaintModalShow}>
+      <Modal show={complaintModalShow} centered>
         <Form onSubmit={submitPost}>
           <Modal.Header>오류 제보</Modal.Header>
           <Modal.Body>
@@ -163,6 +178,7 @@ function MyPage() {
               rows={5}
               value={complaintContent}
               onChange={changeComplaintContent}
+              maxLength={200}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -177,6 +193,10 @@ function MyPage() {
               type="submit"
               disabled={complaintIsValid ? false : true}
               onClick={objToJson}
+              style={{
+                backgroundColor: "#8EC952",
+                borderColor: "#8EC952",
+              }}
             >
               전송
             </Button>
@@ -192,16 +212,18 @@ function MyPage() {
         onAction={logout}
         onHide={closeLogoutModal}
       />
-      <Modal show={leaveModalShow}>
+      <Modal show={leaveModalShow} centered>
         <Modal.Header>탈퇴</Modal.Header>
         <Modal.Body>
           <p>더이상 미라클농장을 이용하지 않으시나요?</p>
+          <p>탈퇴하시려면 닉네임을 적어주세요.</p>
           <InputGroup>
             <InputGroup.Text>닉네임</InputGroup.Text>
             <Form.Control
               type="text"
-              placeholder="닉네임을 입력하세요."
+              placeholder={myName}
               value={memberName}
+              maxLength={10}
               onChange={changeMemberName}
             />
           </InputGroup>
@@ -210,7 +232,12 @@ function MyPage() {
           <Button type="button" variant="secondary" onClick={closeLeaveModal}>
             취소
           </Button>
-          <Button type="submit" onClick={leave} disabled={!leaveIsValid}>
+          <Button
+            variant="danger"
+            type="submit"
+            onClick={leave}
+            disabled={!leaveIsValid}
+          >
             확인
           </Button>
         </Modal.Footer>

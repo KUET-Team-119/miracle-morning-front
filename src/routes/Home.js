@@ -2,8 +2,10 @@ import TodayRoutine from "../components/TodayRoutine";
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Stack, Spinner, Container, Button, Row } from "react-bootstrap";
-import Header from "../components/Header";
+import { Stack, Spinner, Container, Row, Card, Image } from "react-bootstrap";
+import Menu from "../components/Offcanvas";
+import menuIcon from "../images/menu.png";
+import Profile from "../components/Profile";
 
 function Home() {
   const { myName } = useDecodingJwt();
@@ -11,6 +13,38 @@ function Home() {
   const [routinesCount, setRoutinesCount] = useState(0);
   const [members, setMembers] = useState([]);
   const [memberName, setMemberName] = useState(myName);
+  const [menuShow, setMenuShow] = useState(false);
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth();
+  const todayDay = today.getDate();
+  let todayWeekOfDay = today.getDay();
+
+  switch (todayWeekOfDay) {
+    case 1:
+      todayWeekOfDay = "월";
+      break;
+    case 2:
+      todayWeekOfDay = "화";
+      break;
+    case 3:
+      todayWeekOfDay = "수";
+      break;
+    case 4:
+      todayWeekOfDay = "목";
+      break;
+    case 5:
+      todayWeekOfDay = "금";
+      break;
+    case 6:
+      todayWeekOfDay = "토";
+      break;
+    case 7:
+      todayWeekOfDay = "일";
+      break;
+    default:
+      break;
+  }
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -65,13 +99,32 @@ function Home() {
 
   return (
     <>
-      <Header />
+      <Menu
+        show={menuShow}
+        onHide={() => {
+          setMenuShow(false);
+        }}
+      />
       <Stack gap={1}>
-        <Container>
-          <Stack>
-            <h4>안녕하세요 {myName}님!</h4>
-            <p>오늘도 좋은 하루 보내세요~</p>
-          </Stack>
+        <Container
+          className="d-flex justify-content-center align-items-center"
+          style={{ marginTop: 16, marginBottom: 16 }}
+        >
+          <div>
+            <p style={{ padding: 0, margin: 0 }}>
+              안녕하세요 <span style={{ color: "#69973A" }}>{myName}</span>님!
+            </p>
+            <p style={{ padding: 0, margin: 0 }}>오늘도 좋은 하루 보내세요🌱</p>
+          </div>
+          <Image
+            className="ms-auto"
+            src={menuIcon}
+            onClick={() => {
+              setMenuShow(true);
+            }}
+            alt="메뉴"
+            style={{ width: 24, height: 24, marginRight: 12 }}
+          ></Image>
         </Container>
         <Container>
           <Row className="justify-content-center">
@@ -79,36 +132,72 @@ function Home() {
               <Spinner animation="border" />
             ) : (
               <Container>
-                <p>
-                  {routinesCount === 0
-                    ? "모든 목표를 이뤘어요. 정말 최고에요!"
-                    : `완벽한 하루까지 ${routinesCount}개의 루틴이 남았어요`}
-                </p>
-                {members.map((member) => (
-                  <Button
-                    key={member}
-                    value={member}
-                    onClick={() => setMemberName(member)}
-                    style={{ marginRight: "4px", marginBottom: "4px" }}
-                  >
-                    {member === myName ? "내 루틴" : member}
-                  </Button>
-                ))}
-                {response.map((routine) => (
-                  <TodayRoutine
-                    key={routine.routineId}
-                    routineId={routine.routineId}
-                    routineName={routine.routineName}
-                    memberName={routine.memberName}
-                    strategy={routine.strategy}
-                    certification={routine.certification}
-                    startTime={routine.startTime}
-                    endTime={routine.endTime}
-                    doneAt={routine.doneAt}
-                    complete={routine.complete}
-                    setToReload={refetch}
-                  />
-                ))}
+                <Card
+                  className="text-center"
+                  style={{
+                    marginBottom: 24,
+                    background: "#E4F6D2",
+                    border: "none",
+                  }}
+                >
+                  <Card.Body>
+                    <Card.Text>
+                      {routinesCount === 0 ? (
+                        "모든 루틴을 달성했어요! 내일도 화이팅🔥"
+                      ) : (
+                        <>
+                          완벽한 하루까지{" "}
+                          <span style={{ color: "#69973A" }}>
+                            {routinesCount}개
+                          </span>
+                          의 루틴이 남아있어요
+                        </>
+                      )}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+                <Stack direction="horizontal">
+                  {members.map((member) => (
+                    <Profile
+                      key={member}
+                      name={member}
+                      selected={memberName}
+                      setMemberRoutines={() => setMemberName(member)}
+                    />
+                  ))}
+                </Stack>
+                <Container
+                  style={{
+                    borderRadius: "12px",
+                    borderStyle: "solid",
+                    borderWidth: "1px",
+                    borderColor: "#8EC952",
+                    padding: "16px",
+                  }}
+                >
+                  <p style={{ textAlign: "center" }}>
+                    <span style={{ color: "#69973A" }}>{memberName}</span>
+                    님의{" "}
+                    {`${todayYear}년 ${
+                      todayMonth + 1
+                    }월 ${todayDay}일 (${todayWeekOfDay})`}
+                  </p>
+                  {response.map((routine) => (
+                    <TodayRoutine
+                      key={routine.routineId}
+                      routineId={routine.routineId}
+                      routineName={routine.routineName}
+                      memberName={routine.memberName}
+                      strategy={routine.strategy}
+                      certification={routine.certification}
+                      startTime={routine.startTime}
+                      endTime={routine.endTime}
+                      doneAt={routine.doneAt}
+                      complete={routine.complete}
+                      setToReload={refetch}
+                    />
+                  ))}
+                </Container>
               </Container>
             )}
           </Row>

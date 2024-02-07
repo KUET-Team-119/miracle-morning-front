@@ -1,6 +1,14 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import { Button, Card, Form, InputGroup, Modal, Stack } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Form,
+  InputGroup,
+  Modal,
+  Stack,
+} from "react-bootstrap";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import useAxiosPatch from "../hook/useAxiosPatch";
 
@@ -22,6 +30,9 @@ function MyRoutine({
   const [requestData, setRequestData] = useState("");
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [isAllDay, setIsAllDay] = useState(
+    startTime === "00:00:00" && endTime === "11:59:00" ? true : false
+  );
 
   const objToJson = () => {
     setRequestData(
@@ -131,92 +142,221 @@ function MyRoutine({
     newEndTime !== "" &&
     newStartTime <= newEndTime;
 
+  const changeAllDay = () => {
+    setIsAllDay((current) => !current);
+  };
+
+  useEffect(() => {
+    if (isAllDay === true) {
+      setNewStartTime("00:00");
+      setNewEndTime("11:59");
+    }
+  }, [isAllDay]);
+
   return (
-    <div>
+    <>
       <Card
         body
-        border={isActivated ? "primary" : "warning"}
-        style={{ marginBottom: "10px" }}
+        onClick={openUpdateModal}
+        style={{
+          marginBottom: "10px",
+          borderColor: "#8ec952",
+          backgroundColor: "#e4f6d2",
+        }}
       >
         <Stack direction="horizontal" gap={3}>
-          <div>{isActivated ? "💙" : "💛"}</div>
-          <div>
-            {startTime.substring(0, 5)} ~ {endTime.substring(0, 5)}
-          </div>
-          <div className="ms-auto">{routineName}</div>
-          <Button onClick={openUpdateModal}>수정</Button>
-          <Button onClick={openDeleteModal} variant="danger">
-            삭제
-          </Button>
+          <div>🌱</div>
+          {isActivated ? null : <div>(비활성화됨)</div>}
+          <div>{routineName}</div>
         </Stack>
       </Card>
-      <Modal show={updateModalShow}>
+      <Modal show={updateModalShow} centered>
         <Form onSubmit={submitPatch}>
-          <Modal.Header>
-            <Modal.Title>{routineName}</Modal.Title>
+          <Modal.Header className="d-flex justify-content-bwtween">
+            <Modal.Title style={{ fontSize: 20 }}>🌱 {routineName}</Modal.Title>
+            <Button
+              className="ms-auto"
+              onClick={openDeleteModal}
+              variant="danger"
+            >
+              삭제
+            </Button>
           </Modal.Header>
           <Modal.Body>
             <Stack gap={3}>
-              <InputGroup>
-                <InputGroup.Text>인증시간</InputGroup.Text>
-                <Form.Control
-                  type="time"
-                  value={newStartTime}
-                  onChange={changeStartTime}
-                />
-                <Form.Control
-                  type="time"
-                  value={newEndTime}
-                  onChange={changeEndTime}
-                />
-              </InputGroup>
-              <InputGroup>
-                <InputGroup.Text>실천전략</InputGroup.Text>
+              <div>
+                <div>🌱 실천 요일</div>
+                <ButtonGroup
+                  className="d-flex"
+                  style={{
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "#8EC952",
+                  }}
+                >
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    월
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    화
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    수
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    목
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    금
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    토
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    일
+                  </Button>
+                </ButtonGroup>
+              </div>
+              <div>
+                <div>🌱 실천 시간</div>
+                <InputGroup>
+                  <Form.Control
+                    type="time"
+                    value={newStartTime}
+                    readOnly={isAllDay}
+                    onChange={changeStartTime}
+                  />
+                  <Form.Control
+                    type="time"
+                    value={newEndTime}
+                    readOnly={isAllDay}
+                    onChange={changeEndTime}
+                  />
+                </InputGroup>
+                <div className="d-flex justify-content-start align-items-center">
+                  <span style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
+                    하루종일
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={isAllDay}
+                    onChange={changeAllDay}
+                    style={{
+                      width: 16,
+                      height: 16,
+                      display: "inline-block",
+                      marginTop: 2,
+                      marginLeft: 4,
+                      accentColor: "#8EC952",
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div>🌱 실천 전략</div>
                 <Form.Control
                   type="text"
                   value={newStrategy}
+                  placeholder="(20자 이내)"
+                  maxLength={20}
                   onChange={changeStrategy}
                 />
-              </InputGroup>
-              <InputGroup>
-                <InputGroup.Text>인증방법</InputGroup.Text>
+              </div>
+              <div>
+                <div>🌱 인증 방법</div>
                 <Form.Control
                   type="text"
                   value={newCertification}
+                  placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
+                  maxLength={20}
                   onChange={changeCertification}
                 />
-              </InputGroup>
-              <Form.Check
-                type="switch"
-                label="활성화여부"
-                value={newIsActivated}
-                onChange={changeIsActivated}
-                defaultChecked={isActivated}
-              />
+              </div>
+              <div className="d-flex">
+                <div style={{ marginRight: 12 }}>🌱 루틴 활성화 / 비활성화</div>
+                <Form.Check
+                  type="switch"
+                  value={newIsActivated}
+                  onChange={changeIsActivated}
+                  defaultChecked={isActivated}
+                />
+              </div>
             </Stack>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="d-flex justify-content-center align-items-center">
             <Button
               type="button"
               variant="secondary"
               onClick={closeUpdateModal}
             >
-              취소
+              닫기
             </Button>
-            <Button type="submit" onClick={objToJson} disabled={!isValid}>
-              확인
+            <Button
+              type="submit"
+              onClick={objToJson}
+              disabled={!isValid}
+              style={{
+                backgroundColor: "#8EC952",
+                borderColor: "#8EC952",
+              }}
+            >
+              수정하기
             </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal show={deleteModalShow}>
-        <Modal.Header>
-          <Modal.Title>{routineName}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
+        show={deleteModalShow}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>🌱 루틴을 삭제합니다.</p>
           <p>정말로 삭제하시겠습니까?</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="d-flex justify-content-center">
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>
             취소
           </Button>
@@ -225,7 +365,7 @@ function MyRoutine({
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }
 

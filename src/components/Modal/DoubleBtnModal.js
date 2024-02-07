@@ -22,7 +22,13 @@ function CancelOkModal({
         <Button variant="secondary" onClick={onHide}>
           {btnContent1}
         </Button>
-        <Button variant="primary" onClick={onAction}>
+        <Button
+          onClick={onAction}
+          style={{
+            backgroundColor: "#8EC952",
+            borderColor: "#8EC952",
+          }}
+        >
           {btnContent2}
         </Button>
       </Modal.Footer>
