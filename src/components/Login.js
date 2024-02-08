@@ -145,7 +145,6 @@ function Login({ setIsMember }) {
               : "※ 관리자 승인 완료 후 이용 가능합니다."}
           </p>
           <Button
-            variant="primary"
             onClick={() => setErrorModalShow(false)}
             style={{ backgroundColor: "#8EC952", border: "none" }}
           >

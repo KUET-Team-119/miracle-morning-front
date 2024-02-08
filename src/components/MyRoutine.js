@@ -31,7 +31,7 @@ function MyRoutine({
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
-    startTime === "00:00:00" && endTime === "11:59:00" ? true : false
+    startTime === "00:00:00" && endTime === "23:59:00" ? true : false
   );
 
   const objToJson = () => {
@@ -149,7 +149,7 @@ function MyRoutine({
   useEffect(() => {
     if (isAllDay === true) {
       setNewStartTime("00:00");
-      setNewEndTime("11:59");
+      setNewEndTime("23:59");
     }
   }, [isAllDay]);
 
@@ -265,13 +265,13 @@ function MyRoutine({
                   <Form.Control
                     type="time"
                     value={newStartTime}
-                    readOnly={isAllDay}
+                    disabled={isAllDay}
                     onChange={changeStartTime}
                   />
                   <Form.Control
                     type="time"
                     value={newEndTime}
-                    readOnly={isAllDay}
+                    disabled={isAllDay}
                     onChange={changeEndTime}
                   />
                 </InputGroup>

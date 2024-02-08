@@ -27,6 +27,7 @@ function TodayRoutine({
 }) {
   const { myName } = useDecodingJwt();
   const [proveModalShow, setProveModalShow] = useState(false);
+  const [infoModalShow, setInfoModalShow] = useState(false);
   const [data, setData] = useState("");
   const [file, setFile] = useState(null);
   const [fileYear, setFileYear] = useState("");
@@ -148,6 +149,7 @@ function TodayRoutine({
     setFileDay("");
     setFileTime("");
     setIsValid(false);
+    setInfoModalShow(false);
   };
 
   return (
@@ -162,7 +164,7 @@ function TodayRoutine({
           <div>
             {complete
               ? `${doneAt.substring(11, 16)}에 완료!`
-              : startTime === "00:00:00" && endTime === "11:59:00"
+              : startTime === "00:00:00" && endTime === "23:59:00"
               ? "하루종일"
               : startTime.substring(0, 5)}
           </div>
@@ -256,8 +258,8 @@ function TodayRoutine({
               <div>
                 <div>🌱 실천 시간</div>
                 <InputGroup>
-                  <Form.Control type="time" value={startTime} readOnly />
-                  <Form.Control type="time" value={endTime} readOnly />
+                  <Form.Control type="time" value={startTime} disabled />
+                  <Form.Control type="time" value={endTime} disabled />
                 </InputGroup>
               </div>
               <div>
@@ -273,11 +275,13 @@ function TodayRoutine({
                   </Card.Body>
                 </Card>
               </div>
-              <Form.Control type="file" onChange={uploadedFile} />
-              {/* <InputGroup>
-                <InputGroup.Text>사진 시간</InputGroup.Text>
-                <Form.Control value={fileTime} readOnly />
-              </InputGroup> */}
+              <Form.Control
+                type="file"
+                onChange={uploadedFile}
+                onClick={() => {
+                  setInfoModalShow(true);
+                }}
+              />
             </Stack>
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center">
@@ -294,6 +298,23 @@ function TodayRoutine({
             </Button>
           </Modal.Footer>
         </Form>
+      </Modal>
+      {/* TODO 아래 모달이 사용상 불편하지 않은지 확인하기 */}
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
+        show={infoModalShow}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>🌱 사진을 업로드 해주세요</p>
+          <p>인증 사진 업로드 후 인증이 가능합니다.</p>
+          <Button
+            onClick={() => setInfoModalShow(false)}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
       </Modal>
     </>
   );

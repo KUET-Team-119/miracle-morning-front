@@ -25,6 +25,7 @@ function Managing() {
   const { myName } = useDecodingJwt();
   const [routines, setRoutines] = useState([]);
   const [addModalShow, setAddModalShow] = useState(false);
+  const [errorModalShow, setErrorModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
   const [newStrategy, setNewStrategy] = useState("");
   const [newCertification, setNewCertification] = useState("");
@@ -94,6 +95,7 @@ function Managing() {
         refetch();
       } else {
         closeAddModal();
+        setErrorModalShow(true);
       }
     }
   }, [responseDataPost, errorPost, isLoadingPost]);
@@ -158,7 +160,7 @@ function Managing() {
   useEffect(() => {
     if (isAllDay === true) {
       setNewStartTime("00:00:00");
-      setNewEndTime("11:59:00");
+      setNewEndTime("23:59:00");
     }
   }, [isAllDay]);
 
@@ -339,13 +341,13 @@ function Managing() {
                       type="time"
                       value={newStartTime}
                       onChange={changeStartTime}
-                      readOnly={isAllDay}
+                      disabled={isAllDay}
                     />
                     <Form.Control
                       type="time"
                       value={newEndTime}
                       onChange={changeEndTime}
-                      readOnly={isAllDay}
+                      disabled={isAllDay}
                     />
                   </InputGroup>
                   <div className="d-flex justify-content-start align-items-center">
@@ -406,6 +408,23 @@ function Managing() {
               </Button>
             </Modal.Footer>
           </Form>
+        </Modal>
+        <Modal
+          className="d-flex flex-column justify-content-center align-items-center"
+          show={errorModalShow}
+          centered
+        >
+          <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+            <p>⛔ 중복된 루틴입니다.</p>
+            <p>다른 루틴명을 입력해주세요.</p>
+            <Button
+              variant="primary"
+              onClick={() => setErrorModalShow(false)}
+              style={{ backgroundColor: "#8EC952", border: "none" }}
+            >
+              닫기
+            </Button>
+          </Modal.Body>
         </Modal>
       </Stack>
     </>
