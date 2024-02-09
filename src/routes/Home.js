@@ -2,7 +2,7 @@ import TodayRoutine from "../components/TodayRoutine";
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Stack, Spinner, Container, Row, Card, Image } from "react-bootstrap";
+import { Stack, Spinner, Container, Card, Row } from "react-bootstrap";
 import Menu from "../components/Offcanvas";
 import menuIcon from "../images/menu.png";
 import Profile from "../components/Profile";
@@ -107,7 +107,7 @@ function Home() {
       />
       <Stack gap={1}>
         <Container
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-start"
           style={{ marginTop: 16, marginBottom: 16 }}
         >
           <div>
@@ -116,7 +116,7 @@ function Home() {
             </p>
             <p style={{ padding: 0, margin: 0 }}>오늘도 좋은 하루 보내세요🌱</p>
           </div>
-          <Image
+          <img
             className="ms-auto"
             src={menuIcon}
             onClick={() => {
@@ -124,7 +124,7 @@ function Home() {
             }}
             alt="메뉴"
             style={{ width: 24, height: 24, marginRight: 12 }}
-          ></Image>
+          ></img>
         </Container>
         <Container>
           <Row className="justify-content-center">
@@ -182,21 +182,25 @@ function Home() {
                       todayMonth + 1
                     }월 ${todayDay}일 (${todayWeekOfDay})`}
                   </p>
-                  {response.map((routine) => (
-                    <TodayRoutine
-                      key={routine.routineId}
-                      routineId={routine.routineId}
-                      routineName={routine.routineName}
-                      memberName={routine.memberName}
-                      strategy={routine.strategy}
-                      certification={routine.certification}
-                      startTime={routine.startTime}
-                      endTime={routine.endTime}
-                      doneAt={routine.doneAt}
-                      complete={routine.complete}
-                      setToReload={refetch}
-                    />
-                  ))}
+                  <div style={{ maxHeight: "240px", overflowY: "auto" }}>
+                    <div className="d-flex flex-column justify-content-center">
+                      {response.map((routine) => (
+                        <TodayRoutine
+                          key={routine.routineId}
+                          routineId={routine.routineId}
+                          routineName={routine.routineName}
+                          memberName={routine.memberName}
+                          strategy={routine.strategy}
+                          certification={routine.certification}
+                          startTime={routine.startTime}
+                          endTime={routine.endTime}
+                          doneAt={routine.doneAt}
+                          complete={routine.complete}
+                          setToReload={refetch}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </Container>
               </Container>
             )}

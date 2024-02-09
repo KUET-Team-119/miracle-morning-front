@@ -156,19 +156,21 @@ function MyRoutine({
   return (
     <>
       <Card
+        className="d-flex justify-content-center"
         body
         onClick={openUpdateModal}
         style={{
+          height: 48,
           marginBottom: "10px",
           borderColor: "#8ec952",
           backgroundColor: "#e4f6d2",
         }}
       >
-        <Stack direction="horizontal" gap={3}>
+        <div className="d-flex justify-content-start">
           <div>🌱</div>
           {isActivated ? null : <div>(비활성화됨)</div>}
-          <div>{routineName}</div>
-        </Stack>
+          <div className="ms-auto">{routineName}</div>
+        </div>
       </Card>
       <Modal show={updateModalShow} centered>
         <Form onSubmit={submitPatch}>

@@ -11,9 +11,8 @@ import {
   Modal,
   Form,
   InputGroup,
-  Row,
-  Image,
   ButtonGroup,
+  Row,
 } from "react-bootstrap";
 import Menu from "../components/Offcanvas";
 import homeIcon from "../images/home.png";
@@ -174,7 +173,7 @@ function Managing() {
       />
       <Stack gap={1}>
         <Container
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex justify-content-center align-items-start"
           style={{ marginTop: 16, marginBottom: 16 }}
         >
           <div>
@@ -182,21 +181,21 @@ function Managing() {
               <span style={{ color: "#69973A" }}>{myName}</span>님의 루틴 List🌱
             </p>
           </div>
-          <Image
+          <img
             className="ms-auto"
             src={homeIcon}
             onClick={goToHome}
             alt="홈"
             style={{ width: 24, height: 24, marginRight: 12 }}
-          ></Image>
-          <Image
+          ></img>
+          <img
             src={menuIcon}
             onClick={() => {
               setMenuShow(true);
             }}
             alt="메뉴"
             style={{ width: 24, marginRight: 12 }}
-          ></Image>
+          ></img>
         </Container>
         <Container
           style={{
@@ -207,37 +206,40 @@ function Managing() {
             padding: "16px",
           }}
         >
-          <Container className="d-flex justify-content-bwtween align-items-start">
+          <Container className="d-flex justify-content-between align-items-start">
             <p>🌱 수정하고 싶은 루틴을 클릭해요</p>
-            <Image
+            <img
               src={addIcon}
               className="ms-auto rounded-circle"
               onClick={openAddModal}
               width={32}
               height={32}
+              alt="추가"
             />
           </Container>
-          <Container>
-            <Row className="justify-content-center">
-              {isLoading ? (
-                <Spinner animation="border" />
-              ) : (
-                routines.map((routine) => (
-                  <MyRoutine
-                    key={routine.routineId}
-                    routineId={routine.routineId}
-                    routineName={routine.routineName}
-                    strategy={routine.strategy}
-                    certification={routine.certification}
-                    startTime={routine.startTime}
-                    endTime={routine.endTime}
-                    isActivated={routine.isActivated}
-                    setToReload={refetch}
-                  />
-                ))
-              )}
-            </Row>
-          </Container>
+          <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+            <Container>
+              <Row className="justify-content-center">
+                {isLoading ? (
+                  <Spinner animation="border" />
+                ) : (
+                  routines.map((routine) => (
+                    <MyRoutine
+                      key={routine.routineId}
+                      routineId={routine.routineId}
+                      routineName={routine.routineName}
+                      strategy={routine.strategy}
+                      certification={routine.certification}
+                      startTime={routine.startTime}
+                      endTime={routine.endTime}
+                      isActivated={routine.isActivated}
+                      setToReload={refetch}
+                    />
+                  ))
+                )}
+              </Row>
+            </Container>
+          </div>
         </Container>
         <Modal show={addModalShow} centered>
           <Form onSubmit={submitPost}>

@@ -156,10 +156,13 @@ function TodayRoutine({
     <>
       <Card
         body
-        className={complete ? styles.completeRoutine : styles.incompleteRoutine}
+        className={`${
+          complete ? styles.completeRoutine : styles.incompleteRoutine
+        } d-flex justify-content-center`}
         onClick={complete || memberName !== myName ? null : openProveModal}
+        style={{ height: 48 }}
       >
-        <Stack direction="horizontal" gap={3}>
+        <div className="d-flex justify-content-start">
           <div>🌱</div>
           <div>
             {complete
@@ -169,7 +172,7 @@ function TodayRoutine({
               : startTime.substring(0, 5)}
           </div>
           <div className="ms-auto">{routineName}</div>
-        </Stack>
+        </div>
       </Card>
       <Modal show={proveModalShow} centered>
         <Form onSubmit={submitPatch}>
