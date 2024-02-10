@@ -10,6 +10,7 @@ import MyPage from "./routes/MyPage";
 import Container from "react-bootstrap/esm/Container";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
+import Admin from "./routes/Admin";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               path={"/mypage"}
               element={<PrivateRoute component={<MyPage />} />}
             />
+            <Route path={"/admin"} element={<Admin />} />
           </Routes>
         </Container>
       </Container>

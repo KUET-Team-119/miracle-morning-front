@@ -24,7 +24,9 @@ function MyPage() {
   const [complaintModalShow, setComplaintModalShow] = useState(false);
   const [logoutModalShow, setLogoutModalShow] = useState(false);
   const [leaveModalShow, setLeaveModalShow] = useState(false);
-  const [memberName, setMemberName] = useState("");
+  const [leaveConfirmModalShow, setLeaveConfirmModalShow] = useState(false);
+  const [errorModalShow, setErrorModalShow] = useState(false);
+  const [pw, setPw] = useState("");
   const [menuShow, setMenuShow] = useState(false);
   const [postToastShow, setPostToastShow] = useState(false);
   const navigate = useNavigate();
@@ -75,17 +77,22 @@ function MyPage() {
     error: errorDel,
     isLoading: isLoadingDel,
     performDelete,
-  } = useAxiosDelete({ url: `/api/member/${myId}` });
+  } = useAxiosDelete({ url: `/api/member/${myId}`, password: pw });
   useEffect(() => {
     if (!isLoadingDel) {
       if (responseDataDel !== null) {
+        sessionStorage.removeItem("access-token");
+        closeLeaveModal();
+        navigate(`/`);
       } else {
+        setErrorModalShow(true);
+        closeLeaveModal();
       }
     }
   }, [responseDataDel, errorDel, isLoadingDel]);
 
-  const changeMemberName = (e) => {
-    setMemberName(e.target.value);
+  const changePw = (e) => {
+    setPw(e.target.value);
   };
 
   // 오류 제보 입력 시 input의 value 변경
@@ -120,27 +127,29 @@ function MyPage() {
     navigate(`/`);
   };
 
+  // 탈퇴 확인 모달 열기
+  const openLeaveConfirmModal = () => {
+    setLeaveConfirmModalShow(true);
+  };
+
+  // 탈퇴 확인 모달 열기
+  const closeLeaveConfirmModal = () => {
+    setLeaveConfirmModalShow(false);
+  };
+
   // 탈퇴 모달 열기
   const openLeaveModal = () => {
     setLeaveModalShow(true);
+    setLeaveConfirmModalShow(false);
   };
 
   // 탈퇴 모달 닫기
   const closeLeaveModal = () => {
     setLeaveModalShow(false);
-    setMemberName("");
-  };
-
-  // 탈퇴
-  const leave = () => {
-    performDelete();
-    sessionStorage.removeItem("access-token");
-    closeLeaveModal();
-    navigate(`/`);
+    setPw("");
   };
 
   const complaintIsValid = complaintContent !== "";
-  const leaveIsValid = memberName === myName;
 
   return (
     <>
@@ -216,7 +225,7 @@ function MyPage() {
           <Button
             className="ms-auto"
             variant="link"
-            onClick={openLeaveModal}
+            onClick={openLeaveConfirmModal}
             style={{ color: "black" }}
           >
             탈퇴
@@ -289,16 +298,15 @@ function MyPage() {
         centered
       >
         <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
-          <p>더이상 미라클농장을 이용하지 않으시나요?</p>
-          <p>탈퇴하시려면 닉네임을 적어주세요.</p>
+          <p>탈퇴</p>
+          <p>비밀번호를 확인해주세요.</p>
           <InputGroup>
-            <InputGroup.Text>닉네임</InputGroup.Text>
+            <InputGroup.Text>비밀번호</InputGroup.Text>
             <Form.Control
-              type="text"
-              placeholder={myName}
-              value={memberName}
-              maxLength={10}
-              onChange={changeMemberName}
+              type="password"
+              placeholder="비밀번호를 입력해주세요."
+              value={pw}
+              onChange={changePw}
             />
           </InputGroup>
         </Modal.Body>
@@ -306,15 +314,51 @@ function MyPage() {
           <Button type="button" variant="secondary" onClick={closeLeaveModal}>
             취소
           </Button>
-          <Button
-            variant="danger"
-            type="submit"
-            onClick={leave}
-            disabled={!leaveIsValid}
-          >
+          <Button variant="danger" type="submit" onClick={performDelete}>
             확인
           </Button>
         </Modal.Footer>
+      </Modal>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
+        show={leaveConfirmModalShow}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>
+            탈퇴 시 관련 데이터는 모두{" "}
+            <span style={{ color: "#E26862" }}>삭제</span>됩니다.
+          </p>
+          <p>탈퇴하시겠습니까?</p>
+        </Modal.Body>
+        <Modal.Footer className="d-flex flex-row justify-content-center align-items-center">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={closeLeaveConfirmModal}
+          >
+            취소
+          </Button>
+          <Button variant="danger" type="submit" onClick={openLeaveModal}>
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
+        show={errorModalShow}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>⛔ 닉네임/비밀번호를 다시 확인해주세요!</p>
+          <p>※ 비밀번호 분실 시, 관리자에게 문의</p>
+          <Button
+            onClick={() => setErrorModalShow(false)}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
       </Modal>
       <Toast
         show={postToastShow}

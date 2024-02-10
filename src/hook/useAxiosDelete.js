@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function useAxiosDelete({ url }) {
+function useAxiosDelete({ url, password }) {
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null); // 에러 발생 상태
   const [isLoading, setIsLoading] = useState(true); // 데이터 로딩 상태
@@ -11,6 +11,7 @@ function useAxiosDelete({ url }) {
       const response = await axios.delete(url, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
+          Password: `${password}`,
         },
       });
       setResponseData(response.data);
