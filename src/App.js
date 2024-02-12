@@ -5,10 +5,8 @@ import Enter from "./routes/Enter";
 import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
-import Detail from "./routes/Detail";
 import MyPage from "./routes/MyPage";
 import Container from "react-bootstrap/esm/Container";
-import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import Admin from "./routes/Admin";
 
@@ -30,10 +28,6 @@ function App() {
             <Route
               path={"/statistics"}
               element={<PrivateRoute component={<Statistics />} />}
-            />
-            <Route
-              path={"/statistics/detail"}
-              element={<PrivateRoute component={<Detail />} />}
             />
             <Route
               path={"/mypage"}

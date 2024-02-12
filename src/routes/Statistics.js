@@ -1,17 +1,15 @@
 import RoutineCalendar from "../components/RoutineCalendar";
-import { Link } from "react-router-dom";
-import useDecodingJwt from "../hook/useDecodingJwt";
-import { Container, Image, Stack } from "react-bootstrap";
-import useQuote from "../hook/useQuote";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Stack } from "react-bootstrap";
+import useDecodingJwt from "../hook/useDecodingJwt";
 import Menu from "../components/Offcanvas";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
-import { useNavigate } from "react-router-dom";
 
 function Statistics() {
   const { myName } = useDecodingJwt();
-  const { quote, author } = useQuote();
+
   const [menuShow, setMenuShow] = useState(false);
 
   const navigate = useNavigate();
@@ -28,34 +26,38 @@ function Statistics() {
           setMenuShow(false);
         }}
       />
-      <Container>
-        <Stack direction="horizontal">
-          <p style={{ marginLeft: 12 }}>
-            <span style={{ color: "#69973A" }}>{myName}</span>님의 루틴 기록🌱
-          </p>
-          <Image
+      <Stack gap={1}>
+        <Container
+          className="d-flex justify-content-center align-items-start"
+          style={{ marginTop: 16, marginBottom: 16 }}
+        >
+          <div>
+            <p style={{ padding: 0, margin: 0 }}>
+              <span style={{ color: "#69973A" }}>{myName}</span>님의 루틴 기록🌱
+            </p>
+          </div>
+          <img
             className="ms-auto"
             src={homeIcon}
             onClick={goToHome}
             alt="홈"
-            style={{ width: 24, marginRight: 12 }}
-          ></Image>
-          <Image
+            style={{ width: 24, height: 24, marginRight: 12 }}
+          ></img>
+          <img
             src={menuIcon}
             onClick={() => {
               setMenuShow(true);
             }}
             alt="메뉴"
             style={{ width: 24, marginRight: 12 }}
-          ></Image>
-        </Stack>
-        <div>{quote}</div>
-        <div>{" - " + author}</div>
-        <div>
-          <Link to={`/statistics/detail`}>자세히 보기</Link>
-          <RoutineCalendar />
-        </div>
-      </Container>
+          ></img>
+        </Container>
+        <Container className="d-flex flex-column justify-content-center align-items-center">
+          <div>
+            <RoutineCalendar />
+          </div>
+        </Container>
+      </Stack>
     </>
   );
 }

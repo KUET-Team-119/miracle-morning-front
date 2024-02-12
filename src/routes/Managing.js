@@ -241,194 +241,194 @@ function Managing() {
             </Container>
           </div>
         </Container>
-        <Modal show={addModalShow} centered>
-          <Form onSubmit={submitPost}>
-            <Modal.Body>
-              <Stack gap={3}>
-                <div>
-                  <div>🌱 루틴명</div>
-                  <Form.Control
-                    type="text"
-                    value={newRoutineName}
-                    placeholder="10자 이내"
-                    onChange={changeRoutineName}
-                    maxLength={10}
-                  />
-                  <div style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
-                    루틴명은 변경이 불가능해요.
-                  </div>
+      </Stack>
+      <Modal show={addModalShow} centered>
+        <Form onSubmit={submitPost}>
+          <Modal.Body>
+            <Stack gap={3}>
+              <div>
+                <div>🌱 루틴명</div>
+                <Form.Control
+                  type="text"
+                  value={newRoutineName}
+                  placeholder="10자 이내"
+                  onChange={changeRoutineName}
+                  maxLength={10}
+                />
+                <div style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
+                  루틴명은 변경이 불가능해요.
                 </div>
-                <div>
-                  <div>🌱 실천 요일</div>
-                  <ButtonGroup
-                    className="d-flex"
+              </div>
+              <div>
+                <div>🌱 실천 요일</div>
+                <ButtonGroup
+                  className="d-flex"
+                  style={{
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderColor: "#8EC952",
+                  }}
+                >
+                  <Button
                     style={{
-                      borderStyle: "solid",
-                      borderWidth: 1,
-                      borderColor: "#8EC952",
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
                     }}
                   >
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      월
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      화
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      수
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      목
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      금
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      토
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "white",
-                        border: "none",
-                        color: "#6EB02A",
-                      }}
-                    >
-                      일
-                    </Button>
-                  </ButtonGroup>
-                  <div style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
-                    자유롭게 요일을 선택할 수 있어요.
-                  </div>
+                    월
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    화
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    수
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    목
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    금
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    토
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "white",
+                      border: "none",
+                      color: "#6EB02A",
+                    }}
+                  >
+                    일
+                  </Button>
+                </ButtonGroup>
+                <div style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
+                  자유롭게 요일을 선택할 수 있어요.
                 </div>
-                <div>
-                  <div>🌱 실천 시간</div>
-                  <InputGroup>
-                    <Form.Control
-                      type="time"
-                      value={newStartTime}
-                      onChange={changeStartTime}
-                      disabled={isAllDay}
-                    />
-                    <Form.Control
-                      type="time"
-                      value={newEndTime}
-                      onChange={changeEndTime}
-                      disabled={isAllDay}
-                    />
-                  </InputGroup>
-                  <div className="d-flex justify-content-start align-items-center">
-                    <span style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
-                      하루종일
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={isAllDay}
-                      onChange={changeAllDay}
-                      style={{
-                        width: 16,
-                        height: 16,
-                        display: "inline-block",
-                        marginTop: 2,
-                        marginLeft: 4,
-                        accentColor: "#8EC952",
-                      }}
-                    />
-                  </div>
-                </div>
-                <div>
-                  <div>🌱 실천 전략</div>
+              </div>
+              <div>
+                <div>🌱 실천 시간</div>
+                <InputGroup>
                   <Form.Control
-                    type="text"
-                    value={newStrategy}
-                    placeholder="(20자 이내)"
-                    maxLength={20}
-                    onChange={changeStrategy}
+                    type="time"
+                    value={newStartTime}
+                    onChange={changeStartTime}
+                    disabled={isAllDay}
+                  />
+                  <Form.Control
+                    type="time"
+                    value={newEndTime}
+                    onChange={changeEndTime}
+                    disabled={isAllDay}
+                  />
+                </InputGroup>
+                <div className="d-flex justify-content-start align-items-center">
+                  <span style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
+                    하루종일
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={isAllDay}
+                    onChange={changeAllDay}
+                    style={{
+                      width: 16,
+                      height: 16,
+                      display: "inline-block",
+                      marginTop: 2,
+                      marginLeft: 4,
+                      accentColor: "#8EC952",
+                    }}
                   />
                 </div>
-                <div>
-                  <div>🌱 인증 방법</div>
-                  <Form.Control
-                    type="text"
-                    value={newCertification}
-                    placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
-                    maxLength={20}
-                    onChange={changeCertification}
-                  />
-                </div>
-              </Stack>
-            </Modal.Body>
-            <Modal.Footer className="d-flex justify-content-center align-items-center">
-              <Button type="button" variant="secondary" onClick={closeAddModal}>
-                닫기
-              </Button>
-              <Button
-                type="submit"
-                disabled={isValid ? false : true}
-                onClick={objToJson}
-                style={{
-                  backgroundColor: "#8EC952",
-                  borderColor: "#8EC952",
-                }}
-              >
-                만들기
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal>
-        <Modal
-          className="d-flex flex-column justify-content-center align-items-center"
-          show={errorModalShow}
-          centered
-        >
-          <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
-            <p>⛔ 중복된 루틴입니다.</p>
-            <p>다른 루틴명을 입력해주세요.</p>
-            <Button
-              variant="primary"
-              onClick={() => setErrorModalShow(false)}
-              style={{ backgroundColor: "#8EC952", border: "none" }}
-            >
+              </div>
+              <div>
+                <div>🌱 실천 전략</div>
+                <Form.Control
+                  type="text"
+                  value={newStrategy}
+                  placeholder="(20자 이내)"
+                  maxLength={20}
+                  onChange={changeStrategy}
+                />
+              </div>
+              <div>
+                <div>🌱 인증 방법</div>
+                <Form.Control
+                  type="text"
+                  value={newCertification}
+                  placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
+                  maxLength={20}
+                  onChange={changeCertification}
+                />
+              </div>
+            </Stack>
+          </Modal.Body>
+          <Modal.Footer className="d-flex justify-content-center align-items-center">
+            <Button type="button" variant="secondary" onClick={closeAddModal}>
               닫기
             </Button>
-          </Modal.Body>
-        </Modal>
-      </Stack>
+            <Button
+              type="submit"
+              disabled={isValid ? false : true}
+              onClick={objToJson}
+              style={{
+                backgroundColor: "#8EC952",
+                borderColor: "#8EC952",
+              }}
+            >
+              만들기
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+      <Modal
+        className="d-flex flex-column justify-content-center align-items-center"
+        show={errorModalShow}
+        centered
+      >
+        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+          <p>⛔ 중복된 루틴입니다.</p>
+          <p>다른 루틴명을 입력해주세요.</p>
+          <Button
+            variant="primary"
+            onClick={() => setErrorModalShow(false)}
+            style={{ backgroundColor: "#8EC952", border: "none" }}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }
