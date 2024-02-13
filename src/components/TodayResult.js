@@ -1,20 +1,23 @@
-import { useState } from "react";
 import styles from "../css/TodayResult.module.css";
+import moment from "moment";
 
 function TodayResult({ resultId, routineName, createdAt, doneAt }) {
-  const [totalRoutinesCount, setTotalRoutinesCount] = useState(0);
-  const [completeRoutinesCount, setCompleteRoutinesCount] = useState(0);
-
   return (
     <>
       <div className="d-flex justify-content-start">
-        <div
-          className={
-            doneAt !== null ? styles.completeResult : styles.incompleteResult
-          }
-        />
+        <div className="d-flex align-items-center">
+          <div
+            className={
+              doneAt !== null ? styles.completeResult : styles.incompleteResult
+            }
+          />
+        </div>
         <div>{routineName}</div>
-        <div className="ms-auto">{doneAt}에 완료!</div>
+        <div className="ms-auto">
+          {doneAt !== null
+            ? `${moment(doneAt).format("HH:MM")}에 완료!`
+            : `미달성`}
+        </div>
       </div>
     </>
   );

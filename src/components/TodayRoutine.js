@@ -63,7 +63,7 @@ function TodayRoutine({
     formData.append("data", blob);
 
     try {
-      const response = await axios.patch(`/api/result`, formData, {
+      const response = await axios.patch(`/api/results`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
