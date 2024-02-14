@@ -45,4 +45,4 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
 
-      #      docker image prune -f
+            docker image prune -f
