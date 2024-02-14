@@ -238,11 +238,11 @@ function MyPage() {
             <p style={{ textAlign: "center" }}>아래에 오류를 적어주세요.</p>
             <Form.Control
               as="textarea"
-              placeholder="내용을 작성해주세요. (1500자 이내)"
+              placeholder="내용을 작성해주세요. (700자 이내)"
               rows={5}
               value={complaintContent}
               onChange={changeComplaintContent}
-              maxLength={1500}
+              maxLength={700}
             />
           </Modal.Body>
           <Modal.Footer className="d-flex justify-content-center align-items-center">

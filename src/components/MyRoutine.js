@@ -116,6 +116,9 @@ function MyRoutine({
     setNewStartTime(startHourMinute);
     const endHourMinute = endTime.substring(0, 5);
     setNewEndTime(endHourMinute);
+    setIsAllDay(
+      startTime === "00:00:00" && endTime === "23:59:00" ? true : false
+    );
     setNewIsActivated(isActivated);
   };
 
@@ -169,7 +172,7 @@ function MyRoutine({
         <div className="d-flex justify-content-start">
           <div>🌱</div>
           {isActivated ? null : <div>(비활성화됨)</div>}
-          <div className="ms-auto">{routineName}</div>
+          <div>{routineName}</div>
         </div>
       </Card>
       <Modal show={updateModalShow} centered>
