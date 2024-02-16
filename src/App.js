@@ -8,6 +8,7 @@ import Statistics from "./routes/Statistics";
 import MyPage from "./routes/MyPage";
 import Container from "react-bootstrap/esm/Container";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
 import Admin from "./routes/Admin";
 
 function App() {
@@ -33,7 +34,10 @@ function App() {
               path={"/mypage"}
               element={<PrivateRoute component={<MyPage />} />}
             />
-            <Route path={"/admin"} element={<Admin />} />
+            <Route
+              path={"/admin"}
+              element={<PrivateAdminRoute component={<Admin />} />}
+            />
           </Routes>
         </Container>
       </Container>

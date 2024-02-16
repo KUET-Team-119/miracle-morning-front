@@ -14,9 +14,9 @@ function PrivateRoute({ component: Component }) {
       // JWT가 만료되었으면 로그인 페이지로 이동
       return <Navigate to="/" />;
     } else {
-      if (myRoles === "USER" || myRoles === "ADMIN") {
+      if (myRoles === "ADMIN") {
         return Component;
-      } else if (myRoles === "TEMP_USER") {
+      } else if (myRoles === "USER" || myRoles === "TEMP_USER") {
         return <Navigate to="/" />;
       } else {
         return <Navigate to="/" />;
