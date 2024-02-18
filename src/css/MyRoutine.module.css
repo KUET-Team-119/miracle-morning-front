@@ -1,68 +1,29 @@
-.container {
+.routineCard {
+  height: 48px;
   display: flex;
-  flex-direction: column;
-  margin: 24px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.intro p {
-  margin: 0px;
-}
-
-.intro p span {
-  color: #69973a;
-}
-
-.headerIcon {
-  display: flex;
-}
-
-.headerIcon img {
-  width: 24px;
-  height: 24px;
-  margin-left: 12px;
-}
-
-.routinesContainer {
-  border-radius: 12px;
-  border-style: solid;
-  border-width: 1px;
+  justify-content: center;
   border-color: #8ec952;
-  padding: 16px;
+  background-color: #e4f6d2;
+  cursor: pointer;
 }
 
-.routinesContainerHeader {
+.cardContent {
+  display: flex;
+}
+
+.updateModalHeader {
   display: flex;
   justify-content: space-between;
 }
 
-.routinesContainerHeader img {
-  width: 28px;
-  height: 28px;
+.updateModalTitle {
+  font-size: 20px;
 }
 
-.routinesList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 440px;
-  overflow-y: auto;
-}
-
-.addModalBody {
+.updateModalBody {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.spinner {
-  display: flex;
-  justify-content: center;
 }
 
 .modalNotice {
@@ -99,6 +60,14 @@
   accent-color: #8ec952;
 }
 
+.activeToggle {
+  display: flex;
+}
+
+.activeToggleText {
+  margin-right: 8px;
+}
+
 .modalFooter {
   display: flex;
   justify-content: center;
@@ -112,19 +81,8 @@
   border-color: #8ec952;
 }
 
-.errorModalBody {
+.deleteModalBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.errorModalBody p {
-  font-size: 17px;
-}
-
-.errorModalBtn,
-.errorModalBtn:focus,
-.errorModalBtn:hover {
-  background-color: #8ec952;
-  border-color: #8ec952;
 }

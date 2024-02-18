@@ -35,14 +35,18 @@ jobs:
           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front .
           docker push ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
 
-      # ssh로 OCI에 접속, 도커 허브에서 이미지 pull
-      - name: Pull docker image
+      # ssh로 OCI에 접속, 도커 허브에서 이미지 pull, docker-compose 실행
+      - name: Pull docker image & Execute docker-compose
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}
           key: ${{ secrets.REMOTE_KEY }}
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
+            if [ "$(docker ps -qa)" ]; then
+              sudo docker rm -f $(docker ps -qa)
+            fi
 
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/miracle-morning-front
+            docker-compose -f /home/ubuntu/workspace/project/miracle-morning/docker-compose.yml up -d
             docker image prune -f

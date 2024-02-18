@@ -1,5 +1,7 @@
-import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import useAxiosPatch from "../hook/useAxiosPatch";
+import useAxiosDelete from "../hook/useAxiosDelete";
 import {
   Button,
   ButtonGroup,
@@ -7,10 +9,8 @@ import {
   Form,
   InputGroup,
   Modal,
-  Stack,
 } from "react-bootstrap";
-import useAxiosDelete from "../hook/useAxiosDelete";
-import useAxiosPatch from "../hook/useAxiosPatch";
+import styles from "../css/MyRoutine.module.css";
 
 function MyRoutine({
   routineId,
@@ -158,179 +158,96 @@ function MyRoutine({
 
   return (
     <>
-      <Card
-        className="d-flex justify-content-center"
-        body
-        onClick={openUpdateModal}
-        style={{
-          height: 48,
-          marginBottom: "10px",
-          borderColor: "#8ec952",
-          backgroundColor: "#e4f6d2",
-        }}
-      >
-        <div className="d-flex justify-content-start">
-          <div>🌱</div>
-          {isActivated ? null : <div>(비활성화됨)</div>}
-          <div>{routineName}</div>
-        </div>
-      </Card>
+      <div className={styles.container}>
+        <Card body className={styles.routineCard} onClick={openUpdateModal}>
+          <div className={styles.cardContent}>
+            <div>🌱</div>
+            {isActivated ? null : <div>(비활성화됨)</div>}
+            <div>{routineName}</div>
+          </div>
+        </Card>
+      </div>
       <Modal show={updateModalShow} centered>
         <Form onSubmit={submitPatch}>
-          <Modal.Header className="d-flex justify-content-bwtween">
-            <Modal.Title style={{ fontSize: 20 }}>🌱 {routineName}</Modal.Title>
-            <Button
-              className="ms-auto"
-              onClick={openDeleteModal}
-              variant="danger"
-            >
+          <Modal.Header className={styles.updateModalHeader}>
+            <Modal.Title className={styles.updateModalTitle}>
+              🌱 {routineName}
+            </Modal.Title>
+            <Button onClick={openDeleteModal} variant="danger">
               삭제
             </Button>
           </Modal.Header>
-          <Modal.Body>
-            <Stack gap={3}>
-              <div>
-                <div>🌱 실천 요일</div>
-                <ButtonGroup
-                  className="d-flex"
-                  style={{
-                    borderStyle: "solid",
-                    borderWidth: 1,
-                    borderColor: "#8EC952",
-                  }}
-                >
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    월
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    화
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    수
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    목
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    금
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    토
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    일
-                  </Button>
-                </ButtonGroup>
-              </div>
-              <div>
-                <div>🌱 실천 시간</div>
-                <InputGroup>
-                  <Form.Control
-                    type="time"
-                    value={newStartTime}
-                    disabled={isAllDay}
-                    onChange={changeStartTime}
-                  />
-                  <Form.Control
-                    type="time"
-                    value={newEndTime}
-                    disabled={isAllDay}
-                    onChange={changeEndTime}
-                  />
-                </InputGroup>
-                <div className="d-flex justify-content-start align-items-center">
-                  <span style={{ fontSize: 12, marginTop: 2, marginLeft: 4 }}>
-                    하루종일
-                  </span>
-                  <input
-                    type="checkbox"
-                    checked={isAllDay}
-                    onChange={changeAllDay}
-                    style={{
-                      width: 16,
-                      height: 16,
-                      display: "inline-block",
-                      marginTop: 2,
-                      marginLeft: 4,
-                      accentColor: "#8EC952",
-                    }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div>🌱 실천 전략</div>
+          <Modal.Body className={styles.updateModalBody}>
+            <div className={styles.dayOfWeek}>
+              <div>🌱 실천 요일</div>
+              <ButtonGroup className={styles.dayOfWeekGroup}>
+                <Button className={styles.dayOfWeekBtn}>월</Button>
+                <Button className={styles.dayOfWeekBtn}>화</Button>
+                <Button className={styles.dayOfWeekBtn}>수</Button>
+                <Button className={styles.dayOfWeekBtn}>목</Button>
+                <Button className={styles.dayOfWeekBtn}>금</Button>
+                <Button className={styles.dayOfWeekBtn}>토</Button>
+                <Button className={styles.dayOfWeekBtn}>일</Button>
+              </ButtonGroup>
+            </div>
+            <div className={styles.actionTime}>
+              <div>🌱 실천 시간</div>
+              <InputGroup>
                 <Form.Control
-                  type="text"
-                  value={newStrategy}
-                  placeholder="(20자 이내)"
-                  maxLength={20}
-                  onChange={changeStrategy}
+                  type="time"
+                  value={newStartTime}
+                  disabled={isAllDay}
+                  onChange={changeStartTime}
                 />
-              </div>
-              <div>
-                <div>🌱 인증 방법</div>
                 <Form.Control
-                  type="text"
-                  value={newCertification}
-                  placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
-                  maxLength={20}
-                  onChange={changeCertification}
+                  type="time"
+                  value={newEndTime}
+                  disabled={isAllDay}
+                  onChange={changeEndTime}
+                />
+              </InputGroup>
+              <div className={styles.checkAllDay}>
+                <div className={styles.modalNotice}>하루종일</div>
+                <input
+                  type="checkbox"
+                  checked={isAllDay}
+                  onChange={changeAllDay}
                 />
               </div>
-              <div className="d-flex">
-                <div style={{ marginRight: 12 }}>🌱 루틴 활성화 / 비활성화</div>
-                <Form.Check
-                  type="switch"
-                  value={newIsActivated}
-                  onChange={changeIsActivated}
-                  defaultChecked={isActivated}
-                />
+            </div>
+            <div className={styles.strategy}>
+              <div>🌱 실천 전략</div>
+              <Form.Control
+                type="text"
+                value={newStrategy}
+                placeholder="(20자 이내)"
+                maxLength={20}
+                onChange={changeStrategy}
+              />
+            </div>
+            <div className={styles.certification}>
+              <div>🌱 인증 방법</div>
+              <Form.Control
+                type="text"
+                value={newCertification}
+                placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
+                maxLength={20}
+                onChange={changeCertification}
+              />
+            </div>
+            <div className={styles.activeToggle}>
+              <div className={styles.activeToggleText}>
+                🌱 루틴 활성화 / 비활성화
               </div>
-            </Stack>
+              <Form.Check
+                type="switch"
+                value={newIsActivated}
+                onChange={changeIsActivated}
+                defaultChecked={isActivated}
+              />
+            </div>
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center align-items-center">
+          <Modal.Footer className={styles.modalFooter}>
             <Button
               type="button"
               variant="secondary"
@@ -339,29 +256,22 @@ function MyRoutine({
               닫기
             </Button>
             <Button
+              className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
               disabled={!isValid}
-              style={{
-                backgroundColor: "#8EC952",
-                borderColor: "#8EC952",
-              }}
             >
               수정하기
             </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={deleteModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+      <Modal show={deleteModalShow} centered>
+        <Modal.Body className={styles.deleteModalBody}>
           <p>🌱 루틴을 삭제합니다.</p>
           <p>정말로 삭제하시겠습니까?</p>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center">
+        <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>
             취소
           </Button>
@@ -382,6 +292,7 @@ MyRoutine.propTypes = {
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
   isActivated: PropTypes.bool.isRequired,
+  setToReload: PropTypes.func.isRequired,
 };
 
 export default MyRoutine;

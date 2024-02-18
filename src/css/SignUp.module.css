@@ -1,98 +1,87 @@
-.signUpContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #e9e9e9;
-  background-color: white;
-  margin-top: 80px;
-}
-
-.logoSpace {
-  height: 80px;
-  width: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logoSpace span {
-  font-size: 48px;
-  transform: none;
-}
-
-.signUpBox {
-  display: flex;
-  align-self: stretch;
-  margin-left: 16px;
-  margin-right: 16px;
-  flex-direction: column;
-}
-
-.signUpBox input {
-  border: 2px solid #f6f6f6;
-  background-color: #fafafa;
-  height: 40px;
-  font-size: 14px;
-  border-radius: 5px;
-  padding-left: 10px;
-  margin-bottom: 10px;
-}
-
-.signUpBox p {
-  font-size: 12px;
-}
-
-.pwContainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.pwContainer input {
-  flex-basis: 100%;
-}
-
-.pwContainer button {
-  margin-left: 8px;
+.container {
   height: 100%;
-  background-color: white;
-  border-color: #3b9dff;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.signUpBtn {
-  height: 40px;
-  font-size: 18px;
-  border-radius: 5px;
-  margin-top: 10px;
-  border: none;
-  background-color: #3b9dff;
-  color: white;
+.logo {
+  width: 88px;
+  height: 88px;
 }
 
-.signUpBtn:disabled {
-  opacity: 0.5;
-  color: #a2ccf8;
+.title {
+  font-size: 23px;
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 35px;
 }
 
-.switchBtn {
-  margin-left: 16px;
-  margin-right: 16px;
-  font-size: 14px;
-  border-radius: 5px;
-  margin-top: 24px;
-  margin-bottom: 12px;
-  border: none;
-  background-color: white;
-  color: rgb(0, 59, 83);
+.infoCard {
+  width: 320px;
+  margin-bottom: 26px;
+  background-color: #e4f6d2;
+  border-color: #e4f6d2;
+  text-align: center;
 }
 
-.modalBtn {
-  height: 24px;
-  font-size: 14px;
-  border-radius: 5px;
-  margin-top: 10px;
-  border: none;
-  background-color: #3b9dff;
-  color: white;
+.infoCard .warning {
+  color: #e26862;
+}
+
+.form {
+  width: 320px;
+}
+
+.form .inputGroup {
+  margin-top: 18px;
+}
+
+.form .pwBtn {
+  background-color: #8ec952;
+  border-color: #8ec952;
+}
+
+.form .pwBtn:focus {
+  background-color: #8ec952;
+  border-color: #8ec952;
+}
+
+.form .submitBtn,
+.form .submitBtn:focus {
+  width: 100%;
+  background-color: #8ec952;
+  border-color: #8ec952;
+  margin-top: 16px;
+  margin-bottom: 58px;
+}
+
+.loginBtn {
+  font-size: 15px;
+  color: #8ec952;
+}
+
+.loginBtn:hover,
+.loginBtn:focus {
+  font-size: 15px;
+  color: #31461c;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.modalBody p {
+  font-size: 17px;
+}
+
+.modalBtn,
+.modalBtn:focus,
+.modalBtn:hover {
+  background-color: #8ec952;
+  border-color: #8ec952;
 }

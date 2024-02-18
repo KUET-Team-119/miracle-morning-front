@@ -1,11 +1,67 @@
 .incompleteRoutine {
-  margin-bottom: 10px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
   border-color: #8ec952;
   background-color: #e4f6d2;
+  cursor: pointer;
 }
 
 .completeRoutine {
-  margin-bottom: 10px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
   border-color: rgb(190, 190, 190);
   background-color: lightgray;
+}
+
+.cardContent {
+  display: flex;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.modalTitle {
+  font-size: 20px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dayOfWeekGroup {
+  display: flex;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #8ec952;
+}
+
+.dayOfWeekBtn,
+.dayOfWeekBtn:hover {
+  background-color: white;
+  border: none;
+  color: #6eb02a;
+}
+
+.certificationCard {
+  background: #e4f6d2;
+  border-color: #e4f6d2;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+}
+
+.submitBtn,
+.submitBtn:hover,
+.submitBtn:focus,
+.submitBtn:disabled {
+  background-color: #8ec952;
+  border-color: #8ec952;
 }

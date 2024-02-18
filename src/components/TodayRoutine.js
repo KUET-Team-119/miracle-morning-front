@@ -1,6 +1,7 @@
-import axios from "axios";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import useDecodingJwt from "../hook/useDecodingJwt";
 import {
   Button,
   ButtonGroup,
@@ -8,16 +9,13 @@ import {
   Form,
   InputGroup,
   Modal,
-  Stack,
 } from "react-bootstrap";
-import useDecodingJwt from "../hook/useDecodingJwt";
 import styles from "../css/TodayRoutine.module.css";
 
 function TodayRoutine({
   routineId,
   routineName,
   memberName,
-  strategy,
   certification,
   startTime,
   endTime,
@@ -35,8 +33,6 @@ function TodayRoutine({
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
   const [isValid, setIsValid] = useState(false);
-
-  useEffect(() => {}, []);
 
   const objToJson = () => {
     setData(
@@ -154,148 +150,83 @@ function TodayRoutine({
 
   return (
     <>
-      <Card
-        body
-        className={`${
-          complete ? styles.completeRoutine : styles.incompleteRoutine
-        } d-flex justify-content-center`}
-        onClick={complete || memberName !== myName ? null : openProveModal}
-        style={{ height: 48 }}
-      >
-        <div className="d-flex justify-content-start">
-          <div>🌱</div>
-          <div>
-            {complete
-              ? `${doneAt.substring(11, 16)}에 완료!`
-              : startTime === "00:00:00" && endTime === "23:59:00"
-              ? "하루종일"
-              : startTime.substring(0, 5)}
+      <div className={styles.container}>
+        <Card
+          body
+          className={
+            complete ? styles.completeRoutine : styles.incompleteRoutine
+          }
+          onClick={complete || memberName !== myName ? null : openProveModal}
+        >
+          <div className={styles.cardContent}>
+            <div>🌱</div>
+            <div>
+              {complete
+                ? `${doneAt.substring(11, 16)}에 완료!`
+                : startTime === "00:00:00" && endTime === "23:59:00"
+                ? "하루종일"
+                : startTime.substring(0, 5)}
+            </div>
+            <div className="ms-auto">{routineName}</div>
           </div>
-          <div className="ms-auto">{routineName}</div>
-        </div>
-      </Card>
+        </Card>
+      </div>
       <Modal show={proveModalShow} centered>
         <Form onSubmit={submitPatch}>
-          <Modal.Header className="d-flex justify-content-center">
-            <Modal.Title className="text-center" style={{ fontSize: 20 }}>
+          <Modal.Header className={styles.modalHeader}>
+            <Modal.Title className={styles.modalTitle}>
               🌱 {routineName}
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Stack gap={3}>
-              <div>
-                <div>🌱 실천 요일</div>
-                <ButtonGroup
-                  className="d-flex"
-                  style={{
-                    borderStyle: "solid",
-                    borderWidth: 1,
-                    borderColor: "#8EC952",
-                  }}
-                >
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    월
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    화
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    수
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    목
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    금
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    토
-                  </Button>
-                  <Button
-                    style={{
-                      backgroundColor: "white",
-                      border: "none",
-                      color: "#6EB02A",
-                    }}
-                  >
-                    일
-                  </Button>
-                </ButtonGroup>
-              </div>
-              <div>
-                <div>🌱 실천 시간</div>
-                <InputGroup>
-                  <Form.Control type="time" value={startTime} disabled />
-                  <Form.Control type="time" value={endTime} disabled />
-                </InputGroup>
-              </div>
-              <div>
-                <div>🌱 인증 방법</div>
-                <Card
-                  style={{
-                    background: "#E4F6D2",
-                    border: "none",
-                  }}
-                >
-                  <Card.Body>
-                    <Card.Text>{certification}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </div>
+          <Modal.Body className={styles.modalBody}>
+            <div className={styles.dayOfWeek}>
+              <div>🌱 실천 요일</div>
+              <ButtonGroup className={styles.dayOfWeekGroup}>
+                <Button className={styles.dayOfWeekBtn}>월</Button>
+                <Button className={styles.dayOfWeekBtn}>화</Button>
+                <Button className={styles.dayOfWeekBtn}>수</Button>
+                <Button className={styles.dayOfWeekBtn}>목</Button>
+                <Button className={styles.dayOfWeekBtn}>금</Button>
+                <Button className={styles.dayOfWeekBtn}>토</Button>
+                <Button className={styles.dayOfWeekBtn}>일</Button>
+              </ButtonGroup>
+            </div>
+            <div className={styles.actionTime}>
+              <div>🌱 실천 시간</div>
+              <InputGroup>
+                <Form.Control type="time" value={startTime} disabled />
+                <Form.Control type="time" value={endTime} disabled />
+              </InputGroup>
+            </div>
+            <div className={styles.certification}>
+              <div>🌱 인증 방법</div>
+              <Card className={styles.certificationCard}>
+                <Card.Body>
+                  <Card.Text>{certification}</Card.Text>
+                </Card.Body>
+              </Card>
+            </div>
+            <div className={styles.imageSelect}>
+              <div>🌱 인증 사진</div>
               <Form.Control
                 type="file"
+                accept="image/jpeg, image/png, image/heic"
                 onChange={uploadedFile}
                 onClick={() => {
                   setInfoModalShow(true);
                 }}
               />
-            </Stack>
+            </div>
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center">
+          <Modal.Footer className={styles.modalFooter}>
             <Button type="button" variant="secondary" onClick={closeProveModal}>
               닫기
             </Button>
             <Button
+              className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
               disabled={!isValid}
-              style={{ backgroundColor: "#8EC952", borderColor: "#8EC952" }}
             >
               인증하기
             </Button>
@@ -313,7 +244,7 @@ function TodayRoutine({
           <p>인증 사진 업로드 후 인증이 가능합니다.</p>
           <Button
             onClick={() => setInfoModalShow(false)}
-            style={{ backgroundColor: "#8EC952", border: "none" }}
+            style={{ backgroundColor: "#8EC952", borderColor: "#8EC952" }}
           >
             닫기
           </Button>
@@ -326,11 +257,12 @@ function TodayRoutine({
 TodayRoutine.propTypes = {
   routineId: PropTypes.number.isRequired,
   routineName: PropTypes.string.isRequired,
-  strategy: PropTypes.string.isRequired,
+  memberName: PropTypes.string.isRequired,
   certification: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
   complete: PropTypes.bool.isRequired,
+  doneAt: PropTypes.string,
   setToReload: PropTypes.func.isRequired,
 };
 

@@ -3,3 +3,13 @@
 body {
   font-family: "Noto Sans KR";
 }
+
+.window {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.body {
+  height: 100%;
+  overflow-y: auto;
+}

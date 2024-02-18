@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  Container,
-  Form,
-  InputGroup,
-  Modal,
-  Stack,
-  Toast,
-} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import useAxiosPost from "../hook/useAxiosPost";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import Menu from "../components/Offcanvas";
+import { Button, Card, Form, InputGroup, Modal, Toast } from "react-bootstrap";
+import styles from "../css/MyPage.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 
@@ -153,89 +145,54 @@ function MyPage() {
 
   return (
     <>
-      <Menu
-        show={menuShow}
-        onHide={() => {
-          setMenuShow(false);
-        }}
-      />
-      <Stack gap={1}>
-        <Container
-          className="d-flex justify-content-center align-items-start"
-          style={{ marginTop: 16, marginBottom: 16 }}
-        >
-          <div>
-            <p style={{ padding: 0, margin: 0 }}>⚙️ 설정</p>
-          </div>
-          <img
-            className="ms-auto"
-            src={homeIcon}
-            onClick={goToHome}
-            alt="홈"
-            style={{ width: 24, height: 24, marginRight: 12 }}
-          ></img>
-          <img
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-            style={{ width: 24, marginRight: 12 }}
-          ></img>
-        </Container>
-        <Container
-          style={{
-            borderRadius: "12px",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            borderColor: "#8EC952",
-            padding: "16px",
+      <div className={styles.container}>
+        <Menu
+          show={menuShow}
+          onHide={() => {
+            setMenuShow(false);
           }}
-        >
+        />
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>⚙️ 설정</p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img src={homeIcon} onClick={goToHome} alt="홈" />
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
+        </div>
+        <div className={styles.settingContainer}>
           <Card
-            className="d-flex justify-content-center"
+            body
+            className={styles.settingCard}
             onClick={openComplaintModal}
-            style={{
-              height: 48,
-              marginBottom: "10px",
-              borderColor: "#8ec952",
-              backgroundColor: "#e4f6d2",
-              padding: 12,
-              cursor: "pointer",
-            }}
           >
             오류 제보
           </Card>
-          <Card
-            className="d-flex justify-content-center"
-            onClick={openLogoutModal}
-            style={{
-              height: 48,
-              marginBottom: "10px",
-              borderColor: "#8ec952",
-              backgroundColor: "#e4f6d2",
-              padding: 12,
-              cursor: "pointer",
-            }}
-          >
+          <Card body className={styles.settingCard} onClick={openLogoutModal}>
             로그아웃
           </Card>
-        </Container>
-        <div className="d-flex justify-content-end">
+        </div>
+        <div className={styles.leaveContainer}>
           <Button
-            className="ms-auto"
+            className={styles.leaveBtn}
             variant="link"
             onClick={openLeaveConfirmModal}
-            style={{ color: "black" }}
           >
             탈퇴
           </Button>
         </div>
-      </Stack>
+      </div>
       <Modal show={complaintModalShow} centered>
         <Form onSubmit={submitPost}>
-          <Modal.Body>
-            <p style={{ textAlign: "center" }}>아래에 오류를 적어주세요.</p>
+          <Modal.Body className={styles.complaintModalBody}>
+            <p>아래에 오류를 적어주세요.</p>
             <Form.Control
               as="textarea"
               placeholder="내용을 작성해주세요. (700자 이내)"
@@ -245,7 +202,7 @@ function MyPage() {
               maxLength={700}
             />
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center align-items-center">
+          <Modal.Footer className={styles.modalFooter}>
             <Button
               type="button"
               variant="secondary"
@@ -254,52 +211,33 @@ function MyPage() {
               취소
             </Button>
             <Button
+              className={styles.submitBtn}
               type="submit"
               disabled={complaintIsValid ? false : true}
               onClick={objToJson}
-              style={{
-                backgroundColor: "#8EC952",
-                borderColor: "#8EC952",
-              }}
             >
               전송
             </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={logoutModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
-          <p style={{ textAlign: "center", margin: 0, padding: 0 }}>
-            로그아웃 하시겠습니까?
-          </p>
+      <Modal show={logoutModalShow} centered>
+        <Modal.Body className={styles.logoutModalBody}>
+          <p>로그아웃 하시겠습니까?</p>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center align-items-center">
+        <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeLogoutModal}>
             취소
           </Button>
-          <Button
-            onClick={logout}
-            style={{
-              backgroundColor: "#8EC952",
-              borderColor: "#8EC952",
-            }}
-          >
+          <Button className={styles.logoutBtn} onClick={logout}>
             확인
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={leaveModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+      <Modal show={leaveModalShow} centered>
+        <Modal.Body className={styles.leaveModalBody}>
           <p>탈퇴</p>
-          <p>비밀번호를 확인해주세요.</p>
+          <p>비밀번호를 입력해주세요.</p>
           <InputGroup>
             <InputGroup.Text>비밀번호</InputGroup.Text>
             <Form.Control
@@ -310,7 +248,7 @@ function MyPage() {
             />
           </InputGroup>
         </Modal.Body>
-        <Modal.Footer className="d-flex flex-row justify-content-center align-items-center">
+        <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeLeaveModal}>
             취소
           </Button>
@@ -319,19 +257,15 @@ function MyPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={leaveConfirmModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+      <Modal show={leaveConfirmModalShow} centered>
+        <Modal.Body className={styles.leaveModalBody}>
           <p>
             탈퇴 시 관련 데이터는 모두{" "}
-            <span style={{ color: "#E26862" }}>삭제</span>됩니다.
+            <span className={styles.leaveModalNotice}>삭제</span>됩니다.
           </p>
           <p>탈퇴하시겠습니까?</p>
         </Modal.Body>
-        <Modal.Footer className="d-flex flex-row justify-content-center align-items-center">
+        <Modal.Footer className={styles.modalFooter}>
           <Button
             type="button"
             variant="secondary"
@@ -344,34 +278,24 @@ function MyPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={errorModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
+      <Modal show={errorModalShow} centered>
+        <Modal.Body className={styles.errorModalBody}>
           <p>⛔ 닉네임/비밀번호를 다시 확인해주세요!</p>
           <p>※ 비밀번호 분실 시, 관리자에게 문의</p>
           <Button
+            className={styles.errorModalBtn}
             onClick={() => setErrorModalShow(false)}
-            style={{ backgroundColor: "#8EC952", border: "none" }}
           >
             닫기
           </Button>
         </Modal.Body>
       </Modal>
       <Toast
+        className={styles.toast}
         show={postToastShow}
         onClose={() => setPostToastShow(false)}
         delay={3000}
         autohide
-        style={{
-          position: "fixed",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 1000,
-        }}
       >
         <Toast.Body>오류 제보가 전송되었습니다.</Toast.Body>
       </Toast>

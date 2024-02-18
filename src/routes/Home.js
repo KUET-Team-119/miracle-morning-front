@@ -1,11 +1,13 @@
-import TodayRoutine from "../components/TodayRoutine";
 import { useEffect, useState } from "react";
+import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Stack, Spinner, Container, Card, Row } from "react-bootstrap";
 import Menu from "../components/Offcanvas";
-import menuIcon from "../images/menu.png";
 import Profile from "../components/Profile";
+import TodayRoutine from "../components/TodayRoutine";
+import { Spinner, Card } from "react-bootstrap";
+import styles from "../css/Home.module.css";
+import menuIcon from "../images/menu.png";
 
 function Home() {
   const { myName } = useDecodingJwt();
@@ -14,37 +16,9 @@ function Home() {
   const [members, setMembers] = useState([]);
   const [memberName, setMemberName] = useState(myName);
   const [menuShow, setMenuShow] = useState(false);
-  const today = new Date();
-  const todayYear = today.getFullYear();
-  const todayMonth = today.getMonth();
-  const todayDay = today.getDate();
-  let todayWeekOfDay = today.getDay();
-
-  switch (todayWeekOfDay) {
-    case 1:
-      todayWeekOfDay = "월";
-      break;
-    case 2:
-      todayWeekOfDay = "화";
-      break;
-    case 3:
-      todayWeekOfDay = "수";
-      break;
-    case 4:
-      todayWeekOfDay = "목";
-      break;
-    case 5:
-      todayWeekOfDay = "금";
-      break;
-    case 6:
-      todayWeekOfDay = "토";
-      break;
-    case 7:
-      todayWeekOfDay = "일";
-      break;
-    default:
-      break;
-  }
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+  const dayOfWeekIndex = moment().format("d"); // 오늘의 요일을 숫자로 얻기
+  const dayOfWeek = daysOfWeek[dayOfWeekIndex]; // 숫자에 해당하는 요일 문자열 가져오기
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -98,116 +72,83 @@ function Home() {
   }, [responseData, error, isLoading, memberName]);
 
   return (
-    <>
+    <div className={styles.container}>
       <Menu
         show={menuShow}
         onHide={() => {
           setMenuShow(false);
         }}
       />
-      <Stack gap={1}>
-        <Container
-          className="d-flex justify-content-center align-items-start"
-          style={{ marginTop: 16, marginBottom: 16 }}
-        >
-          <div>
-            <p style={{ padding: 0, margin: 0 }}>
-              안녕하세요 <span style={{ color: "#69973A" }}>{myName}</span>님!
-            </p>
-            <p style={{ padding: 0, margin: 0 }}>오늘도 좋은 하루 보내세요🌱</p>
-          </div>
+      <div className={styles.header}>
+        <div className={styles.intro}>
+          <p>
+            안녕하세요 <span>{myName}</span>님!
+          </p>
+          <p>오늘도 좋은 하루 보내세요🌱</p>
+        </div>
+        <div className={styles.headerIcon}>
           <img
-            className="ms-auto"
             src={menuIcon}
             onClick={() => {
               setMenuShow(true);
             }}
             alt="메뉴"
-            style={{ width: 24, height: 24, marginRight: 12 }}
-          ></img>
-        </Container>
-        <Container>
-          <Row className="justify-content-center">
-            {isLoading ? (
-              <Spinner animation="border" />
-            ) : (
-              <Container>
-                <Card
-                  className="text-center"
-                  style={{
-                    marginBottom: 24,
-                    background: "#E4F6D2",
-                    border: "none",
-                  }}
-                >
-                  <Card.Body>
-                    <Card.Text>
-                      {routinesCount === 0 ? (
-                        "모든 루틴을 달성했어요! 내일도 화이팅🔥"
-                      ) : (
-                        <>
-                          완벽한 하루까지{" "}
-                          <span style={{ color: "#69973A" }}>
-                            {routinesCount}개
-                          </span>
-                          의 루틴이 남아있어요
-                        </>
-                      )}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-                <Stack direction="horizontal">
-                  {members.map((member) => (
-                    <Profile
-                      key={member}
-                      name={member}
-                      selected={memberName}
-                      setMemberRoutines={() => setMemberName(member)}
-                    />
-                  ))}
-                </Stack>
-                <Container
-                  style={{
-                    borderRadius: "12px",
-                    borderStyle: "solid",
-                    borderWidth: "1px",
-                    borderColor: "#8EC952",
-                    padding: "16px",
-                  }}
-                >
-                  <p style={{ textAlign: "center" }}>
-                    <span style={{ color: "#69973A" }}>{memberName}</span>
-                    님의{" "}
-                    {`${todayYear}년 ${
-                      todayMonth + 1
-                    }월 ${todayDay}일 (${todayWeekOfDay})`}
-                  </p>
-                  <div style={{ maxHeight: "240px", overflowY: "auto" }}>
-                    <div className="d-flex flex-column justify-content-center">
-                      {response.map((routine) => (
-                        <TodayRoutine
-                          key={routine.routineId}
-                          routineId={routine.routineId}
-                          routineName={routine.routineName}
-                          memberName={routine.memberName}
-                          strategy={routine.strategy}
-                          certification={routine.certification}
-                          startTime={routine.startTime}
-                          endTime={routine.endTime}
-                          doneAt={routine.doneAt}
-                          complete={routine.complete}
-                          setToReload={refetch}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </Container>
-              </Container>
-            )}
-          </Row>
-        </Container>
-      </Stack>
-    </>
+          />
+        </div>
+      </div>
+      <div className={styles.contents}>
+        {isLoading ? (
+          <div className={styles.spinner}>
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <div>
+            <Card className={styles.goalCard} body>
+              {routinesCount === 0 ? (
+                "모든 루틴을 달성했어요! 내일도 화이팅🔥"
+              ) : (
+                <div className={styles.cheering}>
+                  완벽한 하루까지 <span>{routinesCount}개</span>의 루틴이
+                  남아있어요.
+                </div>
+              )}
+            </Card>
+            <div className={styles.membersList}>
+              {members.map((member) => (
+                <Profile
+                  key={member}
+                  name={member}
+                  selected={memberName}
+                  setMemberRoutines={() => setMemberName(member)}
+                />
+              ))}
+            </div>
+            <div className={styles.routinesContainer}>
+              <p>
+                <span>{memberName}</span>
+                님의 {`${moment().format("YYYY년 M월 D일")} (${dayOfWeek})`}
+              </p>
+              <div className={styles.routinesList}>
+                {response.map((routine) => (
+                  <TodayRoutine
+                    key={routine.routineId}
+                    routineId={routine.routineId}
+                    routineName={routine.routineName}
+                    memberName={routine.memberName}
+                    certification={routine.certification}
+                    startTime={routine.startTime}
+                    endTime={routine.endTime}
+                    doneAt={routine.doneAt}
+                    complete={routine.complete}
+                    setToReload={refetch}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
