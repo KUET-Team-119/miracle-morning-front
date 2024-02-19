@@ -1,9 +1,9 @@
-import RoutineCalendar from "../components/RoutineCalendar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Stack } from "react-bootstrap";
+import RoutineCalendar from "../components/RoutineCalendar";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import Menu from "../components/Offcanvas";
+import styles from "../css/Statistics.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 
@@ -19,46 +19,32 @@ function Statistics() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <Menu
         show={menuShow}
         onHide={() => {
           setMenuShow(false);
         }}
       />
-      <Stack gap={1}>
-        <Container
-          className="d-flex justify-content-center align-items-start"
-          style={{ marginTop: 16, marginBottom: 16 }}
-        >
-          <div>
-            <p style={{ padding: 0, margin: 0 }}>
-              <span style={{ color: "#69973A" }}>{myName}</span>님의 루틴 기록🌱
-            </p>
-          </div>
-          <img
-            className="ms-auto"
-            src={homeIcon}
-            onClick={goToHome}
-            alt="홈"
-            style={{ width: 24, height: 24, marginRight: 12 }}
-          ></img>
+      <div className={styles.header}>
+        <div className={styles.intro}>
+          <p>
+            <span>{myName}</span>님의 루틴 기록🌱
+          </p>
+        </div>
+        <div className={styles.headerIcon}>
+          <img src={homeIcon} onClick={goToHome} alt="홈" />
           <img
             src={menuIcon}
             onClick={() => {
               setMenuShow(true);
             }}
             alt="메뉴"
-            style={{ width: 24, marginRight: 12 }}
-          ></img>
-        </Container>
-        <Container className="d-flex flex-column justify-content-center align-items-center">
-          <div>
-            <RoutineCalendar />
-          </div>
-        </Container>
-      </Stack>
-    </>
+          />
+        </div>
+      </div>
+      <RoutineCalendar />
+    </div>
   );
 }
 

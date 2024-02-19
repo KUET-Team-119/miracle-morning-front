@@ -105,11 +105,13 @@ function Home() {
           <div>
             <Card className={styles.goalCard} body>
               {routinesCount === 0 ? (
-                "모든 루틴을 달성했어요! 내일도 화이팅🔥"
+                <div className={styles.cheering}>
+                  모든 루틴을 달성했어요! 내일도 화이팅🔥
+                </div>
               ) : (
                 <div className={styles.cheering}>
                   완벽한 하루까지 <span>{routinesCount}개</span>의 루틴이
-                  남아있어요.
+                  남아있어요
                 </div>
               )}
             </Card>

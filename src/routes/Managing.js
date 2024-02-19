@@ -24,7 +24,6 @@ function Managing() {
   const [addModalShow, setAddModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
-  const [newStrategy, setNewStrategy] = useState("");
   const [newCertification, setNewCertification] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
@@ -64,7 +63,6 @@ function Managing() {
       JSON.stringify({
         routineName: newRoutineName,
         memberName: myName,
-        strategy: newStrategy,
         certification: newCertification,
         startTime: newStartTime,
         endTime: newEndTime,
@@ -103,10 +101,6 @@ function Managing() {
     setNewRoutineName(e.target.value);
   };
 
-  const changeStrategy = (e) => {
-    setNewStrategy(e.target.value);
-  };
-
   const changeCertification = (e) => {
     setNewCertification(e.target.value);
   };
@@ -124,7 +118,6 @@ function Managing() {
   // 데이터 유효성 검사 -> 공백이 있는지와 시간 순서가 맞는지 구분하기
   const isValid =
     newRoutineName !== "" &&
-    newStrategy !== "" &&
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
@@ -139,7 +132,6 @@ function Managing() {
   const closeAddModal = () => {
     setAddModalShow(false);
     setNewRoutineName("");
-    setNewStrategy("");
     setNewCertification("");
     setNewStartTime("");
     setNewEndTime("");
@@ -203,7 +195,6 @@ function Managing() {
                   key={routine.routineId}
                   routineId={routine.routineId}
                   routineName={routine.routineName}
-                  strategy={routine.strategy}
                   certification={routine.certification}
                   startTime={routine.startTime}
                   endTime={routine.endTime}
@@ -219,7 +210,7 @@ function Managing() {
         <Form onSubmit={submitPost}>
           <Modal.Body className={styles.addModalBody}>
             <div className={styles.routineName}>
-              <div>🌱 루틴명</div>
+              <div className={styles.addModalBodyTitle}>🌱 루틴명</div>
               <Form.Control
                 type="text"
                 value={newRoutineName}
@@ -232,7 +223,7 @@ function Managing() {
               </div>
             </div>
             <div className={styles.dayOfWeek}>
-              <div>🌱 실천 요일</div>
+              <div className={styles.addModalBodyTitle}>🌱 실천 요일</div>
               <ButtonGroup className={styles.dayOfWeekGroup}>
                 <Button className={styles.dayOfWeekBtn}>월</Button>
                 <Button className={styles.dayOfWeekBtn}>화</Button>
@@ -247,7 +238,7 @@ function Managing() {
               </div>
             </div>
             <div className={styles.actionTime}>
-              <div>🌱 실천 시간</div>
+              <div className={styles.addModalBodyTitle}>🌱 실천 시간</div>
               <InputGroup>
                 <Form.Control
                   type="time"
@@ -271,23 +262,14 @@ function Managing() {
                 />
               </div>
             </div>
-            <div className={styles.strategy}>
-              <div>🌱 실천 전략</div>
-              <Form.Control
-                type="text"
-                value={newStrategy}
-                placeholder="(20자 이내)"
-                maxLength={20}
-                onChange={changeStrategy}
-              />
-            </div>
             <div className={styles.certification}>
-              <div>🌱 인증 방법</div>
+              <div className={styles.addModalBodyTitle}>🌱 인증 방법</div>
               <Form.Control
-                type="text"
+                as="textarea"
                 value={newCertification}
-                placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
-                maxLength={20}
+                placeholder="ex) 물이 따라진 컵 사진 촬영(30자 이내)"
+                rows={2}
+                maxLength={30}
                 onChange={changeCertification}
               />
             </div>
@@ -309,8 +291,10 @@ function Managing() {
       </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
-          <p>⛔ 중복된 루틴입니다.</p>
-          <p>다른 루틴명을 입력해주세요.</p>
+          <p className={styles.errorModalBodyTitle}>⛔ 중복된 루틴입니다.</p>
+          <p className={styles.errorModalBodyContent}>
+            다른 루틴명을 입력해주세요.
+          </p>
           <Button
             className={styles.errorModalBtn}
             variant="primary"

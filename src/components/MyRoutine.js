@@ -15,14 +15,12 @@ import styles from "../css/MyRoutine.module.css";
 function MyRoutine({
   routineId,
   routineName,
-  strategy,
   certification,
   startTime,
   endTime,
   isActivated,
   setToReload,
 }) {
-  const [newStrategy, setNewStrategy] = useState("");
   const [newCertification, setNewCertification] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
@@ -39,7 +37,6 @@ function MyRoutine({
       JSON.stringify({
         routineId: routineId,
         routineName: routineName,
-        strategy: newStrategy,
         certification: newCertification,
         startTime: newStartTime + ":00",
         endTime: newEndTime + ":00",
@@ -87,10 +84,6 @@ function MyRoutine({
     }
   }, [responseDataDel, errorDel, isLoadingDel]);
 
-  const changeStrategy = (e) => {
-    setNewStrategy(e.target.value);
-  };
-
   const changeCertification = (e) => {
     setNewCertification(e.target.value);
   };
@@ -110,7 +103,6 @@ function MyRoutine({
   // 루틴 수정 모달 열기
   const openUpdateModal = () => {
     setUpdateModalShow(true);
-    setNewStrategy(strategy);
     setNewCertification(certification);
     const startHourMinute = startTime.substring(0, 5);
     setNewStartTime(startHourMinute);
@@ -139,7 +131,6 @@ function MyRoutine({
 
   // 데이터 유효성 검사
   const isValid =
-    newStrategy !== "" &&
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
@@ -179,7 +170,7 @@ function MyRoutine({
           </Modal.Header>
           <Modal.Body className={styles.updateModalBody}>
             <div className={styles.dayOfWeek}>
-              <div>🌱 실천 요일</div>
+              <div className={styles.updateModalBodyTitle}>🌱 실천 요일</div>
               <ButtonGroup className={styles.dayOfWeekGroup}>
                 <Button className={styles.dayOfWeekBtn}>월</Button>
                 <Button className={styles.dayOfWeekBtn}>화</Button>
@@ -191,7 +182,7 @@ function MyRoutine({
               </ButtonGroup>
             </div>
             <div className={styles.actionTime}>
-              <div>🌱 실천 시간</div>
+              <div className={styles.updateModalBodyTitle}>🌱 실천 시간</div>
               <InputGroup>
                 <Form.Control
                   type="time"
@@ -215,29 +206,20 @@ function MyRoutine({
                 />
               </div>
             </div>
-            <div className={styles.strategy}>
-              <div>🌱 실천 전략</div>
-              <Form.Control
-                type="text"
-                value={newStrategy}
-                placeholder="(20자 이내)"
-                maxLength={20}
-                onChange={changeStrategy}
-              />
-            </div>
             <div className={styles.certification}>
-              <div>🌱 인증 방법</div>
+              <div className={styles.updateModalBodyTitle}>🌱 인증 방법</div>
               <Form.Control
-                type="text"
+                as="textarea"
                 value={newCertification}
-                placeholder="ex) 물이 따라진 컵 사진 촬영(20자 이내)"
-                maxLength={20}
+                placeholder="ex) 물이 따라진 컵 사진 촬영(30자 이내)"
+                rows={2}
+                maxLength={30}
                 onChange={changeCertification}
               />
             </div>
             <div className={styles.activeToggle}>
               <div className={styles.activeToggleText}>
-                🌱 루틴 활성화 / 비활성화
+                🌱 루틴 비활성화 / 활성화
               </div>
               <Form.Check
                 type="switch"
@@ -268,8 +250,10 @@ function MyRoutine({
       </Modal>
       <Modal show={deleteModalShow} centered>
         <Modal.Body className={styles.deleteModalBody}>
-          <p>🌱 루틴을 삭제합니다.</p>
-          <p>정말로 삭제하시겠습니까?</p>
+          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제합니다.</p>
+          <p className={styles.deleteModalBodyContent}>
+            정말로 삭제하시겠습니까?
+          </p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>
@@ -287,7 +271,6 @@ function MyRoutine({
 MyRoutine.propTypes = {
   routineId: PropTypes.number.isRequired,
   routineName: PropTypes.string.isRequired,
-  strategy: PropTypes.string.isRequired,
   certification: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,

@@ -16,6 +16,7 @@
 }
 
 .cardContent {
+  font-size: 16px;
   display: flex;
 }
 
@@ -25,13 +26,18 @@
 }
 
 .modalTitle {
-  font-size: 20px;
+  font-size: 19px;
 }
 
 .modalBody {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 25px;
+}
+
+.modalBodyTitle {
+  font-size: 17px;
+  margin-bottom: 9px;
 }
 
 .dayOfWeekGroup {
@@ -51,6 +57,12 @@
 .certificationCard {
   background: #e4f6d2;
   border-color: #e4f6d2;
+}
+
+.certificationCardContent {
+  font-size: 16px;
+  font-weight: bold;
+  color: #6fa934;
 }
 
 .modalFooter {

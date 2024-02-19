@@ -26,8 +26,9 @@
   text-align: center;
 }
 
-.infoCard .warning {
+.infoCard .cardWarning {
   color: #e26862;
+  font-weight: bold;
 }
 
 .form {
@@ -39,6 +40,7 @@
 }
 
 .form .pwBtn {
+  width: 150px;
   background-color: #8ec952;
   border-color: #8ec952;
 }
@@ -75,8 +77,12 @@
   text-align: center;
 }
 
-.modalBody p {
-  font-size: 17px;
+.modalBody .modalBodyTitle {
+  font-size: 18px;
+}
+
+.modalBody .modalBodyContent {
+  font-size: 15px;
 }
 
 .modalBtn,

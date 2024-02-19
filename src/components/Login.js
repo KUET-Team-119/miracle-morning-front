@@ -70,6 +70,7 @@ function Login({ setIsMember }) {
         <InputGroup className={styles.inputGroup}>
           <InputGroup.Text>🌿</InputGroup.Text>
           <Form.Control
+            className={styles.formControl}
             type="text"
             value={name}
             placeholder="닉네임"
@@ -79,6 +80,7 @@ function Login({ setIsMember }) {
         <InputGroup className={styles.inputGroup}>
           <InputGroup.Text>🌿</InputGroup.Text>
           <Form.Control
+            className={styles.formControl}
             type="password"
             value={pw}
             placeholder="비밀번호"
@@ -91,25 +93,31 @@ function Login({ setIsMember }) {
           disabled={isValid ? false : true}
           onClick={objToJson}
         >
-          로그인
+          {isValid ? `로그인` : `닉네임/비밀번호를 입력하세요`}
         </Button>
       </Form>
-      <Button
-        className={styles.signUpBtn}
-        type="button"
-        variant="link"
-        onClick={setIsMember}
-      >
-        회원가입
-      </Button>
+      <div className={styles.beginnerContainer}>
+        <Button className={styles.signUpBtn} type="button" variant="link">
+          미라클 농장이 처음이신가요?
+        </Button>
+        <div className={`${styles.verticalLine} vr`} />
+        <Button
+          className={styles.signUpBtn}
+          type="button"
+          variant="link"
+          onClick={setIsMember}
+        >
+          회원가입
+        </Button>
+      </div>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.modalBody}>
-          <p>
+          <p className={styles.modalBodyTitle}>
             {status === 401
               ? "⛔ 닉네임/비밀번호를 다시 확인해주세요!"
               : "⛔ 승인되지 않은 계정입니다."}
           </p>
-          <p>
+          <p className={styles.modalBodyContent}>
             {status === 401
               ? "※ 비밀번호 분실 시, 관리자에게 문의"
               : "※ 관리자 승인 완료 후 이용 가능합니다."}

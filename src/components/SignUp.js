@@ -76,12 +76,12 @@ function SignUp({ setIsMember }) {
       </h1>
       <Card className={styles.infoCard}>
         <Card.Body>
-          <Card.Text>
+          <Card.Text className={styles.cardContent}>
             비밀번호 만들기를 누르면
             <br />
             자동으로 안전한 비밀번호가 생성돼요.
           </Card.Text>
-          <Card.Text className={styles.warning}>
+          <Card.Text className={styles.cardWarning}>
             ※ 생성된 비밀번호는 변경이 불가해요.
             <br />
             반드시 캡처 후 보관해주세요.
@@ -117,7 +117,7 @@ function SignUp({ setIsMember }) {
           disabled={isValid ? false : true}
           onClick={objToJson}
         >
-          회원가입
+          {isValid ? `회원가입` : `닉네임을 입력하고 비밀번호를 만드세요`}
         </Button>
       </Form>
       <Button
@@ -130,8 +130,10 @@ function SignUp({ setIsMember }) {
       </Button>
       <Modal show={successModalShow} centered>
         <Modal.Body className={styles.modalBody}>
-          <p>✅ 회원가입 신청 완료</p>
-          <p>관리자 승인 완료 후 이용이 가능합니다.</p>
+          <p className={styles.modalBodyTitle}>✅ 회원가입 신청 완료</p>
+          <p className={styles.modalBodyContent}>
+            관리자 승인 완료 후 이용이 가능합니다.
+          </p>
           <Button
             className={styles.modalBtn}
             variant="primary"
@@ -143,8 +145,8 @@ function SignUp({ setIsMember }) {
       </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.modalBody}>
-          <p>⛔ 중복된 닉네임입니다.</p>
-          <p>다른 닉네임을 입력해주세요.</p>
+          <p className={styles.modalBodyTitle}>⛔ 중복된 닉네임입니다.</p>
+          <p className={styles.modalBodyContent}>다른 닉네임을 입력해주세요.</p>
           <Button
             className={styles.modalBtn}
             onClick={() => setErrorModalShow(false)}

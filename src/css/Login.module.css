@@ -26,13 +26,27 @@
   margin-top: 18px;
 }
 
+.form .formControl {
+  font-size: 15px;
+}
+
 .form .submitBtn,
 .form .submitBtn:focus {
   width: 100%;
   margin-top: 16px;
+  font-size: 15px;
   margin-bottom: 58px;
   background-color: #8ec952;
   border-color: #8ec952;
+}
+
+.beginnerContainer {
+  display: flex;
+}
+
+.verticalLine {
+  height: 15px;
+  align-self: center;
 }
 
 .signUpBtn {
@@ -53,8 +67,12 @@
   text-align: center;
 }
 
-.modalBody p {
-  font-size: 17px;
+.modalBody .modalBodyTitle {
+  font-size: 18px;
+}
+
+.modalBody .modalBodyContent {
+  font-size: 15px;
 }
 
 .modalBtn,

@@ -25,7 +25,6 @@ function TodayRoutine({
 }) {
   const { myName } = useDecodingJwt();
   const [proveModalShow, setProveModalShow] = useState(false);
-  const [infoModalShow, setInfoModalShow] = useState(false);
   const [data, setData] = useState("");
   const [file, setFile] = useState(null);
   const [fileYear, setFileYear] = useState("");
@@ -145,7 +144,6 @@ function TodayRoutine({
     setFileDay("");
     setFileTime("");
     setIsValid(false);
-    setInfoModalShow(false);
   };
 
   return (
@@ -180,7 +178,7 @@ function TodayRoutine({
           </Modal.Header>
           <Modal.Body className={styles.modalBody}>
             <div className={styles.dayOfWeek}>
-              <div>🌱 실천 요일</div>
+              <div className={styles.modalBodyTitle}>🌱 실천 요일</div>
               <ButtonGroup className={styles.dayOfWeekGroup}>
                 <Button className={styles.dayOfWeekBtn}>월</Button>
                 <Button className={styles.dayOfWeekBtn}>화</Button>
@@ -192,29 +190,28 @@ function TodayRoutine({
               </ButtonGroup>
             </div>
             <div className={styles.actionTime}>
-              <div>🌱 실천 시간</div>
+              <div className={styles.modalBodyTitle}>🌱 실천 시간</div>
               <InputGroup>
                 <Form.Control type="time" value={startTime} disabled />
                 <Form.Control type="time" value={endTime} disabled />
               </InputGroup>
             </div>
             <div className={styles.certification}>
-              <div>🌱 인증 방법</div>
+              <div className={styles.modalBodyTitle}>🌱 인증 방법</div>
               <Card className={styles.certificationCard}>
                 <Card.Body>
-                  <Card.Text>{certification}</Card.Text>
+                  <Card.Text className={styles.certificationCardContent}>
+                    {certification}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             </div>
             <div className={styles.imageSelect}>
-              <div>🌱 인증 사진</div>
+              <div className={styles.modalBodyTitle}>🌱 인증 사진</div>
               <Form.Control
                 type="file"
                 accept="image/jpeg, image/png, image/heic"
                 onChange={uploadedFile}
-                onClick={() => {
-                  setInfoModalShow(true);
-                }}
               />
             </div>
           </Modal.Body>
@@ -232,23 +229,6 @@ function TodayRoutine({
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
-      {/* TODO 아래 모달이 사용상 불편하지 않은지 확인하기 */}
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={infoModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
-          <p>🌱 사진을 업로드 해주세요</p>
-          <p>인증 사진 업로드 후 인증이 가능합니다.</p>
-          <Button
-            onClick={() => setInfoModalShow(false)}
-            style={{ backgroundColor: "#8EC952", borderColor: "#8EC952" }}
-          >
-            닫기
-          </Button>
-        </Modal.Body>
       </Modal>
     </>
   );
