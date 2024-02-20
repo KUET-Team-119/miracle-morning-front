@@ -45,7 +45,7 @@
 }
 
 .resultsContainer {
-  max-height: 240px;
+  max-height: 216px;
   overflow-y: auto;
   background-color: #f3f3f3;
   margin-top: 13px;
