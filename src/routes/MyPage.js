@@ -192,7 +192,9 @@ function MyPage() {
       <Modal show={complaintModalShow} centered>
         <Form onSubmit={submitPost}>
           <Modal.Body className={styles.complaintModalBody}>
-            <p>아래에 오류를 적어주세요.</p>
+            <p className={styles.complaintModalBodyTitle}>
+              아래에 오류를 적어주세요.
+            </p>
             <Form.Control
               as="textarea"
               placeholder="내용을 작성해주세요. (700자 이내)"
@@ -223,7 +225,7 @@ function MyPage() {
       </Modal>
       <Modal show={logoutModalShow} centered>
         <Modal.Body className={styles.logoutModalBody}>
-          <p>로그아웃 하시겠습니까?</p>
+          <p className={styles.logoutModalBodyTitle}>로그아웃 하시겠습니까?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeLogoutModal}>
@@ -234,10 +236,31 @@ function MyPage() {
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal show={leaveConfirmModalShow} centered>
+        <Modal.Body className={styles.leaveModalBody}>
+          <p className={styles.leaveModalBodyTitle}>
+            탈퇴 시 관련 데이터는 모두{" "}
+            <span className={styles.leaveModalNotice}>삭제</span>됩니다.
+          </p>
+          <p className={styles.leaveModalBodyContent}>탈퇴하시겠습니까?</p>
+        </Modal.Body>
+        <Modal.Footer className={styles.modalFooter}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={closeLeaveConfirmModal}
+          >
+            취소
+          </Button>
+          <Button variant="danger" type="submit" onClick={openLeaveModal}>
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Modal show={leaveModalShow} centered>
         <Modal.Body className={styles.leaveModalBody}>
-          <p>탈퇴</p>
-          <p>비밀번호를 입력해주세요.</p>
+          <p className={styles.leaveModalBodyTitle}>탈퇴</p>
+          <p className={styles.leaveModalBodyContent}>비밀번호를 확인합니다.</p>
           <InputGroup>
             <InputGroup.Text>비밀번호</InputGroup.Text>
             <Form.Control
@@ -257,31 +280,14 @@ function MyPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={leaveConfirmModalShow} centered>
-        <Modal.Body className={styles.leaveModalBody}>
-          <p>
-            탈퇴 시 관련 데이터는 모두{" "}
-            <span className={styles.leaveModalNotice}>삭제</span>됩니다.
-          </p>
-          <p>탈퇴하시겠습니까?</p>
-        </Modal.Body>
-        <Modal.Footer className={styles.modalFooter}>
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={closeLeaveConfirmModal}
-          >
-            취소
-          </Button>
-          <Button variant="danger" type="submit" onClick={openLeaveModal}>
-            확인
-          </Button>
-        </Modal.Footer>
-      </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
-          <p>⛔ 닉네임/비밀번호를 다시 확인해주세요!</p>
-          <p>※ 비밀번호 분실 시, 관리자에게 문의</p>
+          <p className={styles.errorModalBodyTitle}>
+            ⛔ 닉네임/비밀번호를 다시 확인해주세요!
+          </p>
+          <p className={styles.errorModalBodyContent}>
+            ※ 비밀번호 분실 시, 관리자에게 문의
+          </p>
           <Button
             className={styles.errorModalBtn}
             onClick={() => setErrorModalShow(false)}

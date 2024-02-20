@@ -28,6 +28,7 @@
   width: 24px;
   height: 24px;
   margin-left: 12px;
+  cursor: pointer;
 }
 
 .routinesContainer {
@@ -53,7 +54,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 520px;
+  max-height: 568px;
   overflow-y: auto;
 }
 

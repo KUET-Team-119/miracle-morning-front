@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "../css/RoutineCalendar.css";
 import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import TodayResult from "./TodayResult";
 import { Spinner } from "react-bootstrap";
+import "react-calendar/dist/Calendar.css";
+import "../css/RoutineCalendar.css";
+import styles from "../css/RoutineCalendar.module.css";
+import crownIcon from "../images/crown.png";
 
 function RoutineCalendar() {
   const { myId } = useDecodingJwt();
@@ -61,35 +63,18 @@ function RoutineCalendar() {
       ).length;
 
       return (
-        <div style={{ position: "relative", width: 48, height: 48 }}>
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 48,
-              height: 48,
-              borderRadius: "50%",
-              backgroundColor: "#ECFADD",
-              color: "black",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              fontSize: 12,
-            }}
-          >
+        <div className={styles.tileContent}>
+          <div className={styles.tileCircle} />
+          <div className={styles.tileText}>
             {`${doneCount} | ${totalCount}`}
           </div>
+          {doneCount === totalCount ? (
+            <img className={styles.tileCrown} src={crownIcon} alt="왕관" />
+          ) : null}
         </div>
       );
     } else {
-      return null; // 오늘 이후의 날짜는 아무 것도 반환하지 않음
+      return null; // 오늘 이후의 날짜는 반환하지 않음
     }
   };
 
@@ -147,55 +132,52 @@ function RoutineCalendar() {
   }, [searchYear, searchMonth]);
 
   return (
-    <div>
-      <div className="d-flex justify-content-center">
-        {isLoading ? (
+    <div className={styles.container}>
+      {isLoading ? (
+        <div className={styles.spinner}>
           <Spinner animation="border" />
-        ) : (
-          <div>
-            <Calendar
-              onChange={setDate}
-              onActiveStartDateChange={setMonth}
-              value={date}
-              tileContent={addContent}
-              next2Label={null}
-              prev2Label={null}
-              maxDate={new Date()}
-              minDate={new Date("2024-01-01")}
-              minDetail={"month"}
-              formatDay={(locale, date) => moment(date).format("D")}
-              showNeighboringMonth={false}
-            />
-            <div
-              style={{
-                maxHeight: "240px",
-                overflowY: "auto",
-                backgroundColor: "#F3F3F3",
-              }}
-            >
-              <div className="d-flex justify-content-start">
-                <div style={{ marginRight: 4 }}>
-                  {moment(date).format("MM/DD")}
-                </div>
-                <div>
-                  {totalCount}개 중에 {doneCount}개 루틴을 달성했어요
-                </div>
+        </div>
+      ) : (
+        <div>
+          <Calendar
+            onChange={setDate}
+            onActiveStartDateChange={setMonth}
+            value={date}
+            tileContent={addContent}
+            next2Label={null}
+            prev2Label={null}
+            maxDate={new Date()}
+            minDate={new Date("2024-01-01")}
+            minDetail={"month"}
+            formatDay={(locale, date) => moment(date).format("D")}
+            showNeighboringMonth={false}
+          />
+          <div className={styles.resultsContainer}>
+            <div className={styles.resultsContainerTitle}>
+              <div className={styles.targetDate}>
+                {moment(date).format("MM/DD")}
               </div>
-              <div className="d-flex flex-column justify-content-center">
-                {targetDateData.map((result) => (
-                  <TodayResult
-                    key={result.resultId}
-                    resultId={result.resultId}
-                    routineName={result.routineName}
-                    createdAt={result.createdAt}
-                    doneAt={result.doneAt}
-                  />
-                ))}
+              <div>
+                {totalCount}개 중에{" "}
+                <span className={styles.doneCount}>{doneCount}개</span> 루틴을
+                달성했어요!
               </div>
+              {doneCount === totalCount ? (
+                <img className={styles.crown} src={crownIcon} alt="왕관" />
+              ) : null}
+            </div>
+            <div className={styles.resultsList}>
+              {targetDateData.map((result) => (
+                <TodayResult
+                  key={result.resultId}
+                  routineName={result.routineName}
+                  doneAt={result.doneAt}
+                />
+              ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

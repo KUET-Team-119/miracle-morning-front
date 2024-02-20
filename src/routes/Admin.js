@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Button, Container, Form, Modal, Stack, Table } from "react-bootstrap";
+import { Button, Form, Modal, Table } from "react-bootstrap";
 import useAxiosGet from "../hook/useAxiosGet";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import moment from "moment";
 import useAxiosPatch from "../hook/useAxiosPatch";
+import styles from "../css/Admin.module.css";
 import Menu from "../components/Offcanvas";
 import menuIcon from "../images/menu.png";
 
@@ -17,7 +18,6 @@ function Admin() {
   const [errorModalShow, setErrorModalShow] = useState(false);
   const [memberId, setMemberId] = useState("");
   const [memberName, setMemberName] = useState("");
-  const [role, setRole] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [menuShow, setMenuShow] = useState(false);
 
@@ -101,7 +101,6 @@ function Admin() {
     const dataSet = e.target.dataset;
     setMemberId(dataSet.id);
     setMemberName(dataSet.name);
-    setRole(dataSet.role);
     setManagingModalShow(true);
   };
 
@@ -110,7 +109,6 @@ function Admin() {
     setManagingModalShow(false);
     setMemberId("");
     setMemberName("");
-    setRole("");
   };
 
   // 확인 모달 열기
@@ -135,35 +133,33 @@ function Admin() {
 
   return (
     <>
-      <Menu
-        show={menuShow}
-        onHide={() => {
-          setMenuShow(false);
-        }}
-      />
-      <Stack gap={1}>
-        <Container
-          className="d-flex justify-content-center align-items-start"
-          style={{ marginTop: 16, marginBottom: 16 }}
-        >
-          <p style={{ padding: 0, margin: 0 }}>
-            안녕하세요 관리자 <span style={{ color: "#69973A" }}>{myName}</span>
-            님 환영합니다.
-          </p>
-          <img
-            className="ms-auto"
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-            style={{ width: 24, height: 24, marginRight: 12 }}
-          ></img>
-        </Container>
+      <div className={styles.container}>
+        <Menu
+          show={menuShow}
+          onHide={() => {
+            setMenuShow(false);
+          }}
+        />
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>
+              🔧 안녕하세요 관리자 <span>{myName}</span>님 환영합니다.
+            </p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
+        </div>
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
+              <th>id</th>
               <th>닉네임</th>
               <th>비밀번호</th>
               <th>권한</th>
@@ -185,11 +181,8 @@ function Admin() {
                 </td>
                 <td>
                   <Button
+                    className={styles.managingBtn}
                     onClick={openManagingModal}
-                    style={{
-                      backgroundColor: "#8EC952",
-                      borderColor: "#8EC952",
-                    }}
                     data-id={member.memberId}
                     data-name={member.memberName}
                     data-role={member.role}
@@ -201,12 +194,12 @@ function Admin() {
             ))}
           </tbody>
         </Table>
-      </Stack>
+      </div>
       <Modal show={ManagingModalShow} centered>
         <Form onSubmit={submitPatch}>
           <Modal.Header>
             <Modal.Title
-              style={{ fontSize: 20 }}
+              className={styles.managingModalTitle}
             >{`🌱 ${memberName}`}</Modal.Title>
             <Button
               className="ms-auto"
@@ -217,16 +210,14 @@ function Admin() {
             </Button>
           </Modal.Header>
           <Modal.Body>
-            <Stack gap={3}>
-              <div>권한</div>
-              <Form.Select onChange={changeRole} value={selectedRole}>
-                <option>권한을 선택해주세요.</option>
-                <option value="TEMP_USER">TEMP_USER</option>
-                <option value="USER">USER</option>
-              </Form.Select>
-            </Stack>
+            <div className={styles.managingModalBodyTitle}>권한</div>
+            <Form.Select onChange={changeRole} value={selectedRole}>
+              <option>권한을 선택해주세요.</option>
+              <option value="TEMP_USER">TEMP_USER</option>
+              <option value="USER">USER</option>
+            </Form.Select>
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-center align-items-center">
+          <Modal.Footer className={styles.modalFooter}>
             <Button
               type="button"
               variant="secondary"
@@ -235,27 +226,22 @@ function Admin() {
               닫기
             </Button>
             <Button
+              className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
-              style={{
-                backgroundColor: "#8EC952",
-                borderColor: "#8EC952",
-              }}
             >
               수정하기
             </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={checkModalShow}
-        centered
-      >
-        <Modal.Body>
-          <p>{memberName}님이 강제 탈퇴됩니다.</p>
+      <Modal show={checkModalShow} centered>
+        <Modal.Body className={styles.checkModalBody}>
+          <p className={styles.checkModalBodyTitle}>
+            {memberName}님이 강제 탈퇴됩니다.
+          </p>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-center align-items-center">
+        <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeCheckModal}>
             취소
           </Button>
@@ -264,17 +250,12 @@ function Admin() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        className="d-flex flex-column justify-content-center align-items-center"
-        show={errorModalShow}
-        centered
-      >
-        <Modal.Body className="d-flex flex-column justify-content-center align-items-center">
-          <p>⛔ 실행이 완료되지 않았습니다.</p>
-          <Button
-            onClick={closeErrorModal}
-            style={{ backgroundColor: "#8EC952", border: "none" }}
-          >
+      <Modal show={errorModalShow} centered>
+        <Modal.Body className={styles.errorModalBody}>
+          <p className={styles.errorModalBodyTitle}>
+            ⛔ 실행이 완료되지 않았습니다.
+          </p>
+          <Button className={styles.errorModalBtn} onClick={closeErrorModal}>
             닫기
           </Button>
         </Modal.Body>
