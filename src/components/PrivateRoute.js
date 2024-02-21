@@ -8,21 +8,38 @@ function PrivateRoute({ component: Component }) {
     // JWT가 없으면 로그인 페이지로 이동
     return <Navigate to="/" />;
   } else {
-    const currentTime = Date.now() / 1000;
-
-    if (myExp < currentTime) {
-      // JWT가 만료되었으면 로그인 페이지로 이동
+    if (myRoles === "USER" || myRoles === "ADMIN") {
+      return Component;
+    } else if (myRoles === "TEMP_USER") {
       return <Navigate to="/" />;
     } else {
-      if (myRoles === "USER" || myRoles === "ADMIN") {
-        return Component;
-      } else if (myRoles === "TEMP_USER") {
-        return <Navigate to="/" />;
-      } else {
-        return <Navigate to="/" />;
-      }
+      return <Navigate to="/" />;
     }
   }
 }
+
+// function PrivateRoute({ component: Component }) {
+//   const { myRoles, myExp } = useDecodingJwt();
+
+//   if (myRoles === null || myExp === null) {
+//     // JWT가 없으면 로그인 페이지로 이동
+//     return <Navigate to="/" />;
+//   } else {
+//     const currentTime = Date.now() / 1000;
+
+//     if (myExp < currentTime) {
+//       // JWT가 만료되었으면 로그인 페이지로 이동
+//       return <Navigate to="/" />;
+//     } else {
+//       if (myRoles === "USER" || myRoles === "ADMIN") {
+//         return Component;
+//       } else if (myRoles === "TEMP_USER") {
+//         return <Navigate to="/" />;
+//       } else {
+//         return <Navigate to="/" />;
+//       }
+//     }
+//   }
+// }
 
 export default PrivateRoute;

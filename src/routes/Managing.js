@@ -24,6 +24,14 @@ function Managing() {
   const [addModalShow, setAddModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
+  const [newDayOfWeek, setNewDayOfWeek] = useState("");
+  const [mon, setMon] = useState("0");
+  const [tue, setTue] = useState("0");
+  const [wed, setWed] = useState("0");
+  const [thu, setThu] = useState("0");
+  const [fri, setFri] = useState("0");
+  const [sat, setSat] = useState("0");
+  const [sun, setSun] = useState("0");
   const [newCertification, setNewCertification] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
@@ -63,6 +71,7 @@ function Managing() {
       JSON.stringify({
         routineName: newRoutineName,
         memberName: myName,
+        dayOfWeek: newDayOfWeek,
         certification: newCertification,
         startTime: newStartTime,
         endTime: newEndTime,
@@ -135,6 +144,14 @@ function Managing() {
     setNewCertification("");
     setNewStartTime("");
     setNewEndTime("");
+    setNewDayOfWeek("");
+    setMon("0");
+    setTue("0");
+    setWed("0");
+    setThu("0");
+    setFri("0");
+    setSat("0");
+    setSun("0");
     setIsAllDay(false);
   };
 
@@ -144,6 +161,47 @@ function Managing() {
 
   const changeAllDay = () => {
     setIsAllDay((current) => !current);
+  };
+
+  useEffect(() => {
+    const tempDayOfWeek = mon + tue + wed + thu + fri + sat + sun;
+    setNewDayOfWeek(tempDayOfWeek);
+  }, [mon, tue, wed, thu, fri, sat, sun]);
+
+  // 월요일 버튼 클릭 시 상태 및 색상 변경
+  const changeMon = () => {
+    setMon((prevMon) => (prevMon === "0" ? "1" : "0"));
+    console.log(mon);
+  };
+
+  // 화요일 버튼 클릭 시 상태 및 색상 변경
+  const changeTue = () => {
+    setTue((prevTue) => (prevTue === "0" ? "1" : "0"));
+  };
+
+  // 수요일 버튼 클릭 시 상태 및 색상 변경
+  const changeWed = () => {
+    setWed((prevWed) => (prevWed === "0" ? "1" : "0"));
+  };
+
+  // 목요일 버튼 클릭 시 상태 및 색상 변경
+  const changeThu = () => {
+    setThu((prevThu) => (prevThu === "0" ? "1" : "0"));
+  };
+
+  // 금요일 버튼 클릭 시 상태 및 색상 변경
+  const changeFri = () => {
+    setFri((prevFri) => (prevFri === "0" ? "1" : "0"));
+  };
+
+  // 토요일 버튼 클릭 시 상태 및 색상 변경
+  const changeSat = () => {
+    setSat((prevSat) => (prevSat === "0" ? "1" : "0"));
+  };
+
+  // 일요일 버튼 클릭 시 상태 및 색상 변경
+  const changeSun = () => {
+    setSun((prevSun) => (prevSun === "0" ? "1" : "0"));
   };
 
   useEffect(() => {
@@ -225,13 +283,83 @@ function Managing() {
             <div className={styles.dayOfWeek}>
               <div className={styles.addModalBodyTitle}>🌱 실천 요일</div>
               <ButtonGroup className={styles.dayOfWeekGroup}>
-                <Button className={styles.dayOfWeekBtn}>월</Button>
-                <Button className={styles.dayOfWeekBtn}>화</Button>
-                <Button className={styles.dayOfWeekBtn}>수</Button>
-                <Button className={styles.dayOfWeekBtn}>목</Button>
-                <Button className={styles.dayOfWeekBtn}>금</Button>
-                <Button className={styles.dayOfWeekBtn}>토</Button>
-                <Button className={styles.dayOfWeekBtn}>일</Button>
+                <Button
+                  className={
+                    mon === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={mon}
+                  onClick={changeMon}
+                >
+                  월
+                </Button>
+                <Button
+                  className={
+                    tue === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={tue}
+                  onClick={changeTue}
+                >
+                  화
+                </Button>
+                <Button
+                  className={
+                    wed === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={wed}
+                  onClick={changeWed}
+                >
+                  수
+                </Button>
+                <Button
+                  className={
+                    thu === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={thu}
+                  onClick={changeThu}
+                >
+                  목
+                </Button>
+                <Button
+                  className={
+                    fri === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={fri}
+                  onClick={changeFri}
+                >
+                  금
+                </Button>
+                <Button
+                  className={
+                    sat === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={sat}
+                  onClick={changeSat}
+                >
+                  토
+                </Button>
+                <Button
+                  className={
+                    sun === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                  value={sun}
+                  onClick={changeSun}
+                >
+                  일
+                </Button>
               </ButtonGroup>
               <div className={styles.modalNotice}>
                 자유롭게 요일을 선택할 수 있어요.

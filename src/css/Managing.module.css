@@ -89,9 +89,16 @@
 
 .dayOfWeekBtn,
 .dayOfWeekBtn:hover {
+  color: #6eb02a;
   background-color: white;
   border: none;
+}
+
+.selectedDayOfWeekBtn,
+.selectedDayOfWeekBtn:hover {
   color: #6eb02a;
+  background-color: #e4f6d2;
+  border: none;
 }
 
 .checkAllDay {
