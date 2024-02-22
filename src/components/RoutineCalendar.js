@@ -4,7 +4,7 @@ import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import TodayResult from "./TodayResult";
-import { Spinner } from "react-bootstrap";
+import { ProgressBar, Spinner } from "react-bootstrap";
 import "react-calendar/dist/Calendar.css";
 import "../css/RoutineCalendar.css";
 import styles from "../css/RoutineCalendar.module.css";
@@ -15,6 +15,7 @@ function RoutineCalendar() {
   const [date, setDate] = useState(new Date()); // 초기값은 현재 날짜
   const [response, setResponse] = useState([]);
   const [targetDateData, setTargetDateData] = useState([]);
+  const [achievementRate, setAchievementRate] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [doneCount, setDoneCount] = useState(0);
   const [searchYear, setSearchYear] = useState(
@@ -34,7 +35,6 @@ function RoutineCalendar() {
     if (!isLoading) {
       if (responseData !== null) {
         setResponse(responseData);
-        console.log(responseData);
       } else {
         // console.log(error);
       }
@@ -81,6 +81,25 @@ function RoutineCalendar() {
   // totalCount와 doneCount 업데이트
   useEffect(() => {
     if (response.length > 0) {
+      const totalCountMonth = response.filter((item) => {
+        const createdAt = new Date(item.createdAt);
+        return (
+          createdAt.getFullYear() === date.getFullYear() &&
+          createdAt.getMonth() === date.getMonth()
+        );
+      }).length;
+
+      const doneCountMonth = response.filter(
+        (item) =>
+          moment(item.createdAt).isSame(date, "month") && item.doneAt !== null
+      ).length;
+
+      if (isNaN(doneCountMonth / totalCountMonth)) {
+        setAchievementRate(0);
+      } else {
+        setAchievementRate(Math.ceil((doneCountMonth / totalCountMonth) * 100));
+      }
+
       const totalCount = response.filter((item) => {
         const createdAt = new Date(item.createdAt);
         return (
@@ -138,7 +157,15 @@ function RoutineCalendar() {
           <Spinner animation="border" />
         </div>
       ) : (
-        <div>
+        <div className={styles.content}>
+          <div className={styles.rateContainer}>
+            <div>🌱전체 달성률</div>
+            <ProgressBar
+              className={styles.progressBar}
+              now={achievementRate}
+              label={`${achievementRate}%`}
+            />
+          </div>
           <Calendar
             onChange={setDate}
             onActiveStartDateChange={setMonth}

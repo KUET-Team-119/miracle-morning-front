@@ -46,14 +46,16 @@
 }
 
 .dayOfWeekBtn,
-.dayOfWeekBtn:hover {
+.dayOfWeekBtn:hover,
+.dayOfWeekBtn:active {
   color: #6eb02a;
   background-color: white;
   border: none;
 }
 
-.selectedDayOfWeek,
-.selectedDayOfWeek:hover {
+.selectedDayOfWeekBtn,
+.selectedDayOfWeekBtn:hover,
+.selectedDayOfWeekBtn:active {
   color: #6eb02a;
   background-color: #e4f6d2;
   border: none;

@@ -48,10 +48,19 @@
 }
 
 .dayOfWeekBtn,
-.dayOfWeekBtn:hover {
+.dayOfWeekBtn:hover,
+.dayOfWeekBtn:active {
+  color: #6eb02a;
   background-color: white;
   border: none;
+}
+
+.selectedDayOfWeekBtn,
+.selectedDayOfWeekBtn:hover,
+.selectedDayOfWeekBtn:active {
   color: #6eb02a;
+  background-color: #e4f6d2;
+  border: none;
 }
 
 .certificationCard {
@@ -63,6 +72,13 @@
   font-size: 16px;
   font-weight: bold;
   color: #6fa934;
+}
+
+.modalNotice {
+  color: #e26862;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
 }
 
 .modalFooter {

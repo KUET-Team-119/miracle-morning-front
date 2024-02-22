@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import RoutineCalendar from "../components/RoutineCalendar";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import Menu from "../components/Offcanvas";
+import { Tab, Tabs } from "react-bootstrap";
 import styles from "../css/Statistics.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
+import DayOfWeekAchievement from "../components/DayOfWeekAchievement";
 
 function Statistics() {
   const { myName } = useDecodingJwt();
@@ -43,7 +45,17 @@ function Statistics() {
           />
         </div>
       </div>
-      <RoutineCalendar />
+      <Tabs className={styles.tabs} defaultActiveKey="summary" justify>
+        <Tab eventKey="summary" title="요약">
+          <RoutineCalendar />
+        </Tab>
+        <Tab eventKey="eachDay" title="요일별">
+          <DayOfWeekAchievement />
+        </Tab>
+        <Tab eventKey="eachRoutine" title="루틴별">
+          Tab content for Contact
+        </Tab>
+      </Tabs>
     </div>
   );
 }

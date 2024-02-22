@@ -137,6 +137,7 @@ function Home() {
                     routineId={routine.routineId}
                     routineName={routine.routineName}
                     memberName={routine.memberName}
+                    dayOfWeek={routine.dayOfWeek}
                     certification={routine.certification}
                     startTime={routine.startTime}
                     endTime={routine.endTime}

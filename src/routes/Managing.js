@@ -127,6 +127,7 @@ function Managing() {
   // 데이터 유효성 검사 -> 공백이 있는지와 시간 순서가 맞는지 구분하기
   const isValid =
     newRoutineName !== "" &&
+    newDayOfWeek !== "0000000" &&
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
@@ -253,6 +254,7 @@ function Managing() {
                   key={routine.routineId}
                   routineId={routine.routineId}
                   routineName={routine.routineName}
+                  dayOfWeek={routine.dayOfWeek}
                   certification={routine.certification}
                   startTime={routine.startTime}
                   endTime={routine.endTime}

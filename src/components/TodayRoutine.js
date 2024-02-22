@@ -12,10 +12,18 @@ import {
 } from "react-bootstrap";
 import styles from "../css/TodayRoutine.module.css";
 
+// 파일 유효성 상태
+const VALIDATE_FILE = 0;
+const INVALID_DATE = 1;
+const INVALID_TIME = 2;
+const INVALID_SIZE = 3;
+const NOT_SELECTED = 4;
+
 function TodayRoutine({
   routineId,
   routineName,
   memberName,
+  dayOfWeek,
   certification,
   startTime,
   endTime,
@@ -31,7 +39,11 @@ function TodayRoutine({
   const [fileMonth, setFileMonth] = useState("");
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [fileSize, setFileSize] = useState(false);
+  const [isValid, setIsValid] = useState(NOT_SELECTED);
+  const [modalNotice, setModalNotice] = useState(
+    "※ 오늘 날짜의 사진을 선택하세요."
+  );
 
   const objToJson = () => {
     setData(
@@ -73,6 +85,7 @@ function TodayRoutine({
 
   const uploadedFile = (e) => {
     const fileData = e.target.files[0];
+    console.log(fileData);
     // 파일이 선택되어야 함
     if (fileData !== undefined && fileData !== null) {
       setFile(fileData);
@@ -101,8 +114,10 @@ function TodayRoutine({
       setFileTime(
         `${fileYear}-${fileMonth}-${fileDate}T${fileHours}:${fileMinutes}:00`
       );
+      setFileSize(fileData.size);
     } else {
       setFile(null);
+      setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
     }
   };
 
@@ -113,22 +128,30 @@ function TodayRoutine({
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
 
-    // 인증 버튼 유효성 검사
-    setIsValid(false);
     // 조건 1. 파일 날짜 === 오늘 날짜
     if (
       fileYear === todayYear &&
       fileMonth === todayMonth &&
       fileDay === todayDay
     ) {
-      console.log("1 클리어");
       // 조건 2. 파일 시간 <= 인증 시간
       if (timeOnly <= endTime) {
-        setIsValid(true);
-        console.log("2 클리어");
+        // 조건 3. 파일 크기 <= 5MB
+        if (fileSize <= 5242880) {
+          setIsValid(VALIDATE_FILE);
+        } else {
+          setIsValid(INVALID_SIZE);
+          setModalNotice("※ 사진 크기가 5MB 이하여야 합니다.");
+        }
+      } else {
+        setIsValid(INVALID_TIME);
+        setModalNotice("※ 사진 시간이 실천 시간 이후입니다.");
       }
+    } else {
+      setIsValid(INVALID_DATE);
+      setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
     }
-  }, [fileTime]);
+  }, [fileTime, fileSize]);
 
   // 루틴 추가 모달 열기
   const openProveModal = () => {
@@ -143,7 +166,8 @@ function TodayRoutine({
     setFileMonth("");
     setFileDay("");
     setFileTime("");
-    setIsValid(false);
+    setIsValid(NOT_SELECTED);
+    setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
   };
 
   return (
@@ -180,13 +204,69 @@ function TodayRoutine({
             <div className={styles.dayOfWeek}>
               <div className={styles.modalBodyTitle}>🌱 실천 요일</div>
               <ButtonGroup className={styles.dayOfWeekGroup}>
-                <Button className={styles.dayOfWeekBtn}>월</Button>
-                <Button className={styles.dayOfWeekBtn}>화</Button>
-                <Button className={styles.dayOfWeekBtn}>수</Button>
-                <Button className={styles.dayOfWeekBtn}>목</Button>
-                <Button className={styles.dayOfWeekBtn}>금</Button>
-                <Button className={styles.dayOfWeekBtn}>토</Button>
-                <Button className={styles.dayOfWeekBtn}>일</Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(0, 1) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  월
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(1, 2) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  화
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(2, 3) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  수
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(3, 4) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  목
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(4, 5) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  금
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(5, 6) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  토
+                </Button>
+                <Button
+                  className={
+                    dayOfWeek.substring(6) === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
+                >
+                  일
+                </Button>
               </ButtonGroup>
             </div>
             <div className={styles.actionTime}>
@@ -213,6 +293,9 @@ function TodayRoutine({
                 accept="image/jpeg, image/png, image/heic"
                 onChange={uploadedFile}
               />
+              {isValid !== VALIDATE_FILE ? (
+                <div className={styles.modalNotice}>{modalNotice}</div>
+              ) : null}
             </div>
           </Modal.Body>
           <Modal.Footer className={styles.modalFooter}>
@@ -223,7 +306,7 @@ function TodayRoutine({
               className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
-              disabled={!isValid}
+              disabled={isValid !== VALIDATE_FILE}
             >
               인증하기
             </Button>
@@ -238,6 +321,7 @@ TodayRoutine.propTypes = {
   routineId: PropTypes.number.isRequired,
   routineName: PropTypes.string.isRequired,
   memberName: PropTypes.string.isRequired,
+  dayOfWeek: PropTypes.string.isRequired,
   certification: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,

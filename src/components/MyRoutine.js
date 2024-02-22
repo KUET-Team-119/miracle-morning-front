@@ -15,11 +15,11 @@ import styles from "../css/MyRoutine.module.css";
 function MyRoutine({
   routineId,
   routineName,
+  dayOfWeek,
   certification,
   startTime,
   endTime,
   isActivated,
-  dayOfWeek,
   setToReload,
 }) {
   const [newCertification, setNewCertification] = useState("");
@@ -95,75 +95,44 @@ function MyRoutine({
   }, [responseDataDel, errorDel, isLoadingDel]);
 
   // 요일 변경
-  const changeDayOfWeek = () => {
+  useEffect(() => {
     const tempDayOfWeek = mon + tue + wed + thu + fri + sat + sun;
     setNewDayOfWeek(tempDayOfWeek);
-    console.log("tempDayOf~" + tempDayOfWeek);
-    console.log("newDayOf~" + newDayOfWeek);
-  };
+  }, [mon, tue, wed, thu, fri, sat, sun]);
 
   // 월요일 버튼 클릭 시 상태 및 색상 변경
   const changeMon = () => {
-    if (mon === "0") {
-      setMon("1");
-      console.log(mon);
-    } else {
-      setMon("0");
-    }
+    setMon((prevMon) => (prevMon === "0" ? "1" : "0"));
   };
 
   // 화요일 버튼 클릭 시 상태 및 색상 변경
   const changeTue = () => {
-    if (tue === "0") {
-      setTue("1");
-    } else {
-      setTue("0");
-    }
+    setTue((prevTue) => (prevTue === "0" ? "1" : "0"));
   };
 
   // 수요일 버튼 클릭 시 상태 및 색상 변경
   const changeWed = () => {
-    if (wed === "0") {
-      setWed("1");
-    } else {
-      setWed("0");
-    }
+    setWed((prevWed) => (prevWed === "0" ? "1" : "0"));
   };
 
   // 목요일 버튼 클릭 시 상태 및 색상 변경
   const changeThu = () => {
-    if (thu === "0") {
-      setThu("1");
-    } else {
-      setThu("0");
-    }
+    setThu((prevThu) => (prevThu === "0" ? "1" : "0"));
   };
 
   // 금요일 버튼 클릭 시 상태 및 색상 변경
   const changeFri = () => {
-    if (fri === "0") {
-      setFri("1");
-    } else {
-      setFri("0");
-    }
+    setFri((prevFri) => (prevFri === "0" ? "1" : "0"));
   };
 
   // 토요일 버튼 클릭 시 상태 및 색상 변경
   const changeSat = () => {
-    if (sat === "0") {
-      setSat("1");
-    } else {
-      setSat("0");
-    }
+    setSat((prevSat) => (prevSat === "0" ? "1" : "0"));
   };
 
   // 일요일 버튼 클릭 시 상태 및 색상 변경
   const changeSun = () => {
-    if (sun === "0") {
-      setSun("1");
-    } else {
-      setSun("0");
-    }
+    setSun((prevSun) => (prevSun === "0" ? "1" : "0"));
   };
 
   const changeCertification = (e) => {
@@ -194,6 +163,13 @@ function MyRoutine({
       startTime === "00:00:00" && endTime === "23:59:00" ? true : false
     );
     setNewIsActivated(isActivated);
+    setMon(dayOfWeek.substring(0, 1));
+    setTue(dayOfWeek.substring(1, 2));
+    setWed(dayOfWeek.substring(2, 3));
+    setThu(dayOfWeek.substring(3, 4));
+    setFri(dayOfWeek.substring(4, 5));
+    setSat(dayOfWeek.substring(5, 6));
+    setSun(dayOfWeek.substring(6));
   };
 
   // 루틴 수정 모달 닫기
@@ -213,6 +189,7 @@ function MyRoutine({
 
   // 데이터 유효성 검사
   const isValid =
+    newDayOfWeek !== "0000000" &&
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
@@ -253,54 +230,79 @@ function MyRoutine({
           <Modal.Body className={styles.updateModalBody}>
             <div className={styles.dayOfWeek}>
               <div className={styles.updateModalBodyTitle}>🌱 실천 요일</div>
-              <ButtonGroup
-                className={styles.dayOfWeekGroup}
-                onChange={changeDayOfWeek}
-              >
+              <ButtonGroup className={styles.dayOfWeekGroup}>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    mon === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={mon}
                   onClick={changeMon}
                 >
                   월
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    tue === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={tue}
                   onClick={changeTue}
                 >
                   화
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    wed === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={wed}
                   onClick={changeWed}
                 >
                   수
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    thu === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={thu}
                   onClick={changeThu}
                 >
                   목
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    fri === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={fri}
                   onClick={changeFri}
                 >
                   금
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    sat === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={sat}
                   onClick={changeSat}
                 >
                   토
                 </Button>
                 <Button
-                  className={styles.dayOfWeekBtn}
+                  className={
+                    sun === "0"
+                      ? styles.dayOfWeekBtn
+                      : styles.selectedDayOfWeekBtn
+                  }
                   value={sun}
                   onClick={changeSun}
                 >
@@ -402,6 +404,7 @@ MyRoutine.propTypes = {
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
   isActivated: PropTypes.bool.isRequired,
+  dayOfWeek: PropTypes.string.isRequired,
   setToReload: PropTypes.func.isRequired,
 };
 

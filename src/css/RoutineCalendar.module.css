@@ -44,6 +44,23 @@
   height: 14px;
 }
 
+.rateContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.progressBar {
+  height: 24px;
+  font-size: 15px;
+}
+
+.progressBar div {
+  background-color: #8ec952;
+}
+
 .resultsContainer {
   max-height: 216px;
   overflow-y: auto;
