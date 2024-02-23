@@ -62,14 +62,26 @@
 }
 
 .resultsContainer {
-  max-height: 216px;
+  max-height: 240px;
   overflow-y: auto;
   background-color: #f3f3f3;
   margin-top: 13px;
   padding: 8px;
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.resultsContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 .resultsContainerTitle {
+  display: flex;
+  align-items: center;
+}
+
+.resultsContainerTitleText {
   display: flex;
   align-items: center;
 }

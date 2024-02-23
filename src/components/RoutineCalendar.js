@@ -117,7 +117,7 @@ function RoutineCalendar() {
       setTotalCount(totalCount);
       setDoneCount(doneCount);
     }
-  }, [response]);
+  }, [response, date]);
 
   // 날짜별 루틴 표시
   useEffect(() => {
@@ -185,14 +185,20 @@ function RoutineCalendar() {
               <div className={styles.targetDate}>
                 {moment(date).format("MM/DD")}
               </div>
-              <div>
-                {totalCount}개 중에{" "}
-                <span className={styles.doneCount}>{doneCount}개</span> 루틴을
-                달성했어요!
-              </div>
-              {doneCount === totalCount ? (
-                <img className={styles.crown} src={crownIcon} alt="왕관" />
-              ) : null}
+              {totalCount !== 0 ? (
+                <div className={styles.resultsContainerTitleText}>
+                  <div>
+                    {totalCount}개 중에{" "}
+                    <span className={styles.doneCount}>{doneCount}개</span>{" "}
+                    루틴을 달성했어요!
+                  </div>
+                  {doneCount === totalCount ? (
+                    <img className={styles.crown} src={crownIcon} alt="왕관" />
+                  ) : null}
+                </div>
+              ) : (
+                "기록이 없습니다!"
+              )}
             </div>
             <div className={styles.resultsList}>
               {targetDateData.map((result) => (

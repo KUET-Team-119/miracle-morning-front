@@ -72,13 +72,19 @@
 }
 
 .routinesContainer p {
+  display: flex;
+  justify-content: center;
   font-size: 17px;
   text-align: center;
 }
 
 .routinesContainer p span {
+  max-width: 118px;
   font-weight: bold;
   color: #69973a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .routinesList {
@@ -87,4 +93,12 @@
   gap: 10px;
   max-height: 380px;
   overflow-y: auto;
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* 스크롤바 숨기기 */
+.routinesList::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }

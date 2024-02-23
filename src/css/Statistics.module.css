@@ -11,13 +11,18 @@
 }
 
 .intro p {
+  display: flex;
   font-size: 19px;
   margin: 0px;
 }
 
 .intro p span {
+  max-width: 132px;
   font-weight: bold;
   color: #69973a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .headerIcon {
