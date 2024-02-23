@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import styles from "../css/RoutineAchievement.module.css";
-import { ProgressBar } from "react-bootstrap";
+import { Spinner, ProgressBar } from "react-bootstrap";
 
 function RoutineAchievement() {
   const [response, setResponse] = useState([]);
@@ -23,16 +23,24 @@ function RoutineAchievement() {
 
   return (
     <div className={styles.container}>
-      {response.map((routine) => (
-        <div className={styles.rateContainer} key={routine.routineName}>
-          <div className={styles.dayOfWeek}>🌱{routine.routineName}</div>
-          <ProgressBar
-            className={styles.progressBar}
-            now={routine.achievement}
-            label={`${routine.achievement}%`}
-          />
+      {isLoading ? (
+        <div className={styles.spinner}>
+          <Spinner animation="border" />
         </div>
-      ))}
+      ) : (
+        <div className={styles.content}>
+          {response.map((routine) => (
+            <div className={styles.rateContainer} key={routine.routineName}>
+              <div className={styles.dayOfWeek}>🌱{routine.routineName}</div>
+              <ProgressBar
+                className={styles.progressBar}
+                now={routine.achievement}
+                label={`${routine.achievement}%`}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

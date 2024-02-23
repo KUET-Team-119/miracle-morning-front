@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
 import styles from "../css/DayOfWeekAchievement.module.css";
-import { ProgressBar } from "react-bootstrap";
+import { Spinner, ProgressBar } from "react-bootstrap";
 
 function DayOfWeekAchievement() {
   const [response, setResponse] = useState([]);
@@ -22,16 +22,24 @@ function DayOfWeekAchievement() {
 
   return (
     <div className={styles.container}>
-      {response.map((day) => (
-        <div className={styles.rateContainer} key={day.dayOfWeek}>
-          <div className={styles.dayOfWeek}>🌱{day.dayOfWeek}</div>
-          <ProgressBar
-            className={styles.progressBar}
-            now={day.achievement}
-            label={`${day.achievement}%`}
-          />
+      {isLoading ? (
+        <div className={styles.spinner}>
+          <Spinner animation="border" />
         </div>
-      ))}
+      ) : (
+        <div className={styles.content}>
+          {response.map((day) => (
+            <div className={styles.rateContainer} key={day.dayOfWeek}>
+              <div className={styles.dayOfWeek}>🌱{day.dayOfWeek}</div>
+              <ProgressBar
+                className={styles.progressBar}
+                now={day.achievement}
+                label={`${day.achievement}%`}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

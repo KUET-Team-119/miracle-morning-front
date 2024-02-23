@@ -1,3 +1,9 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
 .rateContainer {
   display: flex;
   flex-direction: column;
