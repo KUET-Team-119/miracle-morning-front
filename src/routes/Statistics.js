@@ -8,6 +8,7 @@ import styles from "../css/Statistics.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 import DayOfWeekAchievement from "../components/DayOfWeekAchievement";
+import RoutineAchievement from "../components/RoutineAchievement";
 
 function Statistics() {
   const { myName } = useDecodingJwt();
@@ -53,7 +54,7 @@ function Statistics() {
           <DayOfWeekAchievement />
         </Tab>
         <Tab eventKey="eachRoutine" title="루틴별">
-          Tab content for Contact
+          <RoutineAchievement />
         </Tab>
       </Tabs>
     </div>

@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import useAxiosGet from "../hook/useAxiosGet";
-import styles from "../css/DayOfWeekAchievement.module.css";
+import styles from "../css/RoutineAchievement.module.css";
 import { ProgressBar } from "react-bootstrap";
 
-function DayOfWeekAchievement() {
+function RoutineAchievement() {
   const [response, setResponse] = useState([]);
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading } = useAxiosGet({
-    url: `/api/results/week`,
+    url: `/api/results/routines`,
   });
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
         setResponse(responseData);
+        // console.log(responseData);
       } else {
         // console.log(error);
       }
@@ -22,13 +23,13 @@ function DayOfWeekAchievement() {
 
   return (
     <div className={styles.container}>
-      {response.map((day) => (
-        <div className={styles.rateContainer} key={day.dayOfWeek}>
-          <div className={styles.dayOfWeek}>🌱{day.dayOfWeek}</div>
+      {response.map((routine) => (
+        <div className={styles.rateContainer} key={routine.routineName}>
+          <div className={styles.dayOfWeek}>🌱{routine.routineName}</div>
           <ProgressBar
             className={styles.progressBar}
-            now={day.achievement}
-            label={`${day.achievement}%`}
+            now={routine.achievement}
+            label={`${routine.achievement}%`}
           />
         </div>
       ))}
@@ -36,4 +37,4 @@ function DayOfWeekAchievement() {
   );
 }
 
-export default DayOfWeekAchievement;
+export default RoutineAchievement;

@@ -62,7 +62,7 @@ function RoutineCalendar() {
           moment(item.createdAt).isSame(date, "day") && item.doneAt !== null
       ).length;
 
-      return (
+      return totalCount !== 0 ? (
         <div className={styles.tileContent}>
           <div className={styles.tileCircle} />
           <div className={styles.tileText}>
@@ -72,7 +72,7 @@ function RoutineCalendar() {
             <img className={styles.tileCrown} src={crownIcon} alt="왕관" />
           ) : null}
         </div>
-      );
+      ) : null;
     } else {
       return null; // 오늘 이후의 날짜는 반환하지 않음
     }
@@ -80,7 +80,7 @@ function RoutineCalendar() {
 
   // totalCount와 doneCount 업데이트
   useEffect(() => {
-    if (response.length > 0) {
+    if (response.length >= 0) {
       const totalCountMonth = response.filter((item) => {
         const createdAt = new Date(item.createdAt);
         return (
@@ -117,7 +117,7 @@ function RoutineCalendar() {
       setTotalCount(totalCount);
       setDoneCount(doneCount);
     }
-  }, [response, date]);
+  }, [response]);
 
   // 날짜별 루틴 표시
   useEffect(() => {
@@ -138,6 +138,7 @@ function RoutineCalendar() {
   const setMonth = (e) => {
     setSearchYear(moment(e.activeStartDate).format("YYYY"));
     setSearchMonth(moment(e.activeStartDate).format("M"));
+    setDate(e.activeStartDate);
   };
 
   // 월 변경 시 해당하는 월의 데이터 요청
