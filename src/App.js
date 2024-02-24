@@ -7,6 +7,7 @@ import Expired from "./routes/Expired";
 import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
+import Images from "./routes/Images";
 import MyPage from "./routes/MyPage";
 import AdminMemberManaging from "./routes/AdminMemberManaging";
 import AdminImages from "./routes/AdminImages";
@@ -35,6 +36,10 @@ function App() {
           <Route
             path={"/statistics"}
             element={<PrivateRoute component={<Statistics />} />}
+          />
+          <Route
+            path={"/images"}
+            element={<PrivateRoute component={<Images />} />}
           />
           <Route
             path={"/mypage"}

@@ -25,7 +25,7 @@ function AdminImages() {
 
   // 인증 사진 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
-    url: `/api/admin/results/proofImages`,
+    url: `/api/admin/results/recent`,
   });
   useEffect(() => {
     if (!isLoading) {

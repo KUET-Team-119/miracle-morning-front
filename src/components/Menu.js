@@ -27,6 +27,11 @@ function Menu({ show, onHide }) {
               </Nav.Link>
             </Row>
             <Row>
+              <Nav.Link className={styles.link} as={Link} to={`/images`}>
+                인증 피드
+              </Nav.Link>
+            </Row>
+            <Row>
               <Nav.Link className={styles.link} as={Link} to={`/mypage`}>
                 마이페이지
               </Nav.Link>
