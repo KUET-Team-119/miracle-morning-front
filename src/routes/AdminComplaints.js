@@ -7,7 +7,7 @@ import styles from "../css/AdminComplaints.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 import { useNavigate } from "react-router-dom";
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Spinner } from "react-bootstrap";
 
 function AdminComplaints() {
   const { myName } = useDecodingJwt();
@@ -59,23 +59,31 @@ function AdminComplaints() {
           />
         </div>
       </div>
-      <Row xs={1} sm={2} md={3} className="g-3">
-        {response.map((complaint) => (
-          <Col key={complaint.complaintId}>
-            <Card className={styles.card}>
-              <Card.Body>
-                <Card.Title>{complaint.memberName}</Card.Title>
-                <Card.Subtitle>
-                  {moment(complaint.createdAt).format(
-                    "YYYY년 MM월 DD일 HH시 mm분"
-                  )}
-                </Card.Subtitle>
-                <Card.Text>{complaint.content}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      {isLoading ? (
+        <div className={styles.spinner}>
+          <Spinner animation="border" />
+        </div>
+      ) : (
+        <div className={styles.content}>
+          <Row xs={1} sm={2} md={3} className="g-3">
+            {response.map((complaint) => (
+              <Col key={complaint.complaintId}>
+                <Card className={styles.card}>
+                  <Card.Body>
+                    <Card.Title>{complaint.memberName}</Card.Title>
+                    <Card.Subtitle>
+                      {moment(complaint.createdAt).format(
+                        "YYYY년 MM월 DD일 HH시 mm분"
+                      )}
+                    </Card.Subtitle>
+                    <Card.Text>{complaint.content}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
     </div>
   );
 }

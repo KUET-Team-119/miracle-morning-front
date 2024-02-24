@@ -5,7 +5,7 @@ import moment from "moment";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import useAxiosGet from "../hook/useAxiosGet";
 import AdminMenu from "../components/AdminMenu";
-import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+import { Button, Card, Col, Modal, Row, Spinner } from "react-bootstrap";
 import styles from "../css/AdminImages.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
@@ -124,33 +124,43 @@ function AdminImages() {
             />
           </div>
         </div>
-        <Row xs={1} sm={2} md={3} lg={4} className="g-3">
-          {responseProof.map((result) => (
-            <Col key={result.resultId}>
-              <Card className={styles.card}>
-                <Card.Img
-                  variant="top"
-                  src={`data:image;base64,${result.fileBase64}`}
-                />
-                <Card.Body>
-                  <Card.Title>{result.routineName}</Card.Title>
-                  <Card.Subtitle>{result.memberName}</Card.Subtitle>
-                  <Card.Text>
-                    {moment(result.doneAt).format("YYYY년 MM일 DD일 HH시 mm분")}
-                  </Card.Text>
-                  <Button
-                    variant="danger"
-                    onClick={objToJson}
-                    data-result-id={result.resultId}
-                    data-routine-name={result.resultId}
-                  >
-                    인증 철회
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {isLoading ? (
+          <div className={styles.spinner}>
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <div className={styles.content}>
+            <Row xs={1} sm={2} md={3} lg={4} className="g-3">
+              {responseProof.map((result) => (
+                <Col key={result.resultId}>
+                  <Card className={styles.card}>
+                    <Card.Img
+                      variant="top"
+                      src={`data:image;base64,${result.fileBase64}`}
+                    />
+                    <Card.Body>
+                      <Card.Title>{result.routineName}</Card.Title>
+                      <Card.Subtitle>{result.memberName}</Card.Subtitle>
+                      <Card.Text>
+                        {moment(result.doneAt).format(
+                          "YYYY년 MM일 DD일 HH시 mm분"
+                        )}
+                      </Card.Text>
+                      <Button
+                        variant="danger"
+                        onClick={objToJson}
+                        data-result-id={result.resultId}
+                        data-routine-name={result.resultId}
+                      >
+                        인증 철회
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        )}
       </div>
       <Modal show={proveModalShow} centered>
         <Modal.Body className={styles.proveModalBody}>

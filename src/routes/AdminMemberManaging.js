@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import { Button, Form, Modal, Table } from "react-bootstrap";
+import { Button, Form, Modal, Spinner, Table } from "react-bootstrap";
 import useAxiosGet from "../hook/useAxiosGet";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import moment from "moment";
@@ -157,44 +157,50 @@ function AdminMemberManaging() {
             />
           </div>
         </div>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>닉네임</th>
-              <th>비밀번호</th>
-              <th>권한</th>
-              <th>가입일자</th>
-              <th>관리</th>
-            </tr>
-          </thead>
-          <tbody>
-            {response.map((member) => (
-              <tr key={member.memberId}>
-                <td>{member.memberId}</td>
-                <td>{member.memberName}</td>
-                <td>{member.password}</td>
-                <td>{member.role}</td>
-                <td>
-                  {moment(member.createdAt).format(
-                    "YYYY년 MM월 DD일 HH시 mm분"
-                  )}
-                </td>
-                <td>
-                  <Button
-                    className={styles.managingBtn}
-                    onClick={openManagingModal}
-                    data-id={member.memberId}
-                    data-name={member.memberName}
-                    data-role={member.role}
-                  >
-                    관리
-                  </Button>
-                </td>
+        {isLoading ? (
+          <div className={styles.spinner}>
+            <Spinner animation="border" />
+          </div>
+        ) : (
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>닉네임</th>
+                <th>비밀번호</th>
+                <th>권한</th>
+                <th>가입일자</th>
+                <th>관리</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {response.map((member) => (
+                <tr key={member.memberId}>
+                  <td>{member.memberId}</td>
+                  <td>{member.memberName}</td>
+                  <td>{member.password}</td>
+                  <td>{member.role}</td>
+                  <td>
+                    {moment(member.createdAt).format(
+                      "YYYY년 MM월 DD일 HH시 mm분"
+                    )}
+                  </td>
+                  <td>
+                    <Button
+                      className={styles.managingBtn}
+                      onClick={openManagingModal}
+                      data-id={member.memberId}
+                      data-name={member.memberName}
+                      data-role={member.role}
+                    >
+                      관리
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
       </div>
       <Modal show={ManagingModalShow} centered>
         <Form onSubmit={submitPatch}>
