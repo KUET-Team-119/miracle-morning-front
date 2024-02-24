@@ -2,13 +2,15 @@ import "../src/css/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 import Enter from "./routes/Enter";
+import Forbidden from "./routes/Forbidden";
+import Expired from "./routes/Expired";
 import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
 import MyPage from "./routes/MyPage";
+import Admin from "./routes/Admin";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
-import Admin from "./routes/Admin";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <div className="body">
         <Routes>
           <Route path={"/"} element={<Enter />} />
+          <Route path={"/forbidden"} element={<Forbidden />} />
+          <Route path={"/expired"} element={<Expired />} />
           <Route
             path={"/home"}
             element={<PrivateRoute component={<Home />} />}

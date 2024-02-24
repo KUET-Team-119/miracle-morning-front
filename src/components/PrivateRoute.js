@@ -8,8 +8,10 @@ function PrivateRoute({ component: Component }) {
     // JWT가 없으면 로그인 페이지로 이동
     return <Navigate to="/" />;
   } else {
-    if (myRoles === "USER" || myRoles === "ADMIN") {
+    if (myRoles === "USER") {
       return Component;
+    } else if (myRoles === "ADMIN") {
+      return <Navigate to="/admin" />;
     } else if (myRoles === "TEMP_USER") {
       return <Navigate to="/" />;
     } else {
@@ -29,10 +31,12 @@ function PrivateRoute({ component: Component }) {
 
 //     if (myExp < currentTime) {
 //       // JWT가 만료되었으면 로그인 페이지로 이동
-//       return <Navigate to="/" />;
+//       return <Navigate to="/expired" />;
 //     } else {
-//       if (myRoles === "USER" || myRoles === "ADMIN") {
+//       if (myRoles === "USER") {
 //         return Component;
+//       } else if (myRoles === "ADMIN") {
+//         return <Navigate to="/admin" />;
 //       } else if (myRoles === "TEMP_USER") {
 //         return <Navigate to="/" />;
 //       } else {

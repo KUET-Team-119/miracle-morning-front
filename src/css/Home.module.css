@@ -61,6 +61,16 @@
 .membersList {
   display: flex;
   justify-content: flex-start;
+  max-height: 100%;
+  overflow-x: auto;
+  /* 스크롤바 숨기기 */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* 스크롤바 숨기기 */
+.membersList::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 .routinesContainer {

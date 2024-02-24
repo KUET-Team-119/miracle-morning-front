@@ -1,22 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RoutineCalendar from "../components/RoutineCalendar";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import Menu from "../components/Offcanvas";
-import { Tab, Tabs } from "react-bootstrap";
-import styles from "../css/Statistics.module.css";
+import styles from "../css/Forbidden.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
-import DayOfWeekAchievement from "../components/DayOfWeekAchievement";
-import RoutineAchievement from "../components/RoutineAchievement";
 
-function Statistics() {
+function Forbidden() {
   const { myName } = useDecodingJwt();
-
   const [menuShow, setMenuShow] = useState(false);
-
   const navigate = useNavigate();
-
   const goToHome = () => {
     navigate("/home");
   };
@@ -32,7 +25,7 @@ function Statistics() {
       <div className={styles.header}>
         <div className={styles.intro}>
           <p>
-            <span>{myName}</span>님의 루틴 기록🌱
+            <span>{myName}</span>님이 접근할 수 없는 페이지입니다⛔
           </p>
         </div>
         <div className={styles.headerIcon}>
@@ -46,19 +39,8 @@ function Statistics() {
           />
         </div>
       </div>
-      <Tabs className={styles.tabs} defaultActiveKey="eachMonth" justify>
-        <Tab eventKey="eachMonth" title="월별">
-          <RoutineCalendar />
-        </Tab>
-        <Tab eventKey="eachDay" title="요일별">
-          <DayOfWeekAchievement />
-        </Tab>
-        <Tab eventKey="eachRoutine" title="루틴별">
-          <RoutineAchievement />
-        </Tab>
-      </Tabs>
     </div>
   );
 }
 
-export default Statistics;
+export default Forbidden;
