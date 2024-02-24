@@ -1,6 +1,6 @@
 import { Col, Nav, Offcanvas, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../css/Offcanvas.module.css";
+import styles from "../css/Menu.module.css";
 
 function Menu({ show, onHide }) {
   return (

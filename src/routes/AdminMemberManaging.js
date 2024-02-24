@@ -5,11 +5,11 @@ import useAxiosGet from "../hook/useAxiosGet";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import moment from "moment";
 import useAxiosPatch from "../hook/useAxiosPatch";
-import styles from "../css/Admin.module.css";
-import Menu from "../components/Offcanvas";
+import styles from "../css/AdminMemberManaging.module.css";
+import AdminMenu from "../components/AdminMenu";
 import menuIcon from "../images/menu.png";
 
-function Admin() {
+function AdminMemberManaging() {
   const { myName } = useDecodingJwt();
   const [response, setResponse] = useState([]);
   const [requestData, setRequestData] = useState([]);
@@ -134,7 +134,7 @@ function Admin() {
   return (
     <>
       <div className={styles.container}>
-        <Menu
+        <AdminMenu
           show={menuShow}
           onHide={() => {
             setMenuShow(false);
@@ -143,10 +143,11 @@ function Admin() {
         <div className={styles.header}>
           <div className={styles.intro}>
             <p>
-              🔧 안녕하세요 관리자 <span>{myName}</span>님 환영합니다.
+              관리자 <span>{myName}</span>님 환영합니다.
             </p>
+            <p>사용자 관리 페이지입니다🔧</p>
           </div>
-          {/* <div className={styles.headerIcon}>
+          <div className={styles.headerIcon}>
             <img
               src={menuIcon}
               onClick={() => {
@@ -154,7 +155,7 @@ function Admin() {
               }}
               alt="메뉴"
             />
-          </div> */}
+          </div>
         </div>
         <Table striped bordered hover>
           <thead>
@@ -264,4 +265,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminMemberManaging;

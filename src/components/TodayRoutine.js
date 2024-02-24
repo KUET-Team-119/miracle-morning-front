@@ -20,7 +20,7 @@ const INVALID_SIZE = 3;
 const NOT_SELECTED = 4;
 
 function TodayRoutine({
-  routineId,
+  resultId,
   routineName,
   memberName,
   dayOfWeek,
@@ -48,8 +48,8 @@ function TodayRoutine({
   const objToJson = () => {
     setData(
       JSON.stringify({
-        routineId: routineId,
-        memberName: myName,
+        resultId: resultId,
+        routineName: routineName,
         doneAt: fileTime,
       })
     );
@@ -85,7 +85,7 @@ function TodayRoutine({
 
   const uploadedFile = (e) => {
     const fileData = e.target.files[0];
-    console.log(fileData);
+
     // 파일이 선택되어야 함
     if (fileData !== undefined && fileData !== null) {
       setFile(fileData);
@@ -153,7 +153,7 @@ function TodayRoutine({
     }
   }, [fileTime, fileSize]);
 
-  // 루틴 추가 모달 열기
+  // 인증 모달 열기
   const openProveModal = () => {
     setProveModalShow(true);
   };
@@ -318,7 +318,7 @@ function TodayRoutine({
 }
 
 TodayRoutine.propTypes = {
-  routineId: PropTypes.number.isRequired,
+  resultId: PropTypes.number.isRequired,
   routineName: PropTypes.string.isRequired,
   memberName: PropTypes.string.isRequired,
   dayOfWeek: PropTypes.string.isRequired,

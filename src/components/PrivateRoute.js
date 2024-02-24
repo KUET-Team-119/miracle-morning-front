@@ -11,7 +11,7 @@ function PrivateRoute({ component: Component }) {
     if (myRoles === "USER") {
       return Component;
     } else if (myRoles === "ADMIN") {
-      return <Navigate to="/admin" />;
+      return <Navigate to="/admin/membermanaging" />;
     } else if (myRoles === "TEMP_USER") {
       return <Navigate to="/" />;
     } else {

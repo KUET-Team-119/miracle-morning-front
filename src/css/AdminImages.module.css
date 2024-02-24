@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.intro p {
+  font-size: 19px;
+  margin: 0px;
+}
+
+.intro p span {
+  font-weight: bold;
+  color: #69973a;
+}
+
+.headerIcon {
+  display: flex;
+}
+
+.headerIcon img {
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.proveModalBody .proveModalBodyTitle {
+  font-size: 18px;
+  text-align: center;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+}
+
+.errorModalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorModalBody .errorModalBodyTitle {
+  font-size: 18px;
+}
+
+.errorModalBody .errorModalBodyContent {
+  font-size: 15px;
+}
+
+.errorModalBtn,
+.errorModalBtn:hover,
+.errorModalBtn:focus,
+.errorModalBtn:active {
+  background-color: #8ec952;
+  border-color: #8ec952;
+}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import Menu from "../components/Offcanvas";
+import Menu from "../components/Menu";
 import Profile from "../components/Profile";
 import TodayRoutine from "../components/TodayRoutine";
 import { Spinner, Card } from "react-bootstrap";
@@ -133,7 +133,8 @@ function Home() {
               <div className={styles.routinesList}>
                 {response.map((routine) => (
                   <TodayRoutine
-                    key={routine.routineId}
+                    key={routine.resultId}
+                    resultId={routine.resultId}
                     routineId={routine.routineId}
                     routineName={routine.routineName}
                     memberName={routine.memberName}

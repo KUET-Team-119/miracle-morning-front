@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import Menu from "../components/Menu";
-import styles from "../css/Forbidden.module.css";
+import AdminMenu from "../components/AdminMenu";
+import styles from "../css/AdminStatistics.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
+import { useNavigate } from "react-router-dom";
 
-function Forbidden() {
+function AdminStatistics() {
   const { myName } = useDecodingJwt();
   const [menuShow, setMenuShow] = useState(false);
   const navigate = useNavigate();
-  const goToHome = () => {
-    navigate("/home");
+
+  const goToMemberManaging = () => {
+    navigate("/admin/membermanaging");
   };
 
   return (
     <div className={styles.container}>
-      <Menu
+      <AdminMenu
         show={menuShow}
         onHide={() => {
           setMenuShow(false);
@@ -25,11 +26,12 @@ function Forbidden() {
       <div className={styles.header}>
         <div className={styles.intro}>
           <p>
-            <span>{myName}</span>님이 접근할 수 없는 페이지입니다⛔
+            관리자 <span>{myName}</span>님 환영합니다.
           </p>
+          <p>통계 관리 페이지입니다🔧</p>
         </div>
         <div className={styles.headerIcon}>
-          <img src={homeIcon} onClick={goToHome} alt="홈" />
+          <img src={homeIcon} onClick={goToMemberManaging} alt="홈" />
           <img
             src={menuIcon}
             onClick={() => {
@@ -43,4 +45,4 @@ function Forbidden() {
   );
 }
 
-export default Forbidden;
+export default AdminStatistics;

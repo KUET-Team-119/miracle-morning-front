@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useAxiosGet from "../hook/useAxiosGet";
 import useAxiosPost from "../hook/useAxiosPost";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import Menu from "../components/Offcanvas";
+import Menu from "../components/Menu";
 import MyRoutine from "../components/MyRoutine";
 import {
   Button,

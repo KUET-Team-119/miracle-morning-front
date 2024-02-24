@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoutineCalendar from "../components/RoutineCalendar";
 import useDecodingJwt from "../hook/useDecodingJwt";
-import Menu from "../components/Offcanvas";
+import Menu from "../components/Menu";
 import { Tab, Tabs } from "react-bootstrap";
 import styles from "../css/Statistics.module.css";
 import homeIcon from "../images/home.png";

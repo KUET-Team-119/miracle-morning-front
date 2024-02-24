@@ -8,7 +8,11 @@ import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
 import MyPage from "./routes/MyPage";
-import Admin from "./routes/Admin";
+import AdminMemberManaging from "./routes/AdminMemberManaging";
+import AdminImages from "./routes/AdminImages";
+import AdminComplaints from "./routes/AdminComplaints";
+import AdminStatistics from "./routes/AdminStatistics";
+import AdminMyPage from "./routes/AdminMyPage";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
@@ -37,8 +41,24 @@ function App() {
             element={<PrivateRoute component={<MyPage />} />}
           />
           <Route
-            path={"/admin"}
-            element={<PrivateAdminRoute component={<Admin />} />}
+            path={"/admin/membermanaging"}
+            element={<PrivateAdminRoute component={<AdminMemberManaging />} />}
+          />
+          <Route
+            path={"/admin/images"}
+            element={<PrivateAdminRoute component={<AdminImages />} />}
+          />
+          <Route
+            path={"/admin/statistics"}
+            element={<PrivateAdminRoute component={<AdminStatistics />} />}
+          />
+          <Route
+            path={"/admin/complaints"}
+            element={<PrivateAdminRoute component={<AdminComplaints />} />}
+          />
+          <Route
+            path={"/admin/mypage"}
+            element={<PrivateAdminRoute component={<AdminMyPage />} />}
           />
         </Routes>
       </div>
