@@ -146,7 +146,7 @@ function Admin() {
               🔧 안녕하세요 관리자 <span>{myName}</span>님 환영합니다.
             </p>
           </div>
-          <div className={styles.headerIcon}>
+          {/* <div className={styles.headerIcon}>
             <img
               src={menuIcon}
               onClick={() => {
@@ -154,7 +154,7 @@ function Admin() {
               }}
               alt="메뉴"
             />
-          </div>
+          </div> */}
         </div>
         <Table striped bordered hover>
           <thead>
