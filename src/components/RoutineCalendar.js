@@ -35,7 +35,30 @@ function RoutineCalendar() {
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
-        setResponse(responseData);
+        // 데이터를 받아와서 정렬
+        const sortedData = responseData.sort((a, b) => {
+          if (a.doneAt && b.doneAt) {
+            // doneAt이 모두 존재하는 경우
+            if (a.doneAt === b.doneAt) {
+              // doneAt이 같으면 routineName을 기준으로 오름차순으로 정렬
+              return a.routineName.localeCompare(b.routineName);
+            } else {
+              // doneAt이 다른 경우 doneAt을 기준으로 오름차순으로 정렬
+              return a.doneAt.localeCompare(b.doneAt);
+            }
+          } else if (a.doneAt && !b.doneAt) {
+            // a는 doneAt이 있고, b는 없는 경우 a를 먼저 정렬
+            return -1;
+          } else if (!a.doneAt && b.doneAt) {
+            // a는 doneAt이 없고, b는 있는 경우 b를 먼저 정렬
+            return 1;
+          } else {
+            // doneAt이 모두 없는 경우
+            return 0;
+          }
+        });
+        // 정렬된 데이터를 상태에 저장
+        setResponse(sortedData);
       } else {
         const status = error.response.status;
         if (status === 401) {
