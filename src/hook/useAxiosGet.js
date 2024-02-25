@@ -26,6 +26,9 @@ function useAxiosGet({ url, params }) {
         console.log(
           "로그인 시간이 만료되었거나 사용자 정보가 없습니다. 다시 로그인을 시도해주세요."
         );
+        const accessToken = error.response.headers.Authorization;
+        sessionStorage.setItem("accessToken", accessToken);
+        console.log(error.response.headers);
       } else if (status === 403) {
         console.log("권한이 없습니다.");
       } else if (status === 500) {
