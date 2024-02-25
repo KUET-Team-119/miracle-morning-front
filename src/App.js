@@ -2,18 +2,19 @@ import "../src/css/App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 import Enter from "./routes/Enter";
+import Introduce from "./routes/Introduce";
 import Forbidden from "./routes/Forbidden";
 import Expired from "./routes/Expired";
 import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
 import Images from "./routes/Images";
-import MyPage from "./routes/MyPage";
+import Setting from "./routes/Setting";
 import AdminMemberManaging from "./routes/AdminMemberManaging";
 import AdminImages from "./routes/AdminImages";
 import AdminComplaints from "./routes/AdminComplaints";
 import AdminStatistics from "./routes/AdminStatistics";
-import AdminMyPage from "./routes/AdminMyPage";
+import AdminSetting from "./routes/AdminSetting";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
@@ -23,8 +24,9 @@ function App() {
       <div className="body">
         <Routes>
           <Route path={"/"} element={<Enter />} />
-          <Route path={"/forbidden"} element={<Forbidden />} />
+          <Route path={"/introduce"} element={<Introduce />} />
           <Route path={"/expired"} element={<Expired />} />
+          <Route path={"/forbidden"} element={<Forbidden />} />
           <Route
             path={"/home"}
             element={<PrivateRoute component={<Home />} />}
@@ -42,8 +44,8 @@ function App() {
             element={<PrivateRoute component={<Images />} />}
           />
           <Route
-            path={"/mypage"}
-            element={<PrivateRoute component={<MyPage />} />}
+            path={"/setting"}
+            element={<PrivateRoute component={<Setting />} />}
           />
           <Route
             path={"/admin/membermanaging"}
@@ -62,8 +64,8 @@ function App() {
             element={<PrivateAdminRoute component={<AdminComplaints />} />}
           />
           <Route
-            path={"/admin/mypage"}
-            element={<PrivateAdminRoute component={<AdminMyPage />} />}
+            path={"/admin/setting"}
+            element={<PrivateAdminRoute component={<AdminSetting />} />}
           />
         </Routes>
       </div>

@@ -5,16 +5,15 @@ import useAxiosPost from "../hook/useAxiosPost";
 import useAxiosDelete from "../hook/useAxiosDelete";
 import Menu from "../components/Menu";
 import { Button, Card, Form, InputGroup, Modal, Toast } from "react-bootstrap";
-import styles from "../css/MyPage.module.css";
+import styles from "../css/Setting.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 
-function MyPage() {
+function Setting() {
   const { myId, myName } = useDecodingJwt();
   const [complaintContent, setComplaintContent] = useState("");
   const [requestData, setRequestData] = useState("");
   const [complaintModalShow, setComplaintModalShow] = useState(false);
-  const [logoutModalShow, setLogoutModalShow] = useState(false);
   const [leaveModalShow, setLeaveModalShow] = useState(false);
   const [leaveConfirmModalShow, setLeaveConfirmModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
@@ -103,22 +102,6 @@ function MyPage() {
     setComplaintContent("");
   };
 
-  // 로그아웃 모달 열기
-  const openLogoutModal = () => {
-    setLogoutModalShow(true);
-  };
-
-  // 로그아웃 모달 닫기
-  const closeLogoutModal = () => {
-    setLogoutModalShow(false);
-  };
-
-  const logout = () => {
-    sessionStorage.removeItem("access-token");
-    closeLogoutModal();
-    navigate(`/`);
-  };
-
   // 탈퇴 확인 모달 열기
   const openLeaveConfirmModal = () => {
     setLeaveConfirmModalShow(true);
@@ -175,9 +158,6 @@ function MyPage() {
           >
             오류 제보
           </Card>
-          <Card body className={styles.settingCard} onClick={openLogoutModal}>
-            로그아웃
-          </Card>
         </div>
         <div className={styles.leaveContainer}>
           <Button
@@ -222,19 +202,6 @@ function MyPage() {
             </Button>
           </Modal.Footer>
         </Form>
-      </Modal>
-      <Modal show={logoutModalShow} centered>
-        <Modal.Body className={styles.logoutModalBody}>
-          <p className={styles.logoutModalBodyTitle}>로그아웃 하시겠습니까?</p>
-        </Modal.Body>
-        <Modal.Footer className={styles.modalFooter}>
-          <Button variant="secondary" onClick={closeLogoutModal}>
-            취소
-          </Button>
-          <Button className={styles.logoutBtn} onClick={logout}>
-            확인
-          </Button>
-        </Modal.Footer>
       </Modal>
       <Modal show={leaveConfirmModalShow} centered>
         <Modal.Body className={styles.leaveModalBody}>
@@ -309,4 +276,4 @@ function MyPage() {
   );
 }
 
-export default MyPage;
+export default Setting;

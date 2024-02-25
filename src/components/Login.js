@@ -14,6 +14,10 @@ function Login({ setIsMember }) {
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
+  const goToIntroduce = () => {
+    navigate("/introduce");
+  };
+
   // 닉네임 입력 시 input의 value 변경
   const changeMemberName = (e) => {
     setName(e.target.value);
@@ -64,7 +68,7 @@ function Login({ setIsMember }) {
       <h1 className={styles.title}>
         나를 키우는 공간
         <br />
-        미라클농장🌱
+        미라클 농장🌱
       </h1>
       <Form className={styles.form} onSubmit={submitPost}>
         <InputGroup className={styles.inputGroup}>
@@ -97,7 +101,12 @@ function Login({ setIsMember }) {
         </Button>
       </Form>
       <div className={styles.beginnerContainer}>
-        <Button className={styles.signUpBtn} type="button" variant="link">
+        <Button
+          className={styles.signUpBtn}
+          type="button"
+          variant="link"
+          onClick={goToIntroduce}
+        >
           미라클 농장이 처음이신가요?
         </Button>
         <div className={`${styles.verticalLine} vr`} />

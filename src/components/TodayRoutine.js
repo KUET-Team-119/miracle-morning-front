@@ -39,7 +39,7 @@ function TodayRoutine({
   const [fileMonth, setFileMonth] = useState("");
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
-  const [fileSize, setFileSize] = useState(false);
+  const [fileSize, setFileSize] = useState("");
   const [isValid, setIsValid] = useState(NOT_SELECTED);
   const [modalNotice, setModalNotice] = useState(
     "※ 오늘 날짜의 사진을 선택하세요."
@@ -166,6 +166,7 @@ function TodayRoutine({
     setFileMonth("");
     setFileDay("");
     setFileTime("");
+    setFileSize("");
     setIsValid(NOT_SELECTED);
     setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
   };

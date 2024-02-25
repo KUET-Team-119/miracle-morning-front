@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import Menu from "../components/Menu";
 import Profile from "../components/Profile";
 import TodayRoutine from "../components/TodayRoutine";
-import { Spinner, Card } from "react-bootstrap";
+import { Spinner, Card, Button } from "react-bootstrap";
 import styles from "../css/Home.module.css";
 import menuIcon from "../images/menu.png";
 
@@ -19,6 +20,11 @@ function Home() {
   const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeekIndex = moment().format("d"); // 오늘의 요일을 숫자로 얻기
   const dayOfWeek = daysOfWeek[dayOfWeekIndex]; // 숫자에 해당하는 요일 문자열 가져오기
+  const navigate = useNavigate();
+
+  const goToRoutines = () => {
+    navigate("/routines");
+  };
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -131,22 +137,33 @@ function Home() {
                 님의 {`${moment().format("YYYY년 M월 D일")} (${dayOfWeek})`}
               </p>
               <div className={styles.routinesList}>
-                {response.map((routine) => (
-                  <TodayRoutine
-                    key={routine.resultId}
-                    resultId={routine.resultId}
-                    routineId={routine.routineId}
-                    routineName={routine.routineName}
-                    memberName={routine.memberName}
-                    dayOfWeek={routine.dayOfWeek}
-                    certification={routine.certification}
-                    startTime={routine.startTime}
-                    endTime={routine.endTime}
-                    doneAt={routine.doneAt}
-                    complete={routine.complete}
-                    setToReload={refetch}
-                  />
-                ))}
+                {response.length !== 0 ? (
+                  <div className={styles.routine}>
+                    {response.map((routine) => (
+                      <TodayRoutine
+                        key={routine.resultId}
+                        resultId={routine.resultId}
+                        routineId={routine.routineId}
+                        routineName={routine.routineName}
+                        memberName={routine.memberName}
+                        dayOfWeek={routine.dayOfWeek}
+                        certification={routine.certification}
+                        startTime={routine.startTime}
+                        endTime={routine.endTime}
+                        doneAt={routine.doneAt}
+                        complete={routine.complete}
+                        setToReload={refetch}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className={styles.noRoutine}>
+                    <p>오늘 달성할 루틴이 없어요</p>
+                    <p>루틴 기록은 매일 자정에 생성됩니다</p>
+                    <p>루틴 관리에서 루틴을 만들어보세요!</p>
+                    <Button onClick={goToRoutines}>루틴 관리로 이동</Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

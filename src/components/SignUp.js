@@ -72,7 +72,7 @@ function SignUp({ setIsMember }) {
       <h1 className={styles.title}>
         나를 키우는 공간
         <br />
-        미라클농장🌱
+        미라클 농장🌱
       </h1>
       <Card className={styles.infoCard}>
         <Card.Body>

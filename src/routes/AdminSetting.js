@@ -3,18 +3,17 @@ import { useNavigate } from "react-router-dom";
 import useAxiosPost from "../hook/useAxiosPost";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import AdminMenu from "../components/AdminMenu";
-import styles from "../css/AdminMyPage.module.css";
+import styles from "../css/AdminSetting.module.css";
 import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 import { Button, Card, Form, Modal, Toast } from "react-bootstrap";
 
-function AdminMyPage() {
+function AdminSetting() {
   const { myName } = useDecodingJwt();
   const [complaintContent, setComplaintContent] = useState("");
   const [menuShow, setMenuShow] = useState(false);
   const [requestData, setRequestData] = useState("");
   const [complaintModalShow, setComplaintModalShow] = useState(false);
-  const [logoutModalShow, setLogoutModalShow] = useState(false);
   const [postToastShow, setPostToastShow] = useState(false);
   const navigate = useNavigate();
 
@@ -74,22 +73,6 @@ function AdminMyPage() {
     setComplaintContent("");
   };
 
-  // 로그아웃 모달 열기
-  const openLogoutModal = () => {
-    setLogoutModalShow(true);
-  };
-
-  // 로그아웃 모달 닫기
-  const closeLogoutModal = () => {
-    setLogoutModalShow(false);
-  };
-
-  const logout = () => {
-    sessionStorage.removeItem("access-token");
-    closeLogoutModal();
-    navigate(`/`);
-  };
-
   const complaintIsValid = complaintContent !== "";
 
   return (
@@ -123,9 +106,6 @@ function AdminMyPage() {
             onClick={openComplaintModal}
           >
             오류 제보
-          </Card>
-          <Card body className={styles.settingCard} onClick={openLogoutModal}>
-            로그아웃
           </Card>
         </div>
       </div>
@@ -163,19 +143,6 @@ function AdminMyPage() {
           </Modal.Footer>
         </Form>
       </Modal>
-      <Modal show={logoutModalShow} centered>
-        <Modal.Body className={styles.logoutModalBody}>
-          <p className={styles.logoutModalBodyTitle}>로그아웃 하시겠습니까?</p>
-        </Modal.Body>
-        <Modal.Footer className={styles.modalFooter}>
-          <Button variant="secondary" onClick={closeLogoutModal}>
-            취소
-          </Button>
-          <Button className={styles.logoutBtn} onClick={logout}>
-            확인
-          </Button>
-        </Modal.Footer>
-      </Modal>
       <Toast
         className={styles.toast}
         show={postToastShow}
@@ -189,4 +156,4 @@ function AdminMyPage() {
   );
 }
 
-export default AdminMyPage;
+export default AdminSetting;
