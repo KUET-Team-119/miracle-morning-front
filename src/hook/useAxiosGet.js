@@ -33,8 +33,25 @@ function useAxiosGet({ url, params }) {
           // Bearer 토큰을 추출
           const accessToken = authorizationHeader.split("Bearer ")[1];
           sessionStorage.setItem("access-token", accessToken);
-        } else {
-          console.log("Authorization 헤더가 없습니다.");
+          try {
+            const response = await axios.get(url, {
+              headers: {
+                Authorization: `Bearer ${sessionStorage.getItem(
+                  "access-token"
+                )}`,
+              },
+              params: params,
+            });
+            setResponseData(response.data);
+          } catch (error) {
+            setError(error);
+            const status = error.response.status;
+            if (status === 401) {
+              console.log(
+                "로그인 시간이 만료되었거나 사용자 정보가 없습니다. 다시 로그인을 시도해주세요."
+              );
+            }
+          }
         }
       } else if (status === 403) {
         console.log("권한이 없습니다.");

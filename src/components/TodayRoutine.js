@@ -33,6 +33,7 @@ function TodayRoutine({
 }) {
   const { myName } = useDecodingJwt();
   const [proveModalShow, setProveModalShow] = useState(false);
+  const [cancelProveModalShow, setCancelProveModalShow] = useState(false);
   const [data, setData] = useState("");
   const [file, setFile] = useState(null);
   const [fileYear, setFileYear] = useState("");
@@ -169,6 +170,16 @@ function TodayRoutine({
     setFileSize("");
     setIsValid(NOT_SELECTED);
     setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
+  };
+
+  // 인증 취소 모달 열기
+  const openCancelProveModal = () => {
+    setCancelProveModalShow(true);
+  };
+
+  // 인증 취소 모달 닫기
+  const closeCancelProveModal = () => {
+    setCancelProveModalShow(false);
   };
 
   return (
