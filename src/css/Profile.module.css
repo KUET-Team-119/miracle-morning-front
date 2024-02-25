@@ -16,12 +16,12 @@
 .initialProfile {
   width: 48px;
   height: 48px;
-  background-color: lightgray;
+  background-color: #faf4e8;
   padding: 0px;
   cursor: pointer;
   border-radius: 50%;
   border-style: solid;
-  border-color: rgb(190, 190, 190);
+  border-color: #ead9ad;
   transition-duration: 0.3s;
   position: absolute;
   top: 50%;

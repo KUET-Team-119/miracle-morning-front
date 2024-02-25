@@ -58,6 +58,16 @@ function Setting() {
         setPostToastShow(true);
       } else {
         closeComplaintModal();
+        const status = errorPost.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseDataPost, errorPost, isLoadingPost]);
@@ -72,12 +82,22 @@ function Setting() {
   useEffect(() => {
     if (!isLoadingDel) {
       if (responseDataDel !== null) {
-        sessionStorage.removeItem("access-token");
+        localStorage.removeItem("access-token");
         closeLeaveModal();
         navigate(`/`);
       } else {
-        setErrorModalShow(true);
-        closeLeaveModal();
+        const status = errorDel.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          closeLeaveModal();
+          setErrorModalShow(true);
+        } else if (status === 404) {
+          closeLeaveModal();
+          setErrorModalShow(true);
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseDataDel, errorDel, isLoadingDel]);

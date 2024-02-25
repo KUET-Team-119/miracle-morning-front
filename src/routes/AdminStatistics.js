@@ -15,7 +15,7 @@ function AdminStatistics() {
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
-    navigate("/admin/membermanaging");
+    navigate("/admin/member-managing");
   };
 
   // 사용자별 루틴 통계 조회
@@ -28,7 +28,16 @@ function AdminStatistics() {
       if (responseData !== null) {
         setResponse(responseData);
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

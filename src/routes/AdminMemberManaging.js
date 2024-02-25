@@ -8,6 +8,7 @@ import useAxiosPatch from "../hook/useAxiosPatch";
 import styles from "../css/AdminMemberManaging.module.css";
 import AdminMenu from "../components/AdminMenu";
 import menuIcon from "../images/menu.png";
+import { useNavigate } from "react-router-dom";
 
 function AdminMemberManaging() {
   const { myName } = useDecodingJwt();
@@ -20,6 +21,7 @@ function AdminMemberManaging() {
   const [memberName, setMemberName] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [menuShow, setMenuShow] = useState(false);
+  const navigate = useNavigate();
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
@@ -30,7 +32,16 @@ function AdminMemberManaging() {
       if (responseData !== null) {
         setResponse(responseData);
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);
@@ -67,7 +78,18 @@ function AdminMemberManaging() {
         setSelectedRole("");
         closeManagingModal();
       } else {
-        openErrorModal();
+        setSelectedRole("");
+        closeManagingModal();
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          openErrorModal();
+        } else if (status === 404) {
+          openErrorModal();
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseDataPatch, errorPatch, isLoadingPatch]);
@@ -87,7 +109,17 @@ function AdminMemberManaging() {
         closeManagingModal();
       } else {
         closeCheckModal();
-        openErrorModal();
+        closeManagingModal();
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          openErrorModal();
+        } else if (status === 404) {
+          openErrorModal();
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseDataDel, errorDel, isLoadingDel]);

@@ -3,8 +3,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
 import Enter from "./routes/Enter";
 import Introduce from "./routes/Introduce";
+import Unauthorized from "./routes/Unauthorized";
 import Forbidden from "./routes/Forbidden";
-import Expired from "./routes/Expired";
+import NotFound from "./routes/NotFound";
+import ServerError from "./routes/ServerError";
 import Home from "./routes/Home";
 import Managing from "./routes/Managing";
 import Statistics from "./routes/Statistics";
@@ -25,8 +27,10 @@ function App() {
         <Routes>
           <Route path={"/"} element={<Enter />} />
           <Route path={"/introduce"} element={<Introduce />} />
-          <Route path={"/expired"} element={<Expired />} />
+          <Route path={"/unauthorized"} element={<Unauthorized />} />
           <Route path={"/forbidden"} element={<Forbidden />} />
+          <Route path={"/*"} element={<NotFound />} />
+          <Route path={"/server-error"} element={<ServerError />} />
           <Route
             path={"/home"}
             element={<PrivateRoute component={<Home />} />}
@@ -48,7 +52,7 @@ function App() {
             element={<PrivateRoute component={<Setting />} />}
           />
           <Route
-            path={"/admin/membermanaging"}
+            path={"/admin/member-managing"}
             element={<PrivateAdminRoute component={<AdminMemberManaging />} />}
           />
           <Route

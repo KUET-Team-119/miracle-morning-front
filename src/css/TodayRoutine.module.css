@@ -2,8 +2,8 @@
   height: 48px;
   display: flex;
   justify-content: center;
-  border-color: #8ec952;
-  background-color: #e4f6d2;
+  border-color: #ead9ad;
+  background-color: #faf4e8;
   cursor: pointer;
 }
 
@@ -11,8 +11,9 @@
   height: 48px;
   display: flex;
   justify-content: center;
-  border-color: rgb(190, 190, 190);
-  background-color: lightgray;
+  border-color: #8ec952;
+  background-color: #e4f6d2;
+  cursor: pointer;
 }
 
 .cardContent {
@@ -92,4 +93,9 @@
 .submitBtn:disabled {
   background-color: #8ec952;
   border-color: #8ec952;
+}
+
+.cancelProveModalBody .cancelProveModalBodyTitle {
+  font-size: 18px;
+  text-align: center;
 }

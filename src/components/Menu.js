@@ -18,7 +18,7 @@ function Menu({ show, onHide }) {
   };
 
   const logout = () => {
-    sessionStorage.removeItem("access-token");
+    localStorage.removeItem("access-token");
     closeLogoutModal();
     navigate(`/`);
   };

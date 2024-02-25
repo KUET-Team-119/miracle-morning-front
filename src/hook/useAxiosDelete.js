@@ -10,7 +10,7 @@ function useAxiosDelete({ url, password }) {
     try {
       const response = await axios.delete(url, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
           Password: `${password}`,
         },
       });
@@ -18,17 +18,26 @@ function useAxiosDelete({ url, password }) {
     } catch (error) {
       setError(error);
       const status = error.response.status;
-      console.log(error);
       if (status === 401) {
-        console.log(
-          "로그인 시간이 만료되었거나 사용자 정보가 없습니다. 다시 로그인을 시도해주세요."
-        );
-      } else if (status === 403) {
-        console.log("권한이 없습니다.");
-      } else if (status === 409) {
-        console.log("데이터가 충돌했습니다.");
-      } else if (status === 500) {
-        console.log("서버에 오류가 발생했습니다. 조금 뒤에 다시 시도해주세요.");
+        const authorizationHeader = error.response.headers.authorization;
+
+        // Authorization 헤더가 있는지 확인
+        if (authorizationHeader) {
+          // 새로운 accessToken 토큰을 추출
+          const accessToken = authorizationHeader.split("Bearer ")[1];
+          localStorage.setItem("access-token", accessToken);
+          try {
+            const response = await axios.delete(url, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+                Password: `${password}`,
+              },
+            });
+            setResponseData(response.data);
+          } catch (error) {
+            setError(error);
+          }
+        }
       }
     }
     setIsLoading(false);

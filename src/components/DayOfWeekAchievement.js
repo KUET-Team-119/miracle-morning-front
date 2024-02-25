@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAxiosGet from "../hook/useAxiosGet";
 import styles from "../css/DayOfWeekAchievement.module.css";
 import { Spinner, ProgressBar } from "react-bootstrap";
 
 function DayOfWeekAchievement() {
   const [response, setResponse] = useState([]);
+  const navigate = useNavigate();
 
   // 오늘의 루틴 조회
   const { responseData, error, isLoading } = useAxiosGet({
@@ -15,7 +17,16 @@ function DayOfWeekAchievement() {
       if (responseData !== null) {
         setResponse(responseData);
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

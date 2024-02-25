@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import useDecodingJwt from "../hook/useDecodingJwt";
 import useAxiosGet from "../hook/useAxiosGet";
 import Menu from "../components/Menu";
 import { Card, Col, Row, Spinner } from "react-bootstrap";
@@ -10,7 +9,6 @@ import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 
 function Images() {
-  const { myName } = useDecodingJwt();
   const [responseProof, setResponseProof] = useState([]);
   const [menuShow, setMenuShow] = useState(false);
   const navigate = useNavigate();
@@ -28,7 +26,16 @@ function Images() {
       if (responseData !== null) {
         setResponseProof(responseData);
       } else {
-        // console.log(errorProof);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

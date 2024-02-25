@@ -10,7 +10,7 @@ function Profile({ name, selected, setMemberRoutines }) {
             name === selected ? styles.selectedProfile : styles.initialProfile
           }
         />
-        <div className={styles.icon}>💚</div>
+        <div className={styles.icon}>{name === selected ? "💚" : "💛"}</div>
       </div>
       <p className={styles.name}>{name}</p>
     </div>

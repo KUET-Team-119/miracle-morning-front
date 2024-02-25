@@ -18,7 +18,7 @@ function AdminMenu({ show, onHide }) {
   };
 
   const logout = () => {
-    sessionStorage.removeItem("access-token");
+    localStorage.removeItem("access-token");
     closeLogoutModal();
     navigate(`/`);
   };
@@ -36,7 +36,7 @@ function AdminMenu({ show, onHide }) {
                 <Nav.Link
                   className={styles.link}
                   as={Link}
-                  to={`/admin/membermanaging`}
+                  to={`/admin/member-managing`}
                 >
                   사용자 관리
                 </Nav.Link>

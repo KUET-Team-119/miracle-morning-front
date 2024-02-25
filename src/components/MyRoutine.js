@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAxiosPatch from "../hook/useAxiosPatch";
 import useAxiosDelete from "../hook/useAxiosDelete";
@@ -40,6 +41,7 @@ function MyRoutine({
   const [isAllDay, setIsAllDay] = useState(
     startTime === "00:00:00" && endTime === "23:59:00" ? true : false
   );
+  const navigate = useNavigate();
 
   const objToJson = () => {
     setRequestData(
@@ -70,7 +72,16 @@ function MyRoutine({
       if (responseData !== null) {
         setToReload();
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
     closeUpdateModal();

@@ -53,11 +53,25 @@ function Login({ setIsMember }) {
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
-        sessionStorage.setItem("access-token", responseData.accessToken);
+        localStorage.setItem("access-token", responseData.accessToken);
         navigate(`/home`);
       } else {
-        setStatus(error.response.status);
-        setErrorModalShow(true);
+        const status = error.response.status;
+        if (status === 401) {
+          setStatus(error.response.status);
+          setErrorModalShow(true);
+        } else if (status === 403) {
+          setStatus(error.response.status);
+          setErrorModalShow(true);
+        } else if (status === 404) {
+          setStatus(error.response.status);
+          setErrorModalShow(true);
+        } else if (status === 409) {
+          setStatus(error.response.status);
+          setErrorModalShow(true);
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

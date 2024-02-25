@@ -18,7 +18,7 @@ function AdminSetting() {
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
-    navigate("/admin/membermanaging");
+    navigate("/admin/member-managing");
   };
 
   // 데이터 객체를 json 형태로 변환
@@ -53,6 +53,16 @@ function AdminSetting() {
         setPostToastShow(true);
       } else {
         closeComplaintModal();
+        const status = errorPost.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseDataPost, errorPost, isLoadingPost]);

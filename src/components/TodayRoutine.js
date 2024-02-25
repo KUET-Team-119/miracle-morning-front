@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import useDecodingJwt from "../hook/useDecodingJwt";
@@ -45,13 +46,14 @@ function TodayRoutine({
   const [modalNotice, setModalNotice] = useState(
     "※ 오늘 날짜의 사진을 선택하세요."
   );
+  const navigate = useNavigate();
 
   const objToJson = () => {
     setData(
       JSON.stringify({
         resultId: resultId,
         routineName: routineName,
-        doneAt: fileTime,
+        doneAt: fileTime === "" ? null : fileTime,
       })
     );
   };
@@ -74,13 +76,63 @@ function TodayRoutine({
       const response = await axios.patch(`/api/results`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
         },
       });
       setToReload(); // GET 메소드 재호출 유도
       closeProveModal();
+      closeCancelProveModal();
     } catch (error) {
-      console.error(error);
+      const status = error.response.status;
+      if (status === 401) {
+        const authorizationHeader = error.response.headers.authorization;
+
+        // Authorization 헤더가 있는지 확인
+        if (authorizationHeader) {
+          // 새로운 accessToken 토큰을 추출
+          const accessToken = authorizationHeader.split("Bearer ")[1];
+          localStorage.setItem("access-token", accessToken);
+
+          try {
+            const response = await axios.patch(`/api/results`, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+              },
+            });
+            setToReload(); // GET 메소드 재호출 유도
+            closeProveModal();
+            closeCancelProveModal();
+          } catch (error) {
+            closeProveModal();
+            closeCancelProveModal();
+            const status = error.response.status;
+            if (status === 401) {
+              navigate("/unauthorized");
+            } else if (status === 403) {
+              navigate("/forbidden");
+            } else if (status === 404) {
+              navigate("/not-found");
+            } else {
+              navigate("/server-error");
+            }
+          }
+        } else {
+          closeProveModal();
+          closeCancelProveModal();
+          navigate("/unauthorized");
+        }
+      } else {
+        closeProveModal();
+        closeCancelProveModal();
+        if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
+      }
     }
   };
 
@@ -174,6 +226,7 @@ function TodayRoutine({
 
   // 인증 취소 모달 열기
   const openCancelProveModal = () => {
+    objToJson();
     setCancelProveModalShow(true);
   };
 
@@ -190,7 +243,13 @@ function TodayRoutine({
           className={
             complete ? styles.completeRoutine : styles.incompleteRoutine
           }
-          onClick={complete || memberName !== myName ? null : openProveModal}
+          onClick={
+            memberName === myName
+              ? complete
+                ? openCancelProveModal
+                : openProveModal
+              : null
+          }
         >
           <div className={styles.cardContent}>
             <div>🌱</div>
@@ -324,6 +383,19 @@ function TodayRoutine({
             </Button>
           </Modal.Footer>
         </Form>
+      </Modal>
+      <Modal show={cancelProveModalShow} centered>
+        <Modal.Body className={styles.cancelProveModalBody}>
+          <p className={styles.cancelProveModalBodyTitle}>인증을 철회합니다.</p>
+        </Modal.Body>
+        <Modal.Footer className={styles.modalFooter}>
+          <Button variant="secondary" onClick={closeCancelProveModal}>
+            취소
+          </Button>
+          <Button onClick={submitPatch} variant="danger">
+            확인
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

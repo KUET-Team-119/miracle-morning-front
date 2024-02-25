@@ -16,7 +16,7 @@ function AdminComplaints() {
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
-    navigate("/admin/membermanaging");
+    navigate("/admin/member-managing");
   };
 
   // 사용자의 루틴 조회
@@ -28,7 +28,16 @@ function AdminComplaints() {
       if (responseData !== null) {
         setResponse(responseData);
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

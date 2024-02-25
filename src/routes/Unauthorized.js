@@ -1,8 +1,8 @@
 import useDecodingJwt from "../hook/useDecodingJwt";
-import styles from "../css/Expired.module.css";
 import { Alert } from "react-bootstrap";
+import styles from "../css/Unauthorized.module.css";
 
-function Expired() {
+function Unauthorized() {
   const { myName } = useDecodingJwt();
 
   return (
@@ -21,4 +21,4 @@ function Expired() {
   );
 }
 
-export default Expired;
+export default Unauthorized;

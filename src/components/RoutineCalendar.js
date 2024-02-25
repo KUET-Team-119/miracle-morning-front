@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import moment from "moment";
 import useAxiosGet from "../hook/useAxiosGet";
@@ -24,19 +25,28 @@ function RoutineCalendar() {
   const [searchMonth, setSearchMonth] = useState(
     moment(new Date()).format("M")
   );
+  const navigate = useNavigate();
 
   // 특정 기간의 기록 조회
   const { responseData, error, isLoading, refetch } = useAxiosGet({
     url: `/api/results`,
     params: { "member-id": myId, year: searchYear, month: searchMonth },
   });
-
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
         setResponse(responseData);
       } else {
-        // console.log(error);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

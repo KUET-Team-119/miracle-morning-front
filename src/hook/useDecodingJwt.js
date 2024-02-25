@@ -1,6 +1,6 @@
 function useDecodingJwt() {
-  // sessionStorage에서 "access-token" 키로 저장된 JWT 가져오기
-  const jwt = sessionStorage.getItem("access-token");
+  // localStorage에서 "access-token" 키로 저장된 JWT 가져오기
+  const jwt = localStorage.getItem("access-token");
 
   let myId = null;
   let myName = null;

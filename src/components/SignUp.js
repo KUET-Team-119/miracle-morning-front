@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAxiosPost from "../hook/useAxiosPost";
 import { Button, Card, Form, InputGroup, Modal } from "react-bootstrap";
@@ -11,6 +12,7 @@ function SignUp({ setIsMember }) {
   const [requestData, setRequestData] = useState("");
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const navigate = useNavigate();
 
   // 닉네임 입력 시 input의 value 변경
   const changeMemberName = (e) => {
@@ -52,7 +54,18 @@ function SignUp({ setIsMember }) {
       if (responseData !== null) {
         setSuccessModalShow(true);
       } else {
-        setErrorModalShow(true);
+        const status = error.response.status;
+        if (status === 401) {
+          setErrorModalShow(true);
+        } else if (status === 403) {
+          setErrorModalShow(true);
+        } else if (status === 404) {
+          setErrorModalShow(true);
+        } else if (status === 409) {
+          setErrorModalShow(true);
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);

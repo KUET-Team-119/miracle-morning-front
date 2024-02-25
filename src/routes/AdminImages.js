@@ -16,11 +16,10 @@ function AdminImages() {
   const [menuShow, setMenuShow] = useState(false);
   const [data, setData] = useState("");
   const [proveModalShow, setProveModalShow] = useState(false);
-  const [errorModalShow, setErrorModalShow] = useState(false);
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
-    navigate("/admin/membermanaging");
+    navigate("/admin/member-managing");
   };
 
   // 인증 사진 조회
@@ -32,7 +31,16 @@ function AdminImages() {
       if (responseData !== null) {
         setResponseProof(responseData);
       } else {
-        // console.log(errorProof);
+        const status = error.response.status;
+        if (status === 401) {
+          navigate("/unauthorized");
+        } else if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
       }
     }
   }, [responseData, error, isLoading]);
@@ -66,14 +74,57 @@ function AdminImages() {
       const response = await axios.patch(`/api/results`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${sessionStorage.getItem("access-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
         },
       });
       refetch(); // GET 메소드 재호출 유도
       closeProveModal();
     } catch (error) {
-      closeProveModal();
-      openErrorModal();
+      const status = error.response.status;
+      if (status === 401) {
+        const authorizationHeader = error.response.headers.authorization;
+
+        // Authorization 헤더가 있는지 확인
+        if (authorizationHeader) {
+          // 새로운 accessToken 토큰을 추출
+          const accessToken = authorizationHeader.split("Bearer ")[1];
+          localStorage.setItem("access-token", accessToken);
+          try {
+            const response = await axios.patch(`/api/results`, formData, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+              },
+            });
+            refetch(); // GET 메소드 재호출 유도
+            closeProveModal();
+          } catch (error) {
+            closeProveModal();
+            const status = error.response.status;
+            if (status === 401) {
+              navigate("/unauthorized");
+            } else if (status === 403) {
+              navigate("/forbidden");
+            } else if (status === 404) {
+              navigate("/not-found");
+            } else {
+              navigate("/server-error");
+            }
+          }
+        } else {
+          closeProveModal();
+          navigate("/unauthorized");
+        }
+      } else {
+        closeProveModal();
+        if (status === 403) {
+          navigate("/forbidden");
+        } else if (status === 404) {
+          navigate("/not-found");
+        } else {
+          navigate("/server-error");
+        }
+      }
     }
   };
 
@@ -85,16 +136,6 @@ function AdminImages() {
   // 인증 철회 모달 닫기
   const closeProveModal = () => {
     setProveModalShow(false);
-  };
-
-  // 에러 모달 열기
-  const openErrorModal = () => {
-    setErrorModalShow(true);
-  };
-
-  // 에러 모달 닫기
-  const closeErrorModal = () => {
-    setErrorModalShow(false);
   };
 
   return (
@@ -174,16 +215,6 @@ function AdminImages() {
             확인
           </Button>
         </Modal.Footer>
-      </Modal>
-      <Modal show={errorModalShow} centered>
-        <Modal.Body className={styles.errorModalBody}>
-          <p className={styles.errorModalBodyTitle}>
-            ⛔ 실행이 완료되지 않았습니다.
-          </p>
-          <Button className={styles.errorModalBtn} onClick={closeErrorModal}>
-            닫기
-          </Button>
-        </Modal.Body>
       </Modal>
     </>
   );

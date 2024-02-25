@@ -45,25 +45,3 @@
   display: flex;
   justify-content: center;
 }
-
-.errorModalBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.errorModalBody .errorModalBodyTitle {
-  font-size: 18px;
-}
-
-.errorModalBody .errorModalBodyContent {
-  font-size: 15px;
-}
-
-.errorModalBtn,
-.errorModalBtn:hover,
-.errorModalBtn:focus,
-.errorModalBtn:active {
-  background-color: #8ec952;
-  border-color: #8ec952;
-}
