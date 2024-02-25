@@ -192,7 +192,6 @@ function Managing() {
   // 월요일 버튼 클릭 시 상태 및 색상 변경
   const changeMon = () => {
     setMon((prevMon) => (prevMon === "0" ? "1" : "0"));
-    console.log(mon);
   };
 
   // 화요일 버튼 클릭 시 상태 및 색상 변경
