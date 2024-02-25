@@ -35,6 +35,18 @@
   transform: translate(-50%, -50%);
 }
 
+.tileTextIncompleteDoneAt {
+  color: black;
+}
+
+.tileTextCompleteDoneAt {
+  color: #8ec952;
+}
+
+.tileTextTotal {
+  color: #8ec952;
+}
+
 .tileCrown {
   position: absolute;
   top: 0px;

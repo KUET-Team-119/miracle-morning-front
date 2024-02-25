@@ -76,7 +76,14 @@ function RoutineCalendar() {
         <div className={styles.tileContent}>
           <div className={styles.tileCircle} />
           <div className={styles.tileText}>
-            {`${doneCount} | ${totalCount}`}
+            <span
+              className={
+                doneCount === totalCount
+                  ? styles.tileTextCompleteDoneAt
+                  : styles.tileTextIncompleteDoneAt
+              }
+            >{`${doneCount} `}</span>
+            <span className={styles.tileTextTotal}>{` | ${totalCount}`}</span>
           </div>
           {doneCount === totalCount ? (
             <img className={styles.tileCrown} src={crownIcon} alt="왕관" />

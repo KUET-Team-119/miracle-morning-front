@@ -1,5 +1,4 @@
 .container {
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,13 +8,14 @@
 .logo {
   width: 88px;
   height: 88px;
+  margin-bottom: 12px;
 }
 
 .title {
   font-size: 23px;
   text-align: center;
   line-height: 1.5;
-  margin-bottom: 35px;
+  margin-bottom: 24px;
 }
 
 .form {
@@ -23,7 +23,7 @@
 }
 
 .form .inputGroup {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .form .formControl {
