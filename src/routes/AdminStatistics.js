@@ -79,7 +79,6 @@ function AdminStatistics() {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>id</th>
                 <th>닉네임</th>
                 <th>실천 기록 수</th>
                 <th>전체 기록 수</th>
@@ -89,7 +88,6 @@ function AdminStatistics() {
             <tbody>
               {response.map((data) => (
                 <tr>
-                  <td>{data.memberId}</td>
                   <td>{data.memberName}</td>
                   <td>{data.completeResultCount}회</td>
                   <td>{data.totalResultCount}회</td>
