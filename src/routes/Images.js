@@ -48,19 +48,21 @@ function Images() {
           setMenuShow(false);
         }}
       />
-      <div className={styles.header}>
-        <div className={styles.intro}>
-          <p>오늘의 인증 피드입니다🌱</p>
-        </div>
-        <div className={styles.headerIcon}>
-          <img src={homeIcon} onClick={goToHome} alt="홈" />
-          <img
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-          />
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>오늘의 인증 피드입니다🌱</p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img src={homeIcon} onClick={goToHome} alt="홈" />
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
         </div>
       </div>
       {isLoading ? (

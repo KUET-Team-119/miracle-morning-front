@@ -4,9 +4,23 @@
   margin: 24px;
 }
 
+.headerContainer {
+  width: 100%;
+  height: 80px;
+  top: 0px;
+  background-color: white;
+  position: fixed;
+  z-index: 100;
+}
+
 .header {
+  height: 64px;
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  left: 24px;
+  right: 24px;
+  margin-top: 24px;
   margin-bottom: 16px;
 }
 
@@ -35,6 +49,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  margin-top: 64px;
 }
 
 .spinner {

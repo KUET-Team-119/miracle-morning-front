@@ -10,7 +10,7 @@
   top: 0px;
   background-color: white;
   position: fixed;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .header {
@@ -18,9 +18,8 @@
   display: flex;
   justify-content: space-between;
   position: fixed;
-  top: 0px;
-  left: 22px;
-  right: 38px;
+  left: 24px;
+  right: 24px;
   margin-top: 24px;
   margin-bottom: 16px;
 }
@@ -52,11 +51,11 @@
 }
 
 .tabs {
-  left: 24px;
-  right: 40px;
   top: 64px;
+  left: 24px;
+  right: 24px;
   position: fixed;
-  z-index: 2000;
+  z-index: 200;
 }
 
 .tabs button,
@@ -67,5 +66,5 @@
 }
 
 .tabContent {
-  padding-top: 80px;
+  margin-top: 80px;
 }

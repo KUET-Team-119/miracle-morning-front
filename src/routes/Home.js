@@ -93,21 +93,23 @@ function Home() {
           setMenuShow(false);
         }}
       />
-      <div className={styles.header}>
-        <div className={styles.intro}>
-          <p>
-            안녕하세요 <span>{myName}</span>님!
-          </p>
-          <p>오늘도 좋은 하루 보내세요🌱</p>
-        </div>
-        <div className={styles.headerIcon}>
-          <img
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-          />
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>
+              안녕하세요 <span>{myName}</span>님!
+            </p>
+            <p>오늘도 좋은 하루 보내세요🌱</p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
         </div>
       </div>
       <div className={styles.contents}>
