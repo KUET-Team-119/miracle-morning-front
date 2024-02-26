@@ -163,6 +163,8 @@ function AdminMemberManaging() {
     setErrorModalShow(false);
   };
 
+  const isValid = selectedRole !== "";
+
   return (
     <>
       <div className={styles.container}>
@@ -263,7 +265,7 @@ function AdminMemberManaging() {
           <Modal.Body>
             <div className={styles.managingModalBodyTitle}>권한</div>
             <Form.Select onChange={changeRole} value={selectedRole}>
-              <option>권한을 선택해주세요.</option>
+              <option value="">권한을 선택해주세요.</option>
               <option value="TEMP_USER">TEMP_USER</option>
               <option value="USER">USER</option>
             </Form.Select>
@@ -280,6 +282,7 @@ function AdminMemberManaging() {
               className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
+              disabled={isValid ? false : true}
             >
               수정하기
             </Button>
