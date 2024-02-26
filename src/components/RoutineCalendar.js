@@ -43,7 +43,7 @@ function RoutineCalendar() {
             // doneAt이 모두 존재하는 경우
             if (a.doneAt === b.doneAt) {
               // doneAt이 같으면 routineName을 기준으로 오름차순으로 정렬
-              return a.routineName.localeCompare(b.routineName);
+              return a.routineName.localeCompare(b.routineName, "ko-KR");
             } else {
               // doneAt이 다른 경우 doneAt을 기준으로 오름차순으로 정렬
               return a.doneAt.localeCompare(b.doneAt);
