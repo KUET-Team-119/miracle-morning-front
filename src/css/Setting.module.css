@@ -130,6 +130,7 @@
 }
 
 .toast {
+  font-size: 15px;
   position: fixed;
   bottom: 32px;
   left: 50%;
