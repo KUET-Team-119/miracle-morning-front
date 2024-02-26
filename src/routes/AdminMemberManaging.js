@@ -211,7 +211,9 @@ function AdminMemberManaging() {
               <tbody>
                 {response.length === 0 ? (
                   <tr>
-                    <td colSpan="6">데이터가 없습니다.</td>
+                    <td className={styles.noData} colSpan="6">
+                      데이터가 없습니다.
+                    </td>
                   </tr>
                 ) : (
                   response.map((member) => (

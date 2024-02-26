@@ -55,6 +55,10 @@
   margin-top: 72px;
 }
 
+.noData {
+  text-align: center;
+}
+
 .managingBtn,
 .managingBtn:hover,
 .managingBtn:focus,
