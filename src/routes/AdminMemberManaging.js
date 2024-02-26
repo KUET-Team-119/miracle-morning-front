@@ -172,21 +172,23 @@ function AdminMemberManaging() {
             setMenuShow(false);
           }}
         />
-        <div className={styles.header}>
-          <div className={styles.intro}>
-            <p>
-              관리자 <span>{myName}</span>님 환영합니다.
-            </p>
-            <p>사용자 관리 페이지입니다🔧</p>
-          </div>
-          <div className={styles.headerIcon}>
-            <img
-              src={menuIcon}
-              onClick={() => {
-                setMenuShow(true);
-              }}
-              alt="메뉴"
-            />
+        <div className={styles.headerContainer}>
+          <div className={styles.header}>
+            <div className={styles.intro}>
+              <p>
+                관리자 <span>{myName}</span>님 환영합니다.
+              </p>
+              <p>사용자 관리 페이지입니다🔧</p>
+            </div>
+            <div className={styles.headerIcon}>
+              <img
+                src={menuIcon}
+                onClick={() => {
+                  setMenuShow(true);
+                }}
+                alt="메뉴"
+              />
+            </div>
           </div>
         </div>
         {isLoading ? (
@@ -194,44 +196,46 @@ function AdminMemberManaging() {
             <Spinner animation="border" />
           </div>
         ) : (
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>닉네임</th>
-                <th>비밀번호</th>
-                <th>권한</th>
-                <th>가입일자</th>
-                <th>관리</th>
-              </tr>
-            </thead>
-            <tbody>
-              {response.map((member) => (
-                <tr key={member.memberId}>
-                  <td>{member.memberId}</td>
-                  <td>{member.memberName}</td>
-                  <td>{member.password}</td>
-                  <td>{member.role}</td>
-                  <td>
-                    {moment(member.createdAt).format(
-                      "YYYY년 MM월 DD일 HH시 mm분"
-                    )}
-                  </td>
-                  <td>
-                    <Button
-                      className={styles.managingBtn}
-                      onClick={openManagingModal}
-                      data-id={member.memberId}
-                      data-name={member.memberName}
-                      data-role={member.role}
-                    >
-                      관리
-                    </Button>
-                  </td>
+          <div className={styles.content}>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>닉네임</th>
+                  <th>비밀번호</th>
+                  <th>권한</th>
+                  <th>가입일자</th>
+                  <th>관리</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {response.map((member) => (
+                  <tr key={member.memberId}>
+                    <td>{member.memberId}</td>
+                    <td>{member.memberName}</td>
+                    <td>{member.password}</td>
+                    <td>{member.role}</td>
+                    <td>
+                      {moment(member.createdAt).format(
+                        "YYYY년 MM월 DD일 HH시 mm분"
+                      )}
+                    </td>
+                    <td>
+                      <Button
+                        className={styles.managingBtn}
+                        onClick={openManagingModal}
+                        data-id={member.memberId}
+                        data-name={member.memberName}
+                        data-role={member.role}
+                      >
+                        관리
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         )}
       </div>
       <Modal show={ManagingModalShow} centered>

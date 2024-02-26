@@ -50,22 +50,24 @@ function AdminComplaints() {
           setMenuShow(false);
         }}
       />
-      <div className={styles.header}>
-        <div className={styles.intro}>
-          <p>
-            관리자 <span>{myName}</span>님 환영합니다.
-          </p>
-          <p>오류 관리 페이지입니다🔧</p>
-        </div>
-        <div className={styles.headerIcon}>
-          <img src={homeIcon} onClick={goToMemberManaging} alt="홈" />
-          <img
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-          />
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>
+              관리자 <span>{myName}</span>님 환영합니다.
+            </p>
+            <p>오류 관리 페이지입니다🔧</p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img src={homeIcon} onClick={goToMemberManaging} alt="홈" />
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
         </div>
       </div>
       {isLoading ? (
