@@ -94,7 +94,7 @@ function AdminStatistics() {
                 </tr>
               ) : (
                 response.map((data) => (
-                  <tr>
+                  <tr key={data.memberId}>
                     <td>{data.memberName}</td>
                     <td>{data.completeResultCount}회</td>
                     <td>{data.totalResultCount}회</td>
