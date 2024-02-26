@@ -48,9 +48,12 @@
 .spinner {
   display: flex;
   justify-content: center;
-  margin-top: 72px;
 }
 
 .content {
   margin-top: 72px;
+}
+
+.noData {
+  text-align: center;
 }

@@ -71,27 +71,34 @@ function Images() {
         </div>
       ) : (
         <div className={styles.content}>
-          <Row xs={1} sm={2} md={3} lg={4} className="g-3">
-            {responseProof.map((result) => (
-              <Col key={result.resultId}>
-                <Card className={styles.card}>
-                  <Card.Img
-                    variant="top"
-                    src={`data:image;base64,${result.fileBase64}`}
-                  />
-                  <Card.Body>
-                    <Card.Title>{result.routineName}</Card.Title>
-                    <Card.Subtitle>{result.memberName}</Card.Subtitle>
-                    <Card.Text>
-                      {moment(result.doneAt).format(
-                        "YYYY년 MM일 DD일 HH시 mm분"
-                      )}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          {responseProof.length !== 0 ? (
+            <Row xs={1} sm={2} md={3} lg={4} className="g-3">
+              {responseProof.map((result) => (
+                <Col key={result.resultId}>
+                  <Card className={styles.card}>
+                    <Card.Img
+                      variant="top"
+                      src={`data:image;base64,${result.fileBase64}`}
+                    />
+                    <Card.Body>
+                      <Card.Title>{result.routineName}</Card.Title>
+                      <Card.Subtitle>{result.memberName}</Card.Subtitle>
+                      <Card.Text>
+                        {moment(result.doneAt).format(
+                          "YYYY년 MM일 DD일 HH시 mm분"
+                        )}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <div className={styles.noProof}>
+              <p>아직 루틴을 인증한 사람이 없어요😯</p>
+              <p>가장 먼저 인증해보세요!</p>
+            </div>
+          )}
         </div>
       )}
     </div>

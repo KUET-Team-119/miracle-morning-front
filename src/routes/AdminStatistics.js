@@ -70,12 +70,12 @@ function AdminStatistics() {
           </div>
         </div>
       </div>
-      {isLoading ? (
-        <div className={styles.spinner}>
-          <Spinner animation="border" />
-        </div>
-      ) : (
-        <div className={styles.content}>
+      <div className={styles.content}>
+        {isLoading ? (
+          <div className={styles.spinner}>
+            <Spinner animation="border" />
+          </div>
+        ) : (
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -86,23 +86,31 @@ function AdminStatistics() {
               </tr>
             </thead>
             <tbody>
-              {response.map((data) => (
+              {response.length === 0 ? (
                 <tr>
-                  <td>{data.memberName}</td>
-                  <td>{data.completeResultCount}회</td>
-                  <td>{data.totalResultCount}회</td>
-                  <td>
-                    {Math.ceil(
-                      (data.completeResultCount / data.totalResultCount) * 100
-                    )}
-                    %
+                  <td className={styles.noData} colSpan="4">
+                    데이터가 없습니다.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                response.map((data) => (
+                  <tr>
+                    <td>{data.memberName}</td>
+                    <td>{data.completeResultCount}회</td>
+                    <td>{data.totalResultCount}회</td>
+                    <td>
+                      {Math.ceil(
+                        (data.completeResultCount / data.totalResultCount) * 100
+                      )}
+                      %
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </Table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

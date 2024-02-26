@@ -49,6 +49,10 @@
   margin-top: 72px;
 }
 
+.noData {
+  text-align: center;
+}
+
 .spinner {
   display: flex;
   justify-content: center;

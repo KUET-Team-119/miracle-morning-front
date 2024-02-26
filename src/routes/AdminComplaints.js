@@ -76,23 +76,27 @@ function AdminComplaints() {
         </div>
       ) : (
         <div className={styles.content}>
-          <Row xs={1} sm={2} md={3} className="g-3">
-            {response.map((complaint) => (
-              <Col key={complaint.complaintId}>
-                <Card className={styles.card}>
-                  <Card.Body>
-                    <Card.Title>{complaint.memberName}</Card.Title>
-                    <Card.Subtitle>
-                      {moment(complaint.createdAt).format(
-                        "YYYY년 MM월 DD일 HH시 mm분"
-                      )}
-                    </Card.Subtitle>
-                    <Card.Text>{complaint.content}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          {response.length === 0 ? (
+            <p className={styles.noData}>데이터가 없습니다.</p>
+          ) : (
+            <Row xs={1} sm={2} md={3} className="g-3">
+              {response.map((complaint) => (
+                <Col key={complaint.complaintId}>
+                  <Card className={styles.card}>
+                    <Card.Body>
+                      <Card.Title>{complaint.memberName}</Card.Title>
+                      <Card.Subtitle>
+                        {moment(complaint.createdAt).format(
+                          "YYYY년 MM월 DD일 HH시 mm분"
+                        )}
+                      </Card.Subtitle>
+                      <Card.Text>{complaint.content}</Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )}
         </div>
       )}
     </div>

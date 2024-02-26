@@ -209,30 +209,36 @@ function AdminMemberManaging() {
                 </tr>
               </thead>
               <tbody>
-                {response.map((member) => (
-                  <tr key={member.memberId}>
-                    <td>{member.memberId}</td>
-                    <td>{member.memberName}</td>
-                    <td>{member.password}</td>
-                    <td>{member.role}</td>
-                    <td>
-                      {moment(member.createdAt).format(
-                        "YYYY년 MM월 DD일 HH시 mm분"
-                      )}
-                    </td>
-                    <td>
-                      <Button
-                        className={styles.managingBtn}
-                        onClick={openManagingModal}
-                        data-id={member.memberId}
-                        data-name={member.memberName}
-                        data-role={member.role}
-                      >
-                        관리
-                      </Button>
-                    </td>
+                {response.length === 0 ? (
+                  <tr>
+                    <td colSpan="6">데이터가 없습니다.</td>
                   </tr>
-                ))}
+                ) : (
+                  response.map((member) => (
+                    <tr key={member.memberId}>
+                      <td>{member.memberId}</td>
+                      <td>{member.memberName}</td>
+                      <td>{member.password}</td>
+                      <td>{member.role}</td>
+                      <td>
+                        {moment(member.createdAt).format(
+                          "YYYY년 MM월 DD일 HH시 mm분"
+                        )}
+                      </td>
+                      <td>
+                        <Button
+                          className={styles.managingBtn}
+                          onClick={openManagingModal}
+                          data-id={member.memberId}
+                          data-name={member.memberName}
+                          data-role={member.role}
+                        >
+                          관리
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </Table>
           </div>
