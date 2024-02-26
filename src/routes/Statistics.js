@@ -29,31 +29,37 @@ function Statistics() {
           setMenuShow(false);
         }}
       />
-      <div className={styles.header}>
-        <div className={styles.intro}>
-          <p>
-            <span>{myName}</span>님의 루틴 기록🌱
-          </p>
-        </div>
-        <div className={styles.headerIcon}>
-          <img src={homeIcon} onClick={goToHome} alt="홈" />
-          <img
-            src={menuIcon}
-            onClick={() => {
-              setMenuShow(true);
-            }}
-            alt="메뉴"
-          />
+      <div className={styles.headerContainer}>
+        <div className={styles.header}>
+          <div className={styles.intro}>
+            <p>
+              <span>{myName}</span>님의 루틴 기록🌱
+            </p>
+          </div>
+          <div className={styles.headerIcon}>
+            <img src={homeIcon} onClick={goToHome} alt="홈" />
+            <img
+              src={menuIcon}
+              onClick={() => {
+                setMenuShow(true);
+              }}
+              alt="메뉴"
+            />
+          </div>
         </div>
       </div>
       <Tabs className={styles.tabs} defaultActiveKey="eachMonth" justify>
-        <Tab eventKey="eachMonth" title="월별">
+        <Tab className={styles.tabContent} eventKey="eachMonth" title="월별">
           <RoutineCalendar />
         </Tab>
-        <Tab eventKey="eachDay" title="요일별">
+        <Tab className={styles.tabContent} eventKey="eachDay" title="요일별">
           <DayOfWeekAchievement />
         </Tab>
-        <Tab eventKey="eachRoutine" title="루틴별">
+        <Tab
+          className={styles.tabContent}
+          eventKey="eachRoutine"
+          title="루틴별"
+        >
           <RoutineAchievement />
         </Tab>
       </Tabs>
