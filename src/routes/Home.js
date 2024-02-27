@@ -64,7 +64,12 @@ function Home() {
           // complete가 false인 경우를 먼저 정렬, true인 경우는 나중에 정렬
           if (a.complete === b.complete) {
             // complete 값이 같은 경우 startTime으로 정렬
-            return a.startTime.localeCompare(b.startTime);
+            if (a.startTime === b.startTime) {
+              // startTime이 같은 경우 endTime으로 정렬
+              return a.endTime.localeCompare(b.endTime);
+            } else {
+              return a.startTime.localeCompare(b.startTime);
+            }
           } else {
             return a.complete ? 1 : -1; // false가 앞에 오도록 정렬
           }
