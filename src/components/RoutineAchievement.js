@@ -40,16 +40,20 @@ function RoutineAchievement() {
         </div>
       ) : (
         <div className={styles.content}>
-          {response.map((routine) => (
-            <div className={styles.rateContainer} key={routine.routineName}>
-              <div className={styles.dayOfWeek}>🌱{routine.routineName}</div>
-              <ProgressBar
-                className={styles.progressBar}
-                now={routine.achievement}
-                label={`${routine.achievement}%`}
-              />
-            </div>
-          ))}
+          {response.length !== 0 ? (
+            response.map((routine) => (
+              <div className={styles.rateContainer} key={routine.routineName}>
+                <div className={styles.dayOfWeek}>🌱{routine.routineName}</div>
+                <ProgressBar
+                  className={styles.progressBar}
+                  now={routine.achievement}
+                  label={`${routine.achievement}%`}
+                />
+              </div>
+            ))
+          ) : (
+            <p className={styles.noRoutine}>기록이 없어요</p>
+          )}
         </div>
       )}
     </div>

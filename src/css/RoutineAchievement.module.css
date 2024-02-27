@@ -25,3 +25,9 @@
 .progressBar div {
   background-color: #8ec952;
 }
+
+.noRoutine {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 16px;
+}
