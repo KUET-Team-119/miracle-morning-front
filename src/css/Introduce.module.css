@@ -170,6 +170,10 @@
   text-decoration: none;
 }
 
+.row {
+  width: 100%;
+}
+
 .explainCol {
   display: flex;
   align-items: center;
