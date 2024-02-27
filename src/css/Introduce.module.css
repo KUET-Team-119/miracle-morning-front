@@ -41,14 +41,14 @@
   padding: 7%;
 }
 
-.mission_title {
+.missionTitle {
   color: white;
   font-size: 1rem;
   margin-bottom: 5%;
 }
 
-.mission_korean,
-.mission_english {
+.missionKorean,
+.missionEnglish {
   color: white;
   font-size: 1.5rem;
   font-weight: 500;
@@ -62,7 +62,7 @@
   text-align: left;
 }
 
-.identity_subtitle {
+.identitySubtitle {
   color: green;
   font-size: 1rem;
   font-weight: 500;
@@ -70,14 +70,14 @@
   margin-bottom: 4%;
 }
 
-.identity_title {
+.identityTitle {
   color: green;
   font-weight: 500;
   font-size: 1.5rem;
   margin-bottom: 5%;
 }
 
-.identity_explain {
+.identityExplain {
   color: green;
   font-size: 0.9rem;
   font-weight: 320;
@@ -96,9 +96,8 @@
 .manageRoutine,
 .statistics {
   width: 100%;
-  margin-bottom: 5%;
   display: flex;
-  justify-content: center;
+  margin-bottom: 5%;
 }
 
 .checkRoutineImage,
@@ -110,21 +109,19 @@
 .checkRoutineImageContainer,
 .manageImageContainer,
 .statisticsImageContainer {
-  width: 30%;
+  width: 64%;
   border: 1px solid lightgrey;
   float: left;
   box-sizing: border-box;
-  margin-left: 10%;
 }
 
 .checkRoutineExplain,
 .manageExplain,
 .statisticsExplain {
-  width: 30%;
   float: left;
   font-size: 1rem;
   box-sizing: border-box;
-  margin-top: 5%;
+  margin-left: 20%;
 }
 
 .checkRoutineExplainSubtitle,
@@ -171,6 +168,17 @@
 .applyLink {
   color: white;
   text-decoration: none;
+}
+
+.explainCol {
+  display: flex;
+  align-items: center;
+}
+
+.imageCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 footer {
