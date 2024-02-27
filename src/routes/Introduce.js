@@ -53,7 +53,7 @@ function Introduce() {
         </p>
       </section>
 
-      <section>
+      <section className={styles.function}>
         <div className={styles.functionTitle}>FUNCTION</div>
         <div className={styles.checkRoutine}>
           <Row className={styles.row}>
@@ -148,7 +148,7 @@ function Introduce() {
 
       <footer>
         <p>&copy; 2024 미라클 농장. All rights reserved.</p>
-        <p>Produced By 김도연, 이정진, 이희철, 허승준</p>
+        <p>Produced by 김도연, 이정진, 이희철, 허승준</p>
       </footer>
     </div>
   );
