@@ -129,7 +129,7 @@ function AdminSetting() {
             </p>
             <Form.Control
               as="textarea"
-              placeholder="내용을 작성해주세요. (700자 이내)"
+              placeholder="내용을 작성해주세요 (700자 이내)"
               rows={5}
               value={complaintContent}
               onChange={changeComplaintContent}
