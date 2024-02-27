@@ -18,11 +18,14 @@ import homeIcon from "../images/home.png";
 import menuIcon from "../images/menu.png";
 import addIcon from "../images/add.png";
 
+const MAX_ROUTINES_COUNT = 20;
+
 function Managing() {
   const { myName } = useDecodingJwt();
   const [routines, setRoutines] = useState([]);
   const [addModalShow, setAddModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const [preventModalShow, setPreventModalShow] = useState(false);
   const [newRoutineName, setNewRoutineName] = useState("");
   const [newDayOfWeek, setNewDayOfWeek] = useState("");
   const [mon, setMon] = useState("0");
@@ -38,6 +41,7 @@ function Managing() {
   const [requestData, setRequestData] = useState("");
   const [menuShow, setMenuShow] = useState(false);
   const [isAllDay, setIsAllDay] = useState(false);
+  const [routinesCount, setRoutinesCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -48,12 +52,21 @@ function Managing() {
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
+        if (responseData.length !== 0) {
+          setRoutinesCount(responseData.length);
+        }
+
         const sortedResponseData = [...responseData]; // 복사본을 만들어 정렬
         sortedResponseData.sort((a, b) => {
           // isActivated가 true인 경우를 먼저 정렬, false인 경우는 나중에 정렬
           if (a.isActivated === b.isActivated) {
             // isActivated 값이 같은 경우 startTime으로 정렬
-            return a.startTime.localeCompare(b.startTime);
+            if (a.startTime === b.startTime) {
+              // startTime이 같은 경우 endTime으로 정렬
+              return a.endTime.localeCompare(b.endTime);
+            } else {
+              return a.startTime.localeCompare(b.startTime);
+            }
           } else {
             return a.isActivated ? -1 : 1; // true가 앞에 오도록 정렬
           }
@@ -118,7 +131,7 @@ function Managing() {
         } else if (status === 404) {
           navigate("/not-found");
         } else if (status === 409) {
-          setErrorModalShow(true);
+          openErrorModalShow();
         } else {
           navigate("/server-error");
         }
@@ -174,6 +187,26 @@ function Managing() {
     setSat("0");
     setSun("0");
     setIsAllDay(false);
+  };
+
+  // 루틴 추가 방지 모달 열기
+  const openPreventModalShow = () => {
+    setPreventModalShow(true);
+  };
+
+  // 루틴 추가 방지 모달 닫기
+  const closePreventModalShow = () => {
+    setPreventModalShow(false);
+  };
+
+  // 에러 모달 열기
+  const openErrorModalShow = () => {
+    setErrorModalShow(true);
+  };
+
+  // 에러 모달 닫기
+  const closeErrorModalShow = () => {
+    setErrorModalShow(false);
   };
 
   const goToHome = () => {
@@ -262,7 +295,15 @@ function Managing() {
         <div className={styles.routinesContainer}>
           <div className={styles.routinesContainerHeader}>
             <p>🌱 수정하고 싶은 루틴을 클릭해요</p>
-            <img src={addIcon} onClick={openAddModal} alt="루틴 추가" />
+            <img
+              src={addIcon}
+              onClick={
+                routinesCount !== MAX_ROUTINES_COUNT
+                  ? openAddModal
+                  : openPreventModalShow
+              }
+              alt="루틴 추가"
+            />
           </div>
           <div className={styles.routinesList}>
             {isLoading ? (
@@ -447,6 +488,22 @@ function Managing() {
           </Modal.Footer>
         </Form>
       </Modal>
+      <Modal show={preventModalShow} centered>
+        <Modal.Body className={styles.preventModalBody}>
+          <p className={styles.preventModalBodyTitle}>
+            ⛔ 더 이상 추가할 수 없습니다.
+          </p>
+          <p className={styles.preventModalBodyContent}>
+            루틴은 최대 20개까지 등록할 수 있어요.
+          </p>
+          <Button
+            className={styles.preventModalBtn}
+            onClick={closePreventModalShow}
+          >
+            닫기
+          </Button>
+        </Modal.Body>
+      </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
           <p className={styles.errorModalBodyTitle}>⛔ 중복된 루틴입니다.</p>
@@ -455,8 +512,7 @@ function Managing() {
           </p>
           <Button
             className={styles.errorModalBtn}
-            variant="primary"
-            onClick={() => setErrorModalShow(false)}
+            onClick={closeErrorModalShow}
           >
             닫기
           </Button>

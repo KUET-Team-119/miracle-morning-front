@@ -168,23 +168,29 @@
   border-color: #8ec952;
 }
 
-.errorModalBody {
+.errorModalBody,
+.preventModalBody {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.errorModalBody .errorModalBodyTitle {
+.errorModalBody .errorModalBodyTitle,
+.preventModalBody .preventModalBodyTitle {
   font-size: 18px;
 }
 
-.errorModalBody .errorModalBodyContent {
+.errorModalBody .errorModalBodyContent,
+.preventModalBody .preventModalBodyContent {
   font-size: 15px;
 }
 
 .errorModalBtn,
 .errorModalBtn:focus,
-.errorModalBtn:hover {
+.errorModalBtn:hover,
+.preventModalBtn,
+.preventModalBtn:focus,
+.preventModalBtn:hover {
   background-color: #8ec952;
   border-color: #8ec952;
 }
