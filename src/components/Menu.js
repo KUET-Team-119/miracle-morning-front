@@ -68,7 +68,7 @@ function Menu({ show, onHide }) {
       </Offcanvas>
       <Modal show={logoutModalShow} centered>
         <Modal.Body className={styles.logoutModalBody}>
-          <p className={styles.logoutModalBodyTitle}>로그아웃 하시겠습니까?</p>
+          <p className={styles.logoutModalBodyTitle}>로그아웃 할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeLogoutModal}>

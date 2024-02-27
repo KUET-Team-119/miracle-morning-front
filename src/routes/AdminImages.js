@@ -205,7 +205,7 @@ function AdminImages() {
               </Row>
             ) : (
               <div className={styles.noProof}>
-                <p>데이터가 없습니다.</p>
+                <p>데이터가 없습니다</p>
               </div>
             )}
           </div>
@@ -213,7 +213,7 @@ function AdminImages() {
       </div>
       <Modal show={proveModalShow} centered>
         <Modal.Body className={styles.proveModalBody}>
-          <p className={styles.proveModalBodyTitle}>인증을 철회합니다.</p>
+          <p className={styles.proveModalBodyTitle}>인증을 철회할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeProveModal}>

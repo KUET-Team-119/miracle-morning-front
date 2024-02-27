@@ -92,12 +92,12 @@ function SignUp({ setIsMember }) {
           <Card.Text className={styles.cardContent}>
             비밀번호 만들기를 누르면
             <br />
-            자동으로 안전한 비밀번호가 생성돼요.
+            자동으로 안전한 비밀번호가 생성돼요
           </Card.Text>
           <Card.Text className={styles.cardWarning}>
-            ※ 생성된 비밀번호는 변경이 불가해요.
+            ※ 생성된 비밀번호는 변경이 불가해요
             <br />
-            반드시 캡처 후 보관해주세요.
+            반드시 캡처 후 보관해주세요
           </Card.Text>
         </Card.Body>
       </Card>
@@ -145,7 +145,7 @@ function SignUp({ setIsMember }) {
         <Modal.Body className={styles.modalBody}>
           <p className={styles.modalBodyTitle}>✅ 회원가입 신청 완료</p>
           <p className={styles.modalBodyContent}>
-            관리자 승인 완료 후 이용이 가능합니다.
+            관리자 승인 완료 후 이용이 가능합니다
           </p>
           <Button
             className={styles.modalBtn}
@@ -158,8 +158,8 @@ function SignUp({ setIsMember }) {
       </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.modalBody}>
-          <p className={styles.modalBodyTitle}>⛔ 중복된 닉네임입니다.</p>
-          <p className={styles.modalBodyContent}>다른 닉네임을 입력해주세요.</p>
+          <p className={styles.modalBodyTitle}>⛔ 중복된 닉네임입니다</p>
+          <p className={styles.modalBodyContent}>다른 닉네임을 입력해주세요</p>
           <Button
             className={styles.modalBtn}
             onClick={() => setErrorModalShow(false)}

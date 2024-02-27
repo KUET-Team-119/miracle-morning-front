@@ -343,12 +343,12 @@ function Managing() {
               <Form.Control
                 type="text"
                 value={newRoutineName}
-                placeholder="10자 이내"
+                placeholder="중복된 루틴명 불가(10자 이내)"
                 onChange={changeRoutineName}
                 maxLength={10}
               />
               <div className={styles.modalNotice}>
-                루틴명은 변경이 불가능해요.
+                루틴명은 변경이 불가능해요
               </div>
             </div>
             <div className={styles.dayOfWeek}>
@@ -433,7 +433,7 @@ function Managing() {
                 </Button>
               </ButtonGroup>
               <div className={styles.modalNotice}>
-                자유롭게 요일을 선택할 수 있어요.
+                자유롭게 요일을 선택할 수 있어요
               </div>
             </div>
             <div className={styles.actionTime}>
@@ -491,10 +491,10 @@ function Managing() {
       <Modal show={preventModalShow} centered>
         <Modal.Body className={styles.preventModalBody}>
           <p className={styles.preventModalBodyTitle}>
-            ⛔ 더 이상 추가할 수 없습니다.
+            ⛔ 더 이상 추가할 수 없습니다
           </p>
           <p className={styles.preventModalBodyContent}>
-            루틴은 최대 20개까지 등록할 수 있어요.
+            루틴은 20개까지 등록할 수 있어요
           </p>
           <Button
             className={styles.preventModalBtn}
@@ -506,9 +506,9 @@ function Managing() {
       </Modal>
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
-          <p className={styles.errorModalBodyTitle}>⛔ 중복된 루틴입니다.</p>
+          <p className={styles.errorModalBodyTitle}>⛔ 중복된 루틴입니다</p>
           <p className={styles.errorModalBodyContent}>
-            다른 루틴명을 입력해주세요.
+            다른 루틴명을 입력해주세요
           </p>
           <Button
             className={styles.errorModalBtn}

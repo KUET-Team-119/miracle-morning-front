@@ -132,7 +132,7 @@ function Home() {
               ) : (
                 <div className={styles.cheering}>
                   완벽한 하루까지 <span>{routinesCount}개</span>의 루틴이
-                  남아있어요
+                  남았어요
                 </div>
               )}
             </Card>

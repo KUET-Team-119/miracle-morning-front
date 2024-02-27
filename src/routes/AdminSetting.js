@@ -125,7 +125,7 @@ function AdminSetting() {
         <Form onSubmit={submitPost}>
           <Modal.Body className={styles.complaintModalBody}>
             <p className={styles.complaintModalBodyTitle}>
-              아래에 오류를 적어주세요.
+              아래에 오류를 적어주세요
             </p>
             <Form.Control
               as="textarea"
@@ -162,7 +162,7 @@ function AdminSetting() {
         delay={3000}
         autohide
       >
-        <Toast.Body>오류 제보가 전송되었습니다.</Toast.Body>
+        <Toast.Body>오류 제보가 전송되었습니다</Toast.Body>
       </Toast>
     </>
   );

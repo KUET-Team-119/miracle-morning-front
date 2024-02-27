@@ -138,12 +138,12 @@ function Login({ setIsMember }) {
           <p className={styles.modalBodyTitle}>
             {status === 401
               ? "⛔ 닉네임/비밀번호를 다시 확인해주세요!"
-              : "⛔ 승인되지 않은 계정입니다."}
+              : "⛔ 승인되지 않은 계정입니다"}
           </p>
           <p className={styles.modalBodyContent}>
             {status === 401
               ? "※ 비밀번호 분실 시, 관리자에게 문의"
-              : "※ 관리자 승인 완료 후 이용 가능합니다."}
+              : "※ 관리자 승인 완료 후 이용 가능합니다"}
           </p>
           <Button
             className={styles.modalBtn}

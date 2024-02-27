@@ -400,10 +400,8 @@ function MyRoutine({
       </Modal>
       <Modal show={deleteModalShow} centered>
         <Modal.Body className={styles.deleteModalBody}>
-          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제합니다.</p>
-          <p className={styles.deleteModalBodyContent}>
-            정말로 삭제하시겠습니까?
-          </p>
+          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제합니다</p>
+          <p className={styles.deleteModalBodyContent}>정말로 삭제할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>

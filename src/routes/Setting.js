@@ -195,11 +195,11 @@ function Setting() {
         <Form onSubmit={submitPost}>
           <Modal.Body className={styles.complaintModalBody}>
             <p className={styles.complaintModalBodyTitle}>
-              아래에 오류를 적어주세요.
+              아래에 오류를 적어주세요
             </p>
             <Form.Control
               as="textarea"
-              placeholder="내용을 작성해주세요. (700자 이내)"
+              placeholder="내용을 작성해주세요 (700자 이내)"
               rows={5}
               value={complaintContent}
               onChange={changeComplaintContent}
@@ -229,9 +229,9 @@ function Setting() {
         <Modal.Body className={styles.leaveModalBody}>
           <p className={styles.leaveModalBodyTitle}>
             탈퇴 시 관련 데이터는 모두{" "}
-            <span className={styles.leaveModalNotice}>삭제</span>됩니다.
+            <span className={styles.leaveModalNotice}>삭제</span>됩니다
           </p>
-          <p className={styles.leaveModalBodyContent}>탈퇴하시겠습니까?</p>
+          <p className={styles.leaveModalBodyContent}>탈퇴할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button
@@ -249,12 +249,12 @@ function Setting() {
       <Modal show={leaveModalShow} centered>
         <Modal.Body className={styles.leaveModalBody}>
           <p className={styles.leaveModalBodyTitle}>탈퇴</p>
-          <p className={styles.leaveModalBodyContent}>비밀번호를 확인합니다.</p>
+          <p className={styles.leaveModalBodyContent}>비밀번호를 확인합니다</p>
           <InputGroup>
             <InputGroup.Text>비밀번호</InputGroup.Text>
             <Form.Control
               type="password"
-              placeholder="비밀번호를 입력해주세요."
+              placeholder="비밀번호를 입력해주세요"
               value={pw}
               onChange={changePw}
             />
@@ -292,7 +292,7 @@ function Setting() {
         delay={3000}
         autohide
       >
-        <Toast.Body>오류 제보가 전송되었습니다.</Toast.Body>
+        <Toast.Body>오류 제보가 전송되었습니다</Toast.Body>
       </Toast>
     </>
   );

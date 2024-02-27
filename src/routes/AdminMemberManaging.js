@@ -178,7 +178,7 @@ function AdminMemberManaging() {
           <div className={styles.header}>
             <div className={styles.intro}>
               <p>
-                관리자 <span>{myName}</span>님 환영합니다.
+                관리자 <span>{myName}</span>님 환영합니다
               </p>
               <p>사용자 관리 페이지입니다🔧</p>
             </div>
@@ -214,7 +214,7 @@ function AdminMemberManaging() {
                 {response.length === 0 ? (
                   <tr>
                     <td className={styles.noData} colSpan="6">
-                      데이터가 없습니다.
+                      데이터가 없습니다
                     </td>
                   </tr>
                 ) : (
@@ -265,7 +265,7 @@ function AdminMemberManaging() {
           <Modal.Body>
             <div className={styles.managingModalBodyTitle}>권한</div>
             <Form.Select onChange={changeRole} value={selectedRole}>
-              <option value="">권한을 선택해주세요.</option>
+              <option value="">권한을 선택해주세요</option>
               <option value="TEMP_USER">TEMP_USER</option>
               <option value="USER">USER</option>
             </Form.Select>
@@ -292,7 +292,7 @@ function AdminMemberManaging() {
       <Modal show={checkModalShow} centered>
         <Modal.Body className={styles.checkModalBody}>
           <p className={styles.checkModalBodyTitle}>
-            {memberName}님이 강제 탈퇴됩니다.
+            {memberName}님이 강제 탈퇴할까요?
           </p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
@@ -307,7 +307,7 @@ function AdminMemberManaging() {
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
           <p className={styles.errorModalBodyTitle}>
-            ⛔ 실행이 완료되지 않았습니다.
+            ⛔ 실행이 완료되지 않았습니다
           </p>
           <Button className={styles.errorModalBtn} onClick={closeErrorModal}>
             닫기

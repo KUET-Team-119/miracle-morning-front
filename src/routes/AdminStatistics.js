@@ -54,7 +54,7 @@ function AdminStatistics() {
         <div className={styles.header}>
           <div className={styles.intro}>
             <p>
-              관리자 <span>{myName}</span>님 환영합니다.
+              관리자 <span>{myName}</span>님 환영합니다
             </p>
             <p>통계 관리 페이지입니다🔧</p>
           </div>
@@ -89,7 +89,7 @@ function AdminStatistics() {
               {response.length === 0 ? (
                 <tr>
                   <td className={styles.noData} colSpan="4">
-                    데이터가 없습니다.
+                    데이터가 없습니다
                   </td>
                 </tr>
               ) : (

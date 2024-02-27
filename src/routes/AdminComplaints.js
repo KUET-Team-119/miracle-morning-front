@@ -109,7 +109,7 @@ function AdminComplaints() {
           <div className={styles.header}>
             <div className={styles.intro}>
               <p>
-                관리자 <span>{myName}</span>님 환영합니다.
+                관리자 <span>{myName}</span>님 환영합니다
               </p>
               <p>오류 관리 페이지입니다🔧</p>
             </div>
@@ -132,7 +132,7 @@ function AdminComplaints() {
         ) : (
           <div className={styles.content}>
             {response.length === 0 ? (
-              <p className={styles.noData}>데이터가 없습니다.</p>
+              <p className={styles.noData}>데이터가 없습니다</p>
             ) : (
               <Row xs={1} sm={2} md={3} className="g-3">
                 {response.map((complaint) => (
@@ -164,7 +164,7 @@ function AdminComplaints() {
       </div>
       <Modal show={deleteModalShow} centered>
         <Modal.Body className={styles.deleteModalBody}>
-          <p className={styles.deleteModalBodyTitle}>제보를 삭제합니다.</p>
+          <p className={styles.deleteModalBodyTitle}>제보를 삭제할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeDeleteModal}>
@@ -178,7 +178,7 @@ function AdminComplaints() {
       <Modal show={errorModalShow} centered>
         <Modal.Body className={styles.errorModalBody}>
           <p className={styles.errorModalBodyTitle}>
-            ⛔ 실행이 완료되지 않았습니다.
+            ⛔ 실행이 완료되지 않았습니다
           </p>
           <Button className={styles.errorModalBtn} onClick={closeErrorModal}>
             닫기

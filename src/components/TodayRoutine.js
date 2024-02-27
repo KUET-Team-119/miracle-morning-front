@@ -43,9 +43,8 @@ function TodayRoutine({
   const [fileTime, setFileTime] = useState("");
   const [fileSize, setFileSize] = useState("");
   const [isValid, setIsValid] = useState(NOT_SELECTED);
-  const [modalNotice, setModalNotice] = useState(
-    "※ 오늘 날짜의 사진을 선택하세요."
-  );
+  const [modalNotice, setModalNotice] =
+    useState("※ 오늘 날짜의 사진을 선택하세요");
   const navigate = useNavigate();
 
   const objToJson = () => {
@@ -170,7 +169,7 @@ function TodayRoutine({
       setFileSize(fileData.size);
     } else {
       setFile(null);
-      setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
+      setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
     }
   };
 
@@ -194,15 +193,15 @@ function TodayRoutine({
           setIsValid(VALIDATE_FILE);
         } else {
           setIsValid(INVALID_SIZE);
-          setModalNotice("※ 사진 크기가 5MB 이하여야 합니다.");
+          setModalNotice("※ 사진 크기가 5MB 이하여야 합니다");
         }
       } else {
         setIsValid(INVALID_TIME);
-        setModalNotice("※ 사진 시간이 실천 시간 이후입니다.");
+        setModalNotice("※ 사진 시간이 실천 시간 이후입니다");
       }
     } else {
       setIsValid(INVALID_DATE);
-      setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
+      setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
     }
   }, [fileTime, fileSize]);
 
@@ -221,7 +220,7 @@ function TodayRoutine({
     setFileTime("");
     setFileSize("");
     setIsValid(NOT_SELECTED);
-    setModalNotice("※ 오늘 날짜의 사진을 선택하세요.");
+    setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
   };
 
   // 인증 취소 모달 열기
@@ -386,7 +385,7 @@ function TodayRoutine({
       </Modal>
       <Modal show={cancelProveModalShow} centered>
         <Modal.Body className={styles.cancelProveModalBody}>
-          <p className={styles.cancelProveModalBodyTitle}>인증을 철회합니다.</p>
+          <p className={styles.cancelProveModalBodyTitle}>인증을 철회할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeCancelProveModal}>

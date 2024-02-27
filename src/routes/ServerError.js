@@ -6,9 +6,9 @@ function ServerError() {
     <div className={styles.container}>
       <div className={styles.alert}>
         <Alert variant="danger">
-          <p>서버에 장애가 발생했습니다⛔</p>
+          <p>⛔ 서버에 장애가 발생했습니다</p>
           <hr />
-          <div>조금 뒤에 다시 시도해주세요.</div>
+          <div>조금 뒤에 다시 시도해주세요</div>
         </Alert>
       </div>
     </div>
