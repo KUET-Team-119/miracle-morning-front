@@ -9,6 +9,7 @@
   width: 88px;
   height: 88px;
   margin-top: 50px;
+  margin-bottom: 12px;
 }
 
 .title {
@@ -21,7 +22,6 @@
 .goBackBtn,
 .goBackBtn:hover,
 .goBackBtn:focus {
-  width: 100%;
   font-size: 15px;
   margin-bottom: 30px;
   color: #8ec952;
@@ -33,6 +33,155 @@
   align-self: center;
 }
 
-.introduce {
-  height: 350px;
+.mission {
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  background-color: #8ec952;
+  padding: 7%;
+}
+
+.mission_title {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 5%;
+}
+
+.mission_korean,
+.mission_english {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.identity {
+  width: 100%;
+  background-color: #f6f6f6;
+  text-align: center;
+  padding: 3%;
+  text-align: left;
+}
+
+.identity_subtitle {
+  color: green;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 3%;
+  margin-bottom: 4%;
+}
+
+.identity_title {
+  color: green;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-bottom: 5%;
+}
+
+.identity_explain {
+  color: green;
+  font-size: 0.9rem;
+  font-weight: 320;
+  margin-bottom: 3%;
+}
+
+.functionTitle {
+  color: green;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.checkRoutine,
+.manageRoutine,
+.statistics {
+  width: 100%;
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.checkRoutineImage,
+.manageImage,
+.statisticsImage {
+  width: 100%;
+}
+
+.checkRoutineImageContainer,
+.manageImageContainer,
+.statisticsImageContainer {
+  width: 30%;
+  border: 1px solid lightgrey;
+  float: left;
+  box-sizing: border-box;
+  margin-left: 10%;
+}
+
+.checkRoutineExplain,
+.manageExplain,
+.statisticsExplain {
+  width: 30%;
+  float: left;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 5%;
+}
+
+.checkRoutineExplainSubtitle,
+.manageExplainSubtitle,
+.statisticsExplainSubtitle {
+  color: grey;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 5%;
+}
+
+.checkRoutineExplainTitle,
+.manageExplainTitle,
+.statisticsExplainTitle {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.checkRoutineExplainMain,
+.manageExplainMain,
+.statisticsExplainMain {
+  font-size: 1rem;
+}
+
+.apply {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  background-color: black;
+}
+
+.applyContainer {
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.applyMethod,
+.applyPath {
+  color: white;
+  font-size: 1rem;
+}
+
+.applyLink {
+  color: white;
+  text-decoration: none;
+}
+
+footer {
+  width: 100%;
+  align-self: flex-start;
+  font-size: 14px;
+  color: white;
+  background-color: gray;
+  padding: 24px;
+}
+
+footer p {
+  margin: 0;
 }
