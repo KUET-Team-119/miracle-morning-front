@@ -80,7 +80,7 @@ function AdminMemberManaging() {
       } else {
         setSelectedRole("");
         closeManagingModal();
-        const status = error.response.status;
+        const status = errorPatch.response.status;
         if (status === 401) {
           navigate("/unauthorized");
         } else if (status === 403) {
@@ -110,7 +110,7 @@ function AdminMemberManaging() {
       } else {
         closeCheckModal();
         closeManagingModal();
-        const status = error.response.status;
+        const status = errorDel.response.status;
         if (status === 401) {
           navigate("/unauthorized");
         } else if (status === 403) {

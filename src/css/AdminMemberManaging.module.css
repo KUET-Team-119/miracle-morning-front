@@ -100,12 +100,8 @@
   align-items: center;
 }
 
-.errorModalBody .errorModalBodyTitle {
+.errorModalBodyTitle {
   font-size: 18px;
-}
-
-.errorModalBody .errorModalBodyContent {
-  font-size: 15px;
 }
 
 .errorModalBtn,

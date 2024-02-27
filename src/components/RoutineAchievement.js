@@ -16,7 +16,6 @@ function RoutineAchievement() {
     if (!isLoading) {
       if (responseData !== null) {
         setResponse(responseData);
-        // console.log(responseData);
       } else {
         const status = error.response.status;
         if (status === 401) {

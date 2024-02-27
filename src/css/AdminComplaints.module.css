@@ -58,3 +58,31 @@
   justify-content: center;
   margin-top: 72px;
 }
+
+.deleteModalBody .deleteModalBodyTitle {
+  font-size: 18px;
+  text-align: center;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+}
+
+.errorModalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorModalBodyTitle {
+  font-size: 18px;
+}
+
+.errorModalBtn,
+.errorModalBtn:hover,
+.errorModalBtn:focus,
+.errorModalBtn:active {
+  background-color: #8ec952;
+  border-color: #8ec952;
+}
