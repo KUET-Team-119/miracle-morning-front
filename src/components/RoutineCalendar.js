@@ -14,7 +14,6 @@ import crownIcon from "../images/crown.png";
 function RoutineCalendar() {
   const { myId } = useDecodingJwt();
   const [date, setDate] = useState(new Date()); // 초기값은 현재 날짜
-  const [startDate, setStartDate] = useState(new Date());
   const [response, setResponse] = useState([]);
   const [targetDateData, setTargetDateData] = useState([]);
   const [achievementRate, setAchievementRate] = useState(0);
@@ -36,7 +35,6 @@ function RoutineCalendar() {
   useEffect(() => {
     if (!isLoading) {
       if (responseData !== null) {
-        setStartDate(moment(responseData[0].createdAt).format("YYYY-MM-DD"));
         // 데이터를 받아와서 정렬
         const sortedData = responseData.sort((a, b) => {
           if (a.doneAt && b.doneAt) {
@@ -217,7 +215,7 @@ function RoutineCalendar() {
             next2Label={null}
             prev2Label={null}
             maxDate={new Date()}
-            minDate={new Date(startDate)}
+            minDate={new Date("2024-01-01")}
             minDetail={"month"}
             formatDay={(locale, date) => moment(date).format("D")}
             showNeighboringMonth={false}
