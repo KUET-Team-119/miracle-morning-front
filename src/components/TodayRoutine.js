@@ -42,7 +42,8 @@ function TodayRoutine({
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
   const [fileSize, setFileSize] = useState("");
-  const [isClicked, setIsClicked] = useState(false);
+  const [isProveClicked, setIsProveClicked] = useState(false);
+  const [isCancelClicked, setIsCancelClicked] = useState(false);
   const [isValid, setIsValid] = useState(NOT_SELECTED);
   const [modalNotice, setModalNotice] =
     useState("※ 오늘 날짜의 사진을 선택하세요");
@@ -61,7 +62,8 @@ function TodayRoutine({
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
-    setIsClicked(true);
+    setIsProveClicked(true);
+    setIsCancelClicked(true);
     patchProof();
   };
   const patchProof = async () => {
@@ -223,7 +225,7 @@ function TodayRoutine({
     setFileSize("");
     setIsValid(NOT_SELECTED);
     setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
-    setIsClicked(false);
+    setIsProveClicked(false);
   };
 
   // 인증 취소 모달 열기
@@ -235,7 +237,7 @@ function TodayRoutine({
   // 인증 취소 모달 닫기
   const closeCancelProveModal = () => {
     setCancelProveModalShow(false);
-    setIsClicked(false);
+    setIsCancelClicked(false);
   };
 
   return (
@@ -380,7 +382,7 @@ function TodayRoutine({
               className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
-              disabled={isValid !== VALIDATE_FILE || isClicked}
+              disabled={isValid !== VALIDATE_FILE || isProveClicked}
             >
               인증하기
             </Button>
@@ -395,7 +397,11 @@ function TodayRoutine({
           <Button variant="secondary" onClick={closeCancelProveModal}>
             취소
           </Button>
-          <Button onClick={submitPatch} variant="danger">
+          <Button
+            onClick={submitPatch}
+            variant="danger"
+            disabled={isCancelClicked}
+          >
             확인
           </Button>
         </Modal.Footer>

@@ -21,6 +21,8 @@ function AdminMemberManaging() {
   const [memberName, setMemberName] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [menuShow, setMenuShow] = useState(false);
+  const [isUpdateClicked, setIsUpdateClicked] = useState(false);
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const navigate = useNavigate();
 
   // 오늘의 루틴 조회
@@ -59,6 +61,7 @@ function AdminMemberManaging() {
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
+    setIsUpdateClicked(true);
     performPatch();
   };
   // 회원 권한 수정
@@ -73,13 +76,12 @@ function AdminMemberManaging() {
   });
   useEffect(() => {
     if (!isLoadingPatch) {
+      closeManagingModal();
       if (responseDataPatch !== null) {
         refetch();
         setSelectedRole("");
-        closeManagingModal();
       } else {
         setSelectedRole("");
-        closeManagingModal();
         const status = errorPatch.response.status;
         if (status === 401) {
           navigate("/unauthorized");
@@ -128,6 +130,11 @@ function AdminMemberManaging() {
     setSelectedRole(e.target.value);
   };
 
+  const clickDelete = () => {
+    setIsDeleteClicked(true);
+    performDelete();
+  };
+
   // 관리 모달 열기
   const openManagingModal = (e) => {
     const dataSet = e.target.dataset;
@@ -141,6 +148,7 @@ function AdminMemberManaging() {
     setManagingModalShow(false);
     setMemberId("");
     setMemberName("");
+    setIsUpdateClicked(false);
   };
 
   // 확인 모달 열기
@@ -151,6 +159,7 @@ function AdminMemberManaging() {
   // 확인 모달 닫기
   const closeCheckModal = () => {
     setCheckModalShow(false);
+    setIsDeleteClicked(false);
   };
 
   // 에러 모달 열기
@@ -163,7 +172,7 @@ function AdminMemberManaging() {
     setErrorModalShow(false);
   };
 
-  const isValid = selectedRole !== "";
+  const isValid = selectedRole !== "" && !isUpdateClicked;
 
   return (
     <>
@@ -230,15 +239,17 @@ function AdminMemberManaging() {
                         )}
                       </td>
                       <td>
-                        <Button
-                          className={styles.managingBtn}
-                          onClick={openManagingModal}
-                          data-id={member.memberId}
-                          data-name={member.memberName}
-                          data-role={member.role}
-                        >
-                          관리
-                        </Button>
+                        {member.role !== "ADMIN" ? (
+                          <Button
+                            className={styles.managingBtn}
+                            onClick={openManagingModal}
+                            data-id={member.memberId}
+                            data-name={member.memberName}
+                            data-role={member.role}
+                          >
+                            관리
+                          </Button>
+                        ) : null}
                       </td>
                     </tr>
                   ))
@@ -299,7 +310,11 @@ function AdminMemberManaging() {
           <Button variant="secondary" onClick={closeCheckModal}>
             취소
           </Button>
-          <Button onClick={performDelete} variant="danger">
+          <Button
+            onClick={clickDelete}
+            variant="danger"
+            disabled={isDeleteClicked}
+          >
             확인
           </Button>
         </Modal.Footer>

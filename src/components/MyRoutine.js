@@ -36,7 +36,8 @@ function MyRoutine({
   const [sat, setSat] = useState("");
   const [sun, setSun] = useState("");
   const [requestData, setRequestData] = useState("");
-  const [isClicked, setIsClicked] = useState(false);
+  const [isUpdateClicked, setIsUpdateClicked] = useState(false);
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
@@ -61,7 +62,7 @@ function MyRoutine({
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
-    setIsClicked(true);
+    setIsUpdateClicked(true);
     performPatch();
   };
   // 루틴 수정
@@ -98,11 +99,10 @@ function MyRoutine({
   } = useAxiosDelete({ url: `/api/routine/${routineId}` });
   useEffect(() => {
     if (!isLoadingDel) {
+      setDeleteModalShow(false);
       if (responseDataDel !== null) {
-        setDeleteModalShow(false);
         setToReload();
       } else {
-        setDeleteModalShow(false);
         const status = errorDel.response.status;
         if (status === 401) {
           navigate("/unauthorized");
@@ -116,6 +116,11 @@ function MyRoutine({
       }
     }
   }, [responseDataDel, errorDel, isLoadingDel]);
+
+  const clickDelete = () => {
+    setIsDeleteClicked(true);
+    performDelete();
+  };
 
   // 요일 변경
   useEffect(() => {
@@ -198,7 +203,7 @@ function MyRoutine({
   // 루틴 수정 모달 닫기
   const closeUpdateModal = () => {
     setUpdateModalShow(false);
-    setIsClicked(false);
+    setIsUpdateClicked(false);
   };
 
   // 루틴 삭제 모달 열기
@@ -209,7 +214,7 @@ function MyRoutine({
   // 루틴 삭제 모달 닫기
   const closeDeleteModal = () => {
     setDeleteModalShow(false);
-    setIsClicked(false);
+    setIsDeleteClicked(false);
   };
 
   // 데이터 유효성 검사
@@ -219,7 +224,7 @@ function MyRoutine({
     newStartTime !== "" &&
     newEndTime !== "" &&
     newStartTime <= newEndTime &&
-    !isClicked;
+    !isUpdateClicked;
 
   const changeAllDay = () => {
     setIsAllDay((current) => !current);
@@ -414,7 +419,12 @@ function MyRoutine({
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>
             취소
           </Button>
-          <Button type="button" variant="danger" onClick={performDelete}>
+          <Button
+            type="button"
+            variant="danger"
+            onClick={clickDelete}
+            disabled={isDeleteClicked}
+          >
             확인
           </Button>
         </Modal.Footer>

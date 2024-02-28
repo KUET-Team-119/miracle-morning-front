@@ -16,6 +16,7 @@ function AdminImages() {
   const [menuShow, setMenuShow] = useState(false);
   const [data, setData] = useState("");
   const [proveModalShow, setProveModalShow] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
@@ -59,6 +60,7 @@ function AdminImages() {
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     patchProof();
   };
   const patchProof = async () => {
@@ -136,6 +138,7 @@ function AdminImages() {
   // 인증 철회 모달 닫기
   const closeProveModal = () => {
     setProveModalShow(false);
+    setIsClicked(false);
   };
 
   return (
@@ -219,7 +222,7 @@ function AdminImages() {
           <Button variant="secondary" onClick={closeProveModal}>
             취소
           </Button>
-          <Button onClick={submitPatch} variant="danger">
+          <Button onClick={submitPatch} variant="danger" disabled={isClicked}>
             확인
           </Button>
         </Modal.Footer>

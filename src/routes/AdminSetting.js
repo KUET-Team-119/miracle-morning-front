@@ -15,6 +15,7 @@ function AdminSetting() {
   const [requestData, setRequestData] = useState("");
   const [complaintModalShow, setComplaintModalShow] = useState(false);
   const [postToastShow, setPostToastShow] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
@@ -34,6 +35,7 @@ function AdminSetting() {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     performPost();
   };
   // 오류 제보
@@ -81,9 +83,10 @@ function AdminSetting() {
   const closeComplaintModal = () => {
     setComplaintModalShow(false);
     setComplaintContent("");
+    setIsClicked(false);
   };
 
-  const complaintIsValid = complaintContent !== "";
+  const complaintIsValid = complaintContent !== "" && !isClicked;
 
   return (
     <>

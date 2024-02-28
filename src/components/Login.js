@@ -111,7 +111,7 @@ function Login({ setIsMember }) {
         <Button
           className={styles.submitBtn}
           type="submit"
-          disabled={isValid ? false : true}
+          disabled={!isValid}
           onClick={objToJson}
         >
           로그인

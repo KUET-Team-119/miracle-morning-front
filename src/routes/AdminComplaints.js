@@ -17,6 +17,7 @@ function AdminComplaints() {
   const [complaintId, setComplaintId] = useState("");
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const goToMemberManaging = () => {
@@ -74,6 +75,11 @@ function AdminComplaints() {
     }
   }, [responseDataDel, errorDel, isLoadingDel]);
 
+  const clickDelete = () => {
+    setIsClicked(true);
+    performDelete();
+  };
+
   // 제보 삭제 모달 열기
   const openDeleteModal = (e) => {
     setComplaintId(e.target.dataset.id);
@@ -84,6 +90,7 @@ function AdminComplaints() {
   const closeDeleteModal = () => {
     setDeleteModalShow(false);
     setComplaintId("");
+    setIsClicked(false);
   };
 
   // 에러 모달 열기
@@ -170,7 +177,7 @@ function AdminComplaints() {
           <Button variant="secondary" onClick={closeDeleteModal}>
             취소
           </Button>
-          <Button onClick={performDelete} variant="danger">
+          <Button onClick={clickDelete} variant="danger" disabled={isClicked}>
             확인
           </Button>
         </Modal.Footer>
