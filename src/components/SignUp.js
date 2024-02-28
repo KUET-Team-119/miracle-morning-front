@@ -130,7 +130,7 @@ function SignUp({ setIsMember }) {
         <Button
           className={styles.submitBtn}
           type="submit"
-          disabled={isValid ? false : true}
+          disabled={!isValid}
           onClick={objToJson}
         >
           회원가입
