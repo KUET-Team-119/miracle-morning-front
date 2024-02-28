@@ -151,35 +151,33 @@ function Home() {
                 <span>{memberName}</span>
                 님의 {`${moment().format("YYYY년 M월 D일")} (${dayOfWeek})`}
               </p>
-              <div className={styles.routinesList}>
-                {response.length !== 0 ? (
-                  <div className={styles.routine}>
-                    {response.map((routine) => (
-                      <TodayRoutine
-                        key={routine.resultId}
-                        resultId={routine.resultId}
-                        routineId={routine.routineId}
-                        routineName={routine.routineName}
-                        memberName={routine.memberName}
-                        dayOfWeek={routine.dayOfWeek}
-                        certification={routine.certification}
-                        startTime={routine.startTime}
-                        endTime={routine.endTime}
-                        doneAt={routine.doneAt}
-                        complete={routine.complete}
-                        setToReload={refetch}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className={styles.noRoutine}>
-                    <p>오늘 달성할 루틴이 없어요</p>
-                    <p>루틴 기록은 매일 자정에 생성됩니다</p>
-                    <p>루틴 관리에서 루틴을 만들어보세요!</p>
-                    <Button onClick={goToRoutines}>루틴 관리로 이동</Button>
-                  </div>
-                )}
-              </div>
+              {response.length !== 0 ? (
+                <div className={styles.routinesList}>
+                  {response.map((routine) => (
+                    <TodayRoutine
+                      key={routine.resultId}
+                      resultId={routine.resultId}
+                      routineId={routine.routineId}
+                      routineName={routine.routineName}
+                      memberName={routine.memberName}
+                      dayOfWeek={routine.dayOfWeek}
+                      certification={routine.certification}
+                      startTime={routine.startTime}
+                      endTime={routine.endTime}
+                      doneAt={routine.doneAt}
+                      complete={routine.complete}
+                      setToReload={refetch}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className={styles.noRoutine}>
+                  <p>오늘 달성할 루틴이 없어요</p>
+                  <p>루틴 기록은 매일 자정에 생성됩니다</p>
+                  <p>루틴 관리에서 루틴을 만들어보세요!</p>
+                  <Button onClick={goToRoutines}>루틴 관리로 이동</Button>
+                </div>
+              )}
             </div>
           </div>
         )}

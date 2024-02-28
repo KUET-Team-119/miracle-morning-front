@@ -112,7 +112,7 @@
   text-overflow: ellipsis;
 }
 
-.routine {
+.routinesList {
   display: flex;
   flex-direction: column;
   gap: 10px;

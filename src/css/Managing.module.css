@@ -71,7 +71,7 @@
   cursor: pointer;
 }
 
-.routines {
+.routinesList {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -82,7 +82,7 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.routines::-webkit-scrollbar {
+.routinesList::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
 

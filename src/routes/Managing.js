@@ -305,34 +305,32 @@ function Managing() {
               alt="루틴 추가"
             />
           </div>
-          <div className={styles.routinesList}>
-            {isLoading ? (
-              <div className={styles.spinner}>
-                <Spinner animation="border" />
-              </div>
-            ) : routines.length !== 0 ? (
-              <div className={styles.routines}>
-                {routines.map((routine) => (
-                  <MyRoutine
-                    key={routine.routineId}
-                    routineId={routine.routineId}
-                    routineName={routine.routineName}
-                    dayOfWeek={routine.dayOfWeek}
-                    certification={routine.certification}
-                    startTime={routine.startTime}
-                    endTime={routine.endTime}
-                    isActivated={routine.isActivated}
-                    setToReload={refetch}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.noRoutine}>
-                <p>등록된 루틴이 없어요</p>
-                <p>플러스 버튼을 눌러 루틴을 추가하세요</p>
-              </div>
-            )}
-          </div>
+          {isLoading ? (
+            <div className={styles.spinner}>
+              <Spinner animation="border" />
+            </div>
+          ) : routines.length !== 0 ? (
+            <div className={styles.routinesList}>
+              {routines.map((routine) => (
+                <MyRoutine
+                  key={routine.routineId}
+                  routineId={routine.routineId}
+                  routineName={routine.routineName}
+                  dayOfWeek={routine.dayOfWeek}
+                  certification={routine.certification}
+                  startTime={routine.startTime}
+                  endTime={routine.endTime}
+                  isActivated={routine.isActivated}
+                  setToReload={refetch}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className={styles.noRoutine}>
+              <p>등록된 루틴이 없어요</p>
+              <p>플러스 버튼을 눌러 루틴을 추가하세요</p>
+            </div>
+          )}
         </div>
       </div>
       <Modal show={addModalShow} centered>
