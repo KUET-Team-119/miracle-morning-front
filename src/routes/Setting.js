@@ -292,7 +292,9 @@ function Setting() {
         delay={3000}
         autohide
       >
-        <Toast.Body>오류 제보가 전송되었습니다</Toast.Body>
+        <Toast.Body className={styles.toastBody}>
+          오류 제보가 전송되었습니다
+        </Toast.Body>
       </Toast>
     </>
   );

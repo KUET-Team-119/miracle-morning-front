@@ -97,3 +97,7 @@
   transform: translateX(-50%);
   z-index: 1000;
 }
+
+.toastBody {
+  text-align: center;
+}
