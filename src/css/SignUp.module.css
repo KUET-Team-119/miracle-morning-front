@@ -59,15 +59,12 @@
   margin-bottom: 58px;
 }
 
-.loginBtn {
-  font-size: 15px;
-  color: #8ec952;
-}
-
+.loginBtn,
 .loginBtn:hover,
 .loginBtn:focus {
   font-size: 15px;
-  color: #31461c;
+  color: #8ec952;
+  text-decoration: none;
 }
 
 .modalBody {

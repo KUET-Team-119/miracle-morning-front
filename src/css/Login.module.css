@@ -49,15 +49,12 @@
   align-self: center;
 }
 
-.signUpBtn {
-  font-size: 15px;
-  color: #8ec952;
-}
-
+.signUpBtn,
 .signUpBtn:hover,
 .signUpBtn:focus {
   font-size: 15px;
-  color: #31461c;
+  color: #8ec952;
+  text-decoration: none;
 }
 
 .modalBody {
