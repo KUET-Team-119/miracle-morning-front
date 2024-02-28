@@ -341,12 +341,12 @@ function Managing() {
               <Form.Control
                 type="text"
                 value={newRoutineName}
-                placeholder="중복된 루틴명 불가(10자 이내)"
+                placeholder="ex) 물 마시기(10자 이내)"
                 onChange={changeRoutineName}
                 maxLength={10}
               />
               <div className={styles.modalNotice}>
-                루틴명은 변경이 불가능해요
+                루틴명 중복될 수 없고 변경 불가해요
               </div>
             </div>
             <div className={styles.dayOfWeek}>
