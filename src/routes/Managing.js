@@ -42,6 +42,7 @@ function Managing() {
   const [menuShow, setMenuShow] = useState(false);
   const [isAllDay, setIsAllDay] = useState(false);
   const [routinesCount, setRoutinesCount] = useState(0);
+  const [isClicked, setIsClicked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -104,6 +105,7 @@ function Managing() {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     performPost();
   };
   // 사용자 루틴 추가
@@ -164,7 +166,8 @@ function Managing() {
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
-    newStartTime <= newEndTime;
+    newStartTime <= newEndTime &&
+    !isClicked;
 
   // 루틴 추가 모달 열기
   const openAddModal = () => {
@@ -187,6 +190,7 @@ function Managing() {
     setSat("0");
     setSun("0");
     setIsAllDay(false);
+    setIsClicked(false);
   };
 
   // 루틴 추가 방지 모달 열기

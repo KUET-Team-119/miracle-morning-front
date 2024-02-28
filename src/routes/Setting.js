@@ -20,6 +20,8 @@ function Setting() {
   const [pw, setPw] = useState("");
   const [menuShow, setMenuShow] = useState(false);
   const [postToastShow, setPostToastShow] = useState(false);
+  const [isComplaintClicked, setIsComplaintClicked] = useState(false);
+  const [isLeaveClicked, setIsLeaveClicked] = useState(false);
   const navigate = useNavigate();
 
   const goToHome = () => {
@@ -39,6 +41,7 @@ function Setting() {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
+    setIsComplaintClicked(true);
     performPost();
   };
   // 오류 제보
@@ -86,6 +89,7 @@ function Setting() {
         closeLeaveModal();
         navigate(`/`);
       } else {
+        setIsLeaveClicked(false);
         const status = errorDel.response.status;
         if (status === 401) {
           navigate("/unauthorized");
@@ -120,6 +124,7 @@ function Setting() {
   const closeComplaintModal = () => {
     setComplaintModalShow(false);
     setComplaintContent("");
+    setIsComplaintClicked(false);
   };
 
   // 탈퇴 확인 모달 열기
@@ -144,7 +149,12 @@ function Setting() {
     setPw("");
   };
 
-  const complaintIsValid = complaintContent !== "";
+  const clickLeave = () => {
+    setIsLeaveClicked(true);
+    performDelete();
+  };
+
+  const complaintIsValid = complaintContent !== "" && !isComplaintClicked;
 
   return (
     <>
@@ -217,7 +227,7 @@ function Setting() {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={complaintIsValid ? false : true}
+              disabled={!complaintIsValid}
               onClick={objToJson}
             >
               전송
@@ -264,7 +274,12 @@ function Setting() {
           <Button type="button" variant="secondary" onClick={closeLeaveModal}>
             취소
           </Button>
-          <Button variant="danger" type="submit" onClick={performDelete}>
+          <Button
+            variant="danger"
+            type="submit"
+            onClick={clickLeave}
+            disabled={isLeaveClicked}
+          >
             확인
           </Button>
         </Modal.Footer>

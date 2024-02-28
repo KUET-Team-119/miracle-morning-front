@@ -36,6 +36,7 @@ function MyRoutine({
   const [sat, setSat] = useState("");
   const [sun, setSun] = useState("");
   const [requestData, setRequestData] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
@@ -60,6 +61,7 @@ function MyRoutine({
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     performPatch();
   };
   // 루틴 수정
@@ -196,6 +198,7 @@ function MyRoutine({
   // 루틴 수정 모달 닫기
   const closeUpdateModal = () => {
     setUpdateModalShow(false);
+    setIsClicked(false);
   };
 
   // 루틴 삭제 모달 열기
@@ -206,6 +209,7 @@ function MyRoutine({
   // 루틴 삭제 모달 닫기
   const closeDeleteModal = () => {
     setDeleteModalShow(false);
+    setIsClicked(false);
   };
 
   // 데이터 유효성 검사
@@ -214,7 +218,8 @@ function MyRoutine({
     newCertification !== "" &&
     newStartTime !== "" &&
     newEndTime !== "" &&
-    newStartTime <= newEndTime;
+    newStartTime <= newEndTime &&
+    !isClicked;
 
   const changeAllDay = () => {
     setIsAllDay((current) => !current);
@@ -400,8 +405,10 @@ function MyRoutine({
       </Modal>
       <Modal show={deleteModalShow} centered>
         <Modal.Body className={styles.deleteModalBody}>
-          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제합니다</p>
-          <p className={styles.deleteModalBodyContent}>정말로 삭제할까요?</p>
+          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제할까요?</p>
+          <p className={styles.deleteModalBodyContent}>
+            루틴과 관련된 기록도 사라져요
+          </p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>

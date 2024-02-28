@@ -12,6 +12,7 @@ function SignUp({ setIsMember }) {
   const [requestData, setRequestData] = useState("");
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [errorModalShow, setErrorModalShow] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   // 닉네임 입력 시 input의 value 변경
@@ -43,6 +44,7 @@ function SignUp({ setIsMember }) {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     performPost();
   };
   const { responseData, error, isLoading, performPost } = useAxiosPost({
@@ -54,6 +56,7 @@ function SignUp({ setIsMember }) {
       if (responseData !== null) {
         setSuccessModalShow(true);
       } else {
+        setIsClicked(false);
         const status = error.response.status;
         if (status === 401) {
           setErrorModalShow(true);
@@ -71,7 +74,7 @@ function SignUp({ setIsMember }) {
   }, [responseData, error, isLoading]);
 
   // 닉네임, 비밀번호 유효성 검사
-  const isValid = name !== "" && pw !== "";
+  const isValid = name !== "" && pw !== "" && !isClicked;
 
   // 로그인 화면으로 이동
   const goToEnter = () => {
@@ -130,7 +133,7 @@ function SignUp({ setIsMember }) {
           disabled={isValid ? false : true}
           onClick={objToJson}
         >
-          {isValid ? `회원가입` : `닉네임을 입력하고 비밀번호를 만드세요`}
+          회원가입
         </Button>
       </Form>
       <Button

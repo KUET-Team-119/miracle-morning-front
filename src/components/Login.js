@@ -12,6 +12,7 @@ function Login({ setIsMember }) {
   const [requestData, setRequestData] = useState("");
   const [errorModalShow, setErrorModalShow] = useState(false);
   const [status, setStatus] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const goToIntroduce = () => {
@@ -29,7 +30,7 @@ function Login({ setIsMember }) {
   };
 
   // 닉네임, 비밀번호 유효성 검사
-  const isValid = name !== "" && pw !== "";
+  const isValid = name !== "" && pw !== "" && !isClicked;
 
   // 닉네임, 비밀번호 담긴 객체를 json 형태로 변환
   const objToJson = () => {
@@ -44,6 +45,7 @@ function Login({ setIsMember }) {
   // json 데이터를 서버로 전송
   const submitPost = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     performPost();
   };
   const { responseData, error, isLoading, performPost } = useAxiosPost({
@@ -56,6 +58,7 @@ function Login({ setIsMember }) {
         localStorage.setItem("access-token", responseData.accessToken);
         navigate(`/home`);
       } else {
+        setIsClicked(false);
         const status = error.response.status;
         if (status === 401) {
           setStatus(error.response.status);
@@ -111,7 +114,7 @@ function Login({ setIsMember }) {
           disabled={isValid ? false : true}
           onClick={objToJson}
         >
-          {isValid ? `로그인` : `닉네임/비밀번호를 입력하세요`}
+          로그인
         </Button>
       </Form>
       <div className={styles.beginnerContainer}>

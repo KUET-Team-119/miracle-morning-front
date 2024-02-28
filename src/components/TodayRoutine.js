@@ -42,6 +42,7 @@ function TodayRoutine({
   const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
   const [fileSize, setFileSize] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
   const [isValid, setIsValid] = useState(NOT_SELECTED);
   const [modalNotice, setModalNotice] =
     useState("※ 오늘 날짜의 사진을 선택하세요");
@@ -60,6 +61,7 @@ function TodayRoutine({
   // json 데이터를 서버로 전송
   const submitPatch = (e) => {
     e.preventDefault();
+    setIsClicked(true);
     patchProof();
   };
   const patchProof = async () => {
@@ -221,6 +223,7 @@ function TodayRoutine({
     setFileSize("");
     setIsValid(NOT_SELECTED);
     setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
+    setIsClicked(false);
   };
 
   // 인증 취소 모달 열기
@@ -232,6 +235,7 @@ function TodayRoutine({
   // 인증 취소 모달 닫기
   const closeCancelProveModal = () => {
     setCancelProveModalShow(false);
+    setIsClicked(false);
   };
 
   return (
@@ -376,7 +380,7 @@ function TodayRoutine({
               className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
-              disabled={isValid !== VALIDATE_FILE}
+              disabled={isValid !== VALIDATE_FILE || isClicked}
             >
               인증하기
             </Button>
