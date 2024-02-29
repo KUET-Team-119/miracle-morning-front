@@ -2,7 +2,7 @@ name: React CI/CD # workflow 이름
 
 on: # 이벤트 정의
   push:
-    branches: ["main"] # main 브랜치에 push 이벤트
+    branches: ["chori"] # chori 브랜치에 push 이벤트
 
 jobs:
   build:
