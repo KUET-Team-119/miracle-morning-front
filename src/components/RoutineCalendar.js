@@ -237,9 +237,9 @@ function RoutineCalendar() {
               {totalCount !== 0 ? (
                 <div className={styles.resultsContainerTitleText}>
                   <div>
-                    {totalCount}개 중에{" "}
-                    <span className={styles.doneCount}>{doneCount}개</span>{" "}
-                    루틴을 달성했어요!
+                    {totalCount}개 루틴 중에{" "}
+                    <span className={styles.doneCount}>{doneCount}개</span>를
+                    달성했어요!
                   </div>
                   {doneCount === totalCount ? (
                     <img className={styles.crown} src={crownIcon} alt="왕관" />
