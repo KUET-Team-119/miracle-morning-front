@@ -141,8 +141,6 @@ function TodayRoutine({
     }
   };
 
-  console.log(file);
-
   const uploadedFile = async (e) => {
     setIsValid(INVALID_DATE);
     const fileData = e.target.files[0];
@@ -188,6 +186,7 @@ function TodayRoutine({
         );
         setFileSize(fileData.size);
       } catch (error) {
+        console.log(error);
         setFile(null);
         setIsValid(COMPRESSION_ERROR);
         setModalNotice("※ 파일 분석 중 오류가 발생했습니다. 다시 시도해주세요");
@@ -217,7 +216,6 @@ function TodayRoutine({
         // 조건 3. 파일 크기 <= 5MB
         if (fileSize <= 5242880) {
           setIsValid(VALIDATE_FILE);
-          console.log(fileSize);
         } else {
           setIsValid(INVALID_SIZE);
           setModalNotice("※ 사진 크기가 5MB 이하여야 합니다");
