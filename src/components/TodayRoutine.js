@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 import useDecodingJwt from "../hook/useDecodingJwt";
 import {
   Button,
@@ -19,6 +20,7 @@ const INVALID_DATE = 1;
 const INVALID_TIME = 2;
 const INVALID_SIZE = 3;
 const NOT_SELECTED = 4;
+const COMPRESSION_ERROR = 5;
 
 function TodayRoutine({
   resultId,
@@ -139,40 +141,60 @@ function TodayRoutine({
     }
   };
 
-  const uploadedFile = (e) => {
+  console.log(file);
+
+  const uploadedFile = async (e) => {
+    setIsValid(INVALID_DATE);
     const fileData = e.target.files[0];
+    const options = {
+      maxSizeMB: 0.3, // 이미지 최대 용량
+      useWebWorker: true,
+    };
 
     // 파일이 선택되어야 함
     if (fileData !== undefined && fileData !== null) {
-      setFile(fileData);
-      const lastModifiedTimestamp = fileData.lastModified;
-      const fileDateObj = new Date(lastModifiedTimestamp);
-      const fileYear = fileDateObj.getFullYear();
-      let fileMonth = fileDateObj.getMonth();
-      let fileDate = fileDateObj.getDate();
-      let fileHours = fileDateObj.getHours();
-      let fileMinutes = fileDateObj.getMinutes();
-      setFileYear(fileDateObj.getFullYear());
-      setFileMonth(fileDateObj.getMonth());
-      setFileDay(fileDateObj.getDate());
-      if (fileMonth + 1 <= 9) {
-        fileMonth = "0" + (fileMonth + 1);
+      try {
+        setModalNotice(
+          "※ 파일을 분석 중입니다. 이 작업은 시간이 약간 소요됩니다."
+        );
+        // 파일 압축
+        const compressedFile = await imageCompression(fileData, options);
+        setFile(compressedFile);
+
+        const lastModifiedTimestamp = fileData.lastModified;
+        const fileDateObj = new Date(lastModifiedTimestamp);
+        const fileYear = fileDateObj.getFullYear();
+        let fileMonth = fileDateObj.getMonth();
+        let fileDate = fileDateObj.getDate();
+        let fileHours = fileDateObj.getHours();
+        let fileMinutes = fileDateObj.getMinutes();
+        setFileYear(fileDateObj.getFullYear());
+        setFileMonth(fileDateObj.getMonth());
+        setFileDay(fileDateObj.getDate());
+        if (fileMonth + 1 <= 9) {
+          fileMonth = "0" + (fileMonth + 1);
+        }
+        if (fileDate <= 9) {
+          fileDate = "0" + fileDate;
+        }
+        if (fileHours <= 9) {
+          fileHours = "0" + fileHours;
+        }
+        if (fileMinutes <= 9) {
+          fileMinutes = "0" + fileMinutes;
+        }
+        setFileTime(
+          `${fileYear}-${fileMonth}-${fileDate}T${fileHours}:${fileMinutes}:00`
+        );
+        setFileSize(fileData.size);
+      } catch (error) {
+        setFile(null);
+        setIsValid(COMPRESSION_ERROR);
+        setModalNotice("※ 파일 분석 중 오류가 발생했습니다. 다시 시도해주세요");
       }
-      if (fileDate <= 9) {
-        fileDate = "0" + fileDate;
-      }
-      if (fileHours <= 9) {
-        fileHours = "0" + fileHours;
-      }
-      if (fileMinutes <= 9) {
-        fileMinutes = "0" + fileMinutes;
-      }
-      setFileTime(
-        `${fileYear}-${fileMonth}-${fileDate}T${fileHours}:${fileMinutes}:00`
-      );
-      setFileSize(fileData.size);
     } else {
       setFile(null);
+      setIsValid(NOT_SELECTED);
       setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
     }
   };
@@ -195,6 +217,7 @@ function TodayRoutine({
         // 조건 3. 파일 크기 <= 5MB
         if (fileSize <= 5242880) {
           setIsValid(VALIDATE_FILE);
+          console.log(fileSize);
         } else {
           setIsValid(INVALID_SIZE);
           setModalNotice("※ 사진 크기가 5MB 이하여야 합니다");
