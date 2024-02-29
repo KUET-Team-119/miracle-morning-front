@@ -42,7 +42,7 @@ function MyRoutine({
   const [deleteModalShow, setDeleteModalShow] = useState(false);
   const [isEveryDay, setIsEveryDay] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
-    startTime === "00:00:00" && endTime === "23:59:00" ? true : false
+    startTime === "00:00:00" && endTime === "23:59:00"
   );
   const navigate = useNavigate();
 
@@ -188,9 +188,8 @@ function MyRoutine({
     setNewStartTime(startHourMinute);
     const endHourMinute = endTime.substring(0, 5);
     setNewEndTime(endHourMinute);
-    setIsAllDay(
-      startTime === "00:00:00" && endTime === "23:59:00" ? true : false
-    );
+    setIsEveryDay(dayOfWeek === "1111111");
+    setIsAllDay(startTime === "00:00:00" && endTime === "23:59:00");
     setNewIsActivated(isActivated);
     setMon(dayOfWeek.substring(0, 1));
     setTue(dayOfWeek.substring(1, 2));
@@ -243,7 +242,7 @@ function MyRoutine({
   };
 
   useEffect(() => {
-    if (isAllDay === true) {
+    if (isAllDay) {
       setNewStartTime("00:00");
       setNewEndTime("23:59");
     }
@@ -284,6 +283,7 @@ function MyRoutine({
                   }
                   value={mon}
                   onClick={changeMon}
+                  disabled={isEveryDay}
                 >
                   월
                 </Button>
@@ -295,6 +295,7 @@ function MyRoutine({
                   }
                   value={tue}
                   onClick={changeTue}
+                  disabled={isEveryDay}
                 >
                   화
                 </Button>
@@ -306,6 +307,7 @@ function MyRoutine({
                   }
                   value={wed}
                   onClick={changeWed}
+                  disabled={isEveryDay}
                 >
                   수
                 </Button>
@@ -317,6 +319,7 @@ function MyRoutine({
                   }
                   value={thu}
                   onClick={changeThu}
+                  disabled={isEveryDay}
                 >
                   목
                 </Button>
@@ -328,6 +331,7 @@ function MyRoutine({
                   }
                   value={fri}
                   onClick={changeFri}
+                  disabled={isEveryDay}
                 >
                   금
                 </Button>
@@ -339,6 +343,7 @@ function MyRoutine({
                   }
                   value={sat}
                   onClick={changeSat}
+                  disabled={isEveryDay}
                 >
                   토
                 </Button>
@@ -350,6 +355,7 @@ function MyRoutine({
                   }
                   value={sun}
                   onClick={changeSun}
+                  disabled={isEveryDay}
                 >
                   일
                 </Button>

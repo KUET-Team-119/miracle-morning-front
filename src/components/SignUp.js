@@ -117,7 +117,7 @@ function SignUp({ setIsMember }) {
             className={styles.pwBtn}
             type="button"
             onClick={generatePassword}
-            disabled={pw !== "" ? true : false}
+            disabled={pw !== ""}
           >
             {pw !== "" ? "생성 완료" : "비밀번호 만들기"}
           </Button>

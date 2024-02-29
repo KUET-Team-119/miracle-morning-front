@@ -187,6 +187,7 @@ function Managing() {
     setFri("0");
     setSat("0");
     setSun("0");
+    setIsEveryDay(false);
     setIsAllDay(false);
     setIsClicked(false);
   };
@@ -271,7 +272,7 @@ function Managing() {
   };
 
   useEffect(() => {
-    if (isAllDay === true) {
+    if (isAllDay) {
       setNewStartTime("00:00:00");
       setNewEndTime("23:59:00");
     }
@@ -508,7 +509,7 @@ function Managing() {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={isValid ? false : true}
+              disabled={!isValid}
               onClick={objToJson}
             >
               만들기
