@@ -391,7 +391,7 @@ function TodayRoutine({
       </Modal>
       <Modal show={cancelProveModalShow} centered>
         <Modal.Body className={styles.cancelProveModalBody}>
-          <p className={styles.cancelProveModalBodyTitle}>인증을 철회할까요?</p>
+          <p className={styles.cancelProveModalBodyTitle}>인증을 취소할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeCancelProveModal}>

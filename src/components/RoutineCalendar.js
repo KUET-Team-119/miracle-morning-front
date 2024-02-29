@@ -227,6 +227,7 @@ function RoutineCalendar() {
             minDetail={"month"}
             formatDay={(locale, date) => moment(date).format("D")}
             showNeighboringMonth={false}
+            calendarType="gregory"
           />
           <div className={styles.resultsContainer}>
             <div className={styles.resultsContainerTitle}>

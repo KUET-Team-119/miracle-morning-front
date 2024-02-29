@@ -350,7 +350,7 @@ function Managing() {
                 maxLength={10}
               />
               <div className={styles.modalNotice}>
-                루틴명 중복될 수 없고 변경 불가해요
+                루틴명은 중복될 수 없고 변경 불가해요
               </div>
             </div>
             <div className={styles.dayOfWeek}>

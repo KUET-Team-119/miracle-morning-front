@@ -145,7 +145,7 @@ function Home() {
               ))}
             </div>
             <div className={styles.routinesContainer}>
-              <p>
+              <p className={styles.date}>
                 <span>{memberName}</span>
                 님의 {`${moment().format("YYYY년 M월 D일")} (${dayOfWeek})`}
               </p>

@@ -33,8 +33,9 @@ function Statistics() {
         <div className={styles.header}>
           <div className={styles.intro}>
             <p>
-              <span>{myName}</span>님의 루틴 기록🌱
+              <span>{myName}</span>님의 알찬
             </p>
+            <p>한 달을 확인해보세요🌳</p>
           </div>
           <div className={styles.headerIcon}>
             <img src={homeIcon} onClick={goToHome} alt="홈" />
