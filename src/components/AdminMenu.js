@@ -1,11 +1,52 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Modal, Nav, Offcanvas, Row } from "react-bootstrap";
 import styles from "../css/AdminMenu.module.css";
 
 function AdminMenu({ show, onHide }) {
   const [logoutModalShow, setLogoutModalShow] = useState(false);
+  const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const goToMemberManaging = () => {
+    if (pathname === `/admin/member-managing`) {
+      onHide();
+    } else {
+      navigate(`/admin/member-managing`);
+    }
+  };
+
+  const goToImages = () => {
+    if (pathname === `/admin/images`) {
+      onHide();
+    } else {
+      navigate(`/admin/images`);
+    }
+  };
+
+  const goToStatistics = () => {
+    if (pathname === `/admin/statistics`) {
+      onHide();
+    } else {
+      navigate(`/admin/statistics`);
+    }
+  };
+
+  const goToCompalints = () => {
+    if (pathname === `/admin/complaints`) {
+      onHide();
+    } else {
+      navigate(`/admin/complaints`);
+    }
+  };
+
+  const goToSetting = () => {
+    if (pathname === `/admin/setting`) {
+      onHide();
+    } else {
+      navigate(`/admin/setting`);
+    }
+  };
 
   // 로그아웃 모달 열기
   const openLogoutModal = () => {
@@ -33,47 +74,27 @@ function AdminMenu({ show, onHide }) {
           <Nav>
             <Col>
               <Row>
-                <Nav.Link
-                  className={styles.link}
-                  as={Link}
-                  to={`/admin/member-managing`}
-                >
+                <Nav.Link className={styles.link} onClick={goToMemberManaging}>
                   사용자 관리
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link
-                  className={styles.link}
-                  as={Link}
-                  to={`/admin/images`}
-                >
+                <Nav.Link className={styles.link} onClick={goToImages}>
                   사진 관리
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link
-                  className={styles.link}
-                  as={Link}
-                  to={`/admin/statistics`}
-                >
+                <Nav.Link className={styles.link} onClick={goToStatistics}>
                   통계 관리
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link
-                  className={styles.link}
-                  as={Link}
-                  to={`/admin/complaints`}
-                >
+                <Nav.Link className={styles.link} onClick={goToCompalints}>
                   오류 관리
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link
-                  className={styles.link}
-                  as={Link}
-                  to={`/admin/setting`}
-                >
+                <Nav.Link className={styles.link} onClick={goToSetting}>
                   설정
                 </Nav.Link>
               </Row>

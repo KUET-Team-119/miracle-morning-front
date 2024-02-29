@@ -293,7 +293,7 @@ function AdminMemberManaging() {
               className={styles.submitBtn}
               type="submit"
               onClick={objToJson}
-              disabled={isValid ? false : true}
+              disabled={!isValid}
             >
               수정하기
             </Button>

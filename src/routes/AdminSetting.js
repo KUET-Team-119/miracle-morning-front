@@ -150,7 +150,7 @@ function AdminSetting() {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={complaintIsValid ? false : true}
+              disabled={!complaintIsValid}
               onClick={objToJson}
             >
               전송
