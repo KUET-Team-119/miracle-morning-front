@@ -40,6 +40,7 @@ function MyRoutine({
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [isEveryDay, setIsEveryDay] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
     startTime === "00:00:00" && endTime === "23:59:00" ? true : false
   );
@@ -226,6 +227,17 @@ function MyRoutine({
     newStartTime <= newEndTime &&
     !isUpdateClicked;
 
+  const changeEveryDay = () => {
+    setIsEveryDay((current) => !current);
+    setMon("1");
+    setTue("1");
+    setWed("1");
+    setThu("1");
+    setFri("1");
+    setSat("1");
+    setSun("1");
+  };
+
   const changeAllDay = () => {
     setIsAllDay((current) => !current);
   };
@@ -243,7 +255,9 @@ function MyRoutine({
         <Card body className={styles.routineCard} onClick={openUpdateModal}>
           <div className={styles.cardContent}>
             <div>🌱</div>
-            {isActivated ? null : <div>(비활성화됨)</div>}
+            {isActivated ? null : (
+              <div className={styles.deactivated}>(비활성화)</div>
+            )}
             <div>{routineName}</div>
           </div>
         </Card>
@@ -340,6 +354,14 @@ function MyRoutine({
                   일
                 </Button>
               </ButtonGroup>
+              <div className={styles.checkEveryDay}>
+                <div className={styles.modalNotice}>매일</div>
+                <input
+                  type="checkbox"
+                  checked={isEveryDay}
+                  onChange={changeEveryDay}
+                />
+              </div>
             </div>
             <div className={styles.actionTime}>
               <div className={styles.updateModalBodyTitle}>🌱 실천 시간</div>
@@ -350,6 +372,7 @@ function MyRoutine({
                   disabled={isAllDay}
                   onChange={changeStartTime}
                 />
+                <InputGroup.Text>~</InputGroup.Text>
                 <Form.Control
                   type="time"
                   value={newEndTime}
@@ -379,7 +402,7 @@ function MyRoutine({
             </div>
             <div className={styles.activeToggle}>
               <div className={styles.activeToggleText}>
-                🌱 루틴 비활성화 / 활성화
+                🌱 루틴 활성화 / 비활성화
               </div>
               <Form.Check
                 type="switch"
@@ -414,6 +437,10 @@ function MyRoutine({
           <p className={styles.deleteModalBodyContent}>
             루틴과 관련된 기록도 사라져요
           </p>
+          <p className={styles.deleteModalBodyContent}>
+            기록을 유지하고 싶거나 잠시 멈추고 싶은 루틴은
+          </p>
+          <p className={styles.deleteModalBodyContent}>비활성화를 권장해요</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>

@@ -61,7 +61,7 @@
   flex-direction: column;
   gap: 4px;
   margin-top: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
 .progressBar {
@@ -75,13 +75,14 @@
 
 .resultsContainer {
   background-color: #e9ecef;
-  margin-top: 13px;
-  padding: 8px;
+  margin-top: 24px;
+  padding: 12px;
 }
 
 .resultsContainerTitle {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 
 .resultsContainerTitleText {

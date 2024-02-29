@@ -201,7 +201,7 @@ function TodayRoutine({
         }
       } else {
         setIsValid(INVALID_TIME);
-        setModalNotice("※ 사진 시간이 실천 시간 이후입니다");
+        setModalNotice("※ 실천 시간 내에 촬영한 사진을 선택하세요");
       }
     } else {
       setIsValid(INVALID_DATE);
@@ -279,76 +279,92 @@ function TodayRoutine({
           <Modal.Body className={styles.modalBody}>
             <div className={styles.dayOfWeek}>
               <div className={styles.modalBodyTitle}>🌱 실천 요일</div>
-              <ButtonGroup className={styles.dayOfWeekGroup}>
-                <Button
-                  className={
-                    dayOfWeek.substring(0, 1) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  월
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(1, 2) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  화
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(2, 3) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  수
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(3, 4) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  목
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(4, 5) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  금
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(5, 6) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  토
-                </Button>
-                <Button
-                  className={
-                    dayOfWeek.substring(6) === "0"
-                      ? styles.dayOfWeekBtn
-                      : styles.selectedDayOfWeekBtn
-                  }
-                >
-                  일
-                </Button>
-              </ButtonGroup>
+              {dayOfWeek === "1111111" ? (
+                <ButtonGroup className={styles.dayOfWeekGroup}>
+                  <Button className={styles.selectedEveryDayBtn} disabled>
+                    매일
+                  </Button>{" "}
+                </ButtonGroup>
+              ) : (
+                <ButtonGroup className={styles.dayOfWeekGroup}>
+                  <Button
+                    className={
+                      dayOfWeek.substring(0, 1) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    월
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(1, 2) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    화
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(2, 3) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    수
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(3, 4) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    목
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(4, 5) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    금
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(5, 6) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    토
+                  </Button>
+                  <Button
+                    className={
+                      dayOfWeek.substring(6) === "0"
+                        ? styles.dayOfWeekBtn
+                        : styles.selectedDayOfWeekBtn
+                    }
+                    disabled
+                  >
+                    일
+                  </Button>
+                </ButtonGroup>
+              )}
             </div>
             <div className={styles.actionTime}>
               <div className={styles.modalBodyTitle}>🌱 실천 시간</div>
               <InputGroup>
                 <Form.Control type="time" value={startTime} disabled />
+                <InputGroup.Text>~</InputGroup.Text>
                 <Form.Control type="time" value={endTime} disabled />
               </InputGroup>
             </div>

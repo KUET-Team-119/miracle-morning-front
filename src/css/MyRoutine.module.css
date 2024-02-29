@@ -12,6 +12,10 @@
   font-size: 16px;
 }
 
+.deactivated {
+  margin-right: 8px;
+}
+
 .updateModalHeader {
   display: flex;
   justify-content: space-between;
@@ -63,6 +67,20 @@
   border: none;
 }
 
+.checkEveryDay {
+  display: flex;
+  align-items: center;
+}
+
+.checkEveryDay input {
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  margin-left: 4px;
+  display: inline-block;
+  accent-color: #8ec952;
+}
+
 .checkAllDay {
   display: flex;
   align-items: center;
@@ -112,4 +130,6 @@
 
 .deleteModalBody .deleteModalBodyContent {
   font-size: 15px;
+  text-align: center;
+  margin: 0px;
 }
