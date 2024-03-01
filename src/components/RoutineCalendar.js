@@ -240,7 +240,7 @@ function RoutineCalendar() {
                   ) : null}
                 </div>
               ) : (
-                "기록이 없습니다!"
+                "기록이 없어요"
               )}
             </div>
             <div className={styles.resultsList}>
