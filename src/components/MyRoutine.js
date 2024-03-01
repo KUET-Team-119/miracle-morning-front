@@ -208,11 +208,13 @@ function MyRoutine({
 
   // 루틴 삭제 모달 열기
   const openDeleteModal = () => {
+    closeUpdateModal();
     setDeleteModalShow(true);
   };
 
   // 루틴 삭제 모달 닫기
   const closeDeleteModal = () => {
+    openUpdateModal();
     setDeleteModalShow(false);
     setIsDeleteClicked(false);
   };

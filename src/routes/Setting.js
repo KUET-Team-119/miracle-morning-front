@@ -94,11 +94,9 @@ function Setting() {
         if (status === 401) {
           navigate("/unauthorized");
         } else if (status === 403) {
-          closeLeaveModal();
-          setErrorModalShow(true);
+          openErrorModal();
         } else if (status === 404) {
-          closeLeaveModal();
-          setErrorModalShow(true);
+          openErrorModal();
         } else {
           navigate("/server-error");
         }
@@ -147,6 +145,18 @@ function Setting() {
   const closeLeaveModal = () => {
     setLeaveModalShow(false);
     setPw("");
+  };
+
+  // 에러 모달 열기
+  const openErrorModal = () => {
+    closeLeaveModal();
+    setErrorModalShow(true);
+  };
+
+  // 에러 모달 닫기
+  const closeErrorModal = () => {
+    setErrorModalShow(false);
+    openLeaveModal();
   };
 
   const clickLeave = () => {
@@ -267,6 +277,7 @@ function Setting() {
               placeholder="비밀번호를 입력해주세요"
               value={pw}
               onChange={changePw}
+              maxLength={5}
             />
           </InputGroup>
         </Modal.Body>
@@ -292,10 +303,7 @@ function Setting() {
           <p className={styles.errorModalBodyContent}>
             ※ 비밀번호 분실 시, 관리자에게 문의
           </p>
-          <Button
-            className={styles.errorModalBtn}
-            onClick={() => setErrorModalShow(false)}
-          >
+          <Button className={styles.errorModalBtn} onClick={closeErrorModal}>
             닫기
           </Button>
         </Modal.Body>
