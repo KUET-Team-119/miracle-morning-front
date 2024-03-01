@@ -229,14 +229,24 @@ function MyRoutine({
     !isUpdateClicked;
 
   const changeEveryDay = () => {
+    if (newDayOfWeek !== "1111111" && !isEveryDay) {
+      setMon("1");
+      setTue("1");
+      setWed("1");
+      setThu("1");
+      setFri("1");
+      setSat("1");
+      setSun("1");
+    } else if (newDayOfWeek === "1111111" && isEveryDay) {
+      setMon("0");
+      setTue("0");
+      setWed("0");
+      setThu("0");
+      setFri("0");
+      setSat("0");
+      setSun("0");
+    }
     setIsEveryDay((current) => !current);
-    setMon("1");
-    setTue("1");
-    setWed("1");
-    setThu("1");
-    setFri("1");
-    setSat("1");
-    setSun("1");
   };
 
   const changeAllDay = () => {

@@ -16,7 +16,7 @@ function Menu({ show, onHide }) {
     }
   };
 
-  const goToManaging = () => {
+  const goToRoutines = () => {
     if (pathname === `/routines`) {
       onHide();
     } else {
@@ -79,7 +79,7 @@ function Menu({ show, onHide }) {
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link className={styles.link} onClick={goToManaging}>
+                <Nav.Link className={styles.link} onClick={goToRoutines}>
                   루틴 관리
                 </Nav.Link>
               </Row>
