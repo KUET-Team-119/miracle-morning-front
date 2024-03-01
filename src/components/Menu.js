@@ -1,11 +1,52 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Modal, Nav, Offcanvas, Row } from "react-bootstrap";
 import styles from "../css/Menu.module.css";
 
 function Menu({ show, onHide }) {
   const [logoutModalShow, setLogoutModalShow] = useState(false);
+  const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const goToHome = () => {
+    if (pathname === `/home`) {
+      onHide();
+    } else {
+      navigate(`/home`);
+    }
+  };
+
+  const goToRoutines = () => {
+    if (pathname === `/routines`) {
+      onHide();
+    } else {
+      navigate(`/routines`);
+    }
+  };
+
+  const goToStatistics = () => {
+    if (pathname === `/statistics`) {
+      onHide();
+    } else {
+      navigate(`/statistics`);
+    }
+  };
+
+  const goToImages = () => {
+    if (pathname === `/images`) {
+      onHide();
+    } else {
+      navigate(`/images`);
+    }
+  };
+
+  const goToSetting = () => {
+    if (pathname === `/setting`) {
+      onHide();
+    } else {
+      navigate(`/setting`);
+    }
+  };
 
   // 로그아웃 모달 열기
   const openLogoutModal = () => {
@@ -33,27 +74,27 @@ function Menu({ show, onHide }) {
           <Nav>
             <Col>
               <Row>
-                <Nav.Link className={styles.link} as={Link} to={`/home`}>
+                <Nav.Link className={styles.link} onClick={goToHome}>
                   홈
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link className={styles.link} as={Link} to={`/routines`}>
+                <Nav.Link className={styles.link} onClick={goToRoutines}>
                   루틴 관리
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link className={styles.link} as={Link} to={`/statistics`}>
+                <Nav.Link className={styles.link} onClick={goToStatistics}>
                   루틴 현황
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link className={styles.link} as={Link} to={`/images`}>
+                <Nav.Link className={styles.link} onClick={goToImages}>
                   인증 피드
                 </Nav.Link>
               </Row>
               <Row>
-                <Nav.Link className={styles.link} as={Link} to={`/setting`}>
+                <Nav.Link className={styles.link} onClick={goToSetting}>
                   설정
                 </Nav.Link>
               </Row>

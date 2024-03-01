@@ -40,6 +40,7 @@ function Managing() {
   const [newEndTime, setNewEndTime] = useState("");
   const [requestData, setRequestData] = useState("");
   const [menuShow, setMenuShow] = useState(false);
+  const [isEveryDay, setIsEveryDay] = useState(false);
   const [isAllDay, setIsAllDay] = useState(false);
   const [routinesCount, setRoutinesCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
@@ -61,13 +62,10 @@ function Managing() {
         sortedResponseData.sort((a, b) => {
           // isActivated가 true인 경우를 먼저 정렬, false인 경우는 나중에 정렬
           if (a.isActivated === b.isActivated) {
-            // isActivated 값이 같은 경우 startTime으로 정렬
-            if (a.startTime === b.startTime) {
-              // startTime이 같은 경우 endTime으로 정렬
-              return a.endTime.localeCompare(b.endTime);
-            } else {
-              return a.startTime.localeCompare(b.startTime);
-            }
+            // isActivated 값이 같은 경우 routineName으로 오름차순 정렬
+            return a.routineName.localeCompare(b.routineName, "ko-KR", {
+              numeric: true,
+            });
           } else {
             return a.isActivated ? -1 : 1; // true가 앞에 오도록 정렬
           }
@@ -189,6 +187,7 @@ function Managing() {
     setFri("0");
     setSat("0");
     setSun("0");
+    setIsEveryDay(false);
     setIsAllDay(false);
     setIsClicked(false);
   };
@@ -215,6 +214,27 @@ function Managing() {
 
   const goToHome = () => {
     navigate("/home");
+  };
+
+  const changeEveryDay = () => {
+    if (newDayOfWeek !== "1111111" && !isEveryDay) {
+      setMon("1");
+      setTue("1");
+      setWed("1");
+      setThu("1");
+      setFri("1");
+      setSat("1");
+      setSun("1");
+    } else if (newDayOfWeek === "1111111" && isEveryDay) {
+      setMon("0");
+      setTue("0");
+      setWed("0");
+      setThu("0");
+      setFri("0");
+      setSat("0");
+      setSun("0");
+    }
+    setIsEveryDay((current) => !current);
   };
 
   const changeAllDay = () => {
@@ -262,7 +282,7 @@ function Managing() {
   };
 
   useEffect(() => {
-    if (isAllDay === true) {
+    if (isAllDay) {
       setNewStartTime("00:00:00");
       setNewEndTime("23:59:00");
     }
@@ -281,8 +301,9 @@ function Managing() {
           <div className={styles.header}>
             <div className={styles.intro}>
               <p>
-                <span>{myName}</span>님의 루틴 List🌱
+                <span>{myName}</span>님의
               </p>
+              <p>루틴 List🌱</p>
             </div>
             <div className={styles.headerIcon}>
               <img src={homeIcon} onClick={goToHome} alt="홈" />
@@ -349,8 +370,8 @@ function Managing() {
                 onChange={changeRoutineName}
                 maxLength={10}
               />
-              <div className={styles.modalNotice}>
-                루틴명은 중복될 수 없고 변경 불가해요
+              <div className={styles.modalNameNotice}>
+                루틴명은 중복될 수 없고, 추후에 변경이 불가능해요
               </div>
             </div>
             <div className={styles.dayOfWeek}>
@@ -364,6 +385,7 @@ function Managing() {
                   }
                   value={mon}
                   onClick={changeMon}
+                  disabled={isEveryDay}
                 >
                   월
                 </Button>
@@ -375,6 +397,7 @@ function Managing() {
                   }
                   value={tue}
                   onClick={changeTue}
+                  disabled={isEveryDay}
                 >
                   화
                 </Button>
@@ -386,6 +409,7 @@ function Managing() {
                   }
                   value={wed}
                   onClick={changeWed}
+                  disabled={isEveryDay}
                 >
                   수
                 </Button>
@@ -397,6 +421,7 @@ function Managing() {
                   }
                   value={thu}
                   onClick={changeThu}
+                  disabled={isEveryDay}
                 >
                   목
                 </Button>
@@ -408,6 +433,7 @@ function Managing() {
                   }
                   value={fri}
                   onClick={changeFri}
+                  disabled={isEveryDay}
                 >
                   금
                 </Button>
@@ -419,6 +445,7 @@ function Managing() {
                   }
                   value={sat}
                   onClick={changeSat}
+                  disabled={isEveryDay}
                 >
                   토
                 </Button>
@@ -430,12 +457,21 @@ function Managing() {
                   }
                   value={sun}
                   onClick={changeSun}
+                  disabled={isEveryDay}
                 >
                   일
                 </Button>
               </ButtonGroup>
               <div className={styles.modalNotice}>
                 자유롭게 요일을 선택할 수 있어요
+              </div>
+              <div className={styles.checkEveryDay}>
+                <div className={styles.modalNotice}>매일</div>
+                <input
+                  type="checkbox"
+                  checked={isEveryDay}
+                  onChange={changeEveryDay}
+                />
               </div>
             </div>
             <div className={styles.actionTime}>
@@ -447,6 +483,7 @@ function Managing() {
                   onChange={changeStartTime}
                   disabled={isAllDay}
                 />
+                <InputGroup.Text>~</InputGroup.Text>
                 <Form.Control
                   type="time"
                   value={newEndTime}
@@ -482,7 +519,7 @@ function Managing() {
             <Button
               className={styles.submitBtn}
               type="submit"
-              disabled={isValid ? false : true}
+              disabled={!isValid}
               onClick={objToJson}
             >
               만들기

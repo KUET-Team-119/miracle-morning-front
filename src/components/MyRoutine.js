@@ -40,8 +40,9 @@ function MyRoutine({
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [updateModalShow, setUpdateModalShow] = useState(false);
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+  const [isEveryDay, setIsEveryDay] = useState(false);
   const [isAllDay, setIsAllDay] = useState(
-    startTime === "00:00:00" && endTime === "23:59:00" ? true : false
+    startTime === "00:00:00" && endTime === "23:59:00"
   );
   const navigate = useNavigate();
 
@@ -187,9 +188,8 @@ function MyRoutine({
     setNewStartTime(startHourMinute);
     const endHourMinute = endTime.substring(0, 5);
     setNewEndTime(endHourMinute);
-    setIsAllDay(
-      startTime === "00:00:00" && endTime === "23:59:00" ? true : false
-    );
+    setIsEveryDay(dayOfWeek === "1111111");
+    setIsAllDay(startTime === "00:00:00" && endTime === "23:59:00");
     setNewIsActivated(isActivated);
     setMon(dayOfWeek.substring(0, 1));
     setTue(dayOfWeek.substring(1, 2));
@@ -208,11 +208,13 @@ function MyRoutine({
 
   // 루틴 삭제 모달 열기
   const openDeleteModal = () => {
+    closeUpdateModal();
     setDeleteModalShow(true);
   };
 
   // 루틴 삭제 모달 닫기
   const closeDeleteModal = () => {
+    openUpdateModal();
     setDeleteModalShow(false);
     setIsDeleteClicked(false);
   };
@@ -226,12 +228,33 @@ function MyRoutine({
     newStartTime <= newEndTime &&
     !isUpdateClicked;
 
+  const changeEveryDay = () => {
+    if (newDayOfWeek !== "1111111" && !isEveryDay) {
+      setMon("1");
+      setTue("1");
+      setWed("1");
+      setThu("1");
+      setFri("1");
+      setSat("1");
+      setSun("1");
+    } else if (newDayOfWeek === "1111111" && isEveryDay) {
+      setMon("0");
+      setTue("0");
+      setWed("0");
+      setThu("0");
+      setFri("0");
+      setSat("0");
+      setSun("0");
+    }
+    setIsEveryDay((current) => !current);
+  };
+
   const changeAllDay = () => {
     setIsAllDay((current) => !current);
   };
 
   useEffect(() => {
-    if (isAllDay === true) {
+    if (isAllDay) {
       setNewStartTime("00:00");
       setNewEndTime("23:59");
     }
@@ -243,7 +266,9 @@ function MyRoutine({
         <Card body className={styles.routineCard} onClick={openUpdateModal}>
           <div className={styles.cardContent}>
             <div>🌱</div>
-            {isActivated ? null : <div>(비활성화됨)</div>}
+            {isActivated ? null : (
+              <div className={styles.deactivated}>(비활성화)</div>
+            )}
             <div>{routineName}</div>
           </div>
         </Card>
@@ -270,6 +295,7 @@ function MyRoutine({
                   }
                   value={mon}
                   onClick={changeMon}
+                  disabled={isEveryDay}
                 >
                   월
                 </Button>
@@ -281,6 +307,7 @@ function MyRoutine({
                   }
                   value={tue}
                   onClick={changeTue}
+                  disabled={isEveryDay}
                 >
                   화
                 </Button>
@@ -292,6 +319,7 @@ function MyRoutine({
                   }
                   value={wed}
                   onClick={changeWed}
+                  disabled={isEveryDay}
                 >
                   수
                 </Button>
@@ -303,6 +331,7 @@ function MyRoutine({
                   }
                   value={thu}
                   onClick={changeThu}
+                  disabled={isEveryDay}
                 >
                   목
                 </Button>
@@ -314,6 +343,7 @@ function MyRoutine({
                   }
                   value={fri}
                   onClick={changeFri}
+                  disabled={isEveryDay}
                 >
                   금
                 </Button>
@@ -325,6 +355,7 @@ function MyRoutine({
                   }
                   value={sat}
                   onClick={changeSat}
+                  disabled={isEveryDay}
                 >
                   토
                 </Button>
@@ -336,10 +367,19 @@ function MyRoutine({
                   }
                   value={sun}
                   onClick={changeSun}
+                  disabled={isEveryDay}
                 >
                   일
                 </Button>
               </ButtonGroup>
+              <div className={styles.checkEveryDay}>
+                <div className={styles.modalNotice}>매일</div>
+                <input
+                  type="checkbox"
+                  checked={isEveryDay}
+                  onChange={changeEveryDay}
+                />
+              </div>
             </div>
             <div className={styles.actionTime}>
               <div className={styles.updateModalBodyTitle}>🌱 실천 시간</div>
@@ -350,6 +390,7 @@ function MyRoutine({
                   disabled={isAllDay}
                   onChange={changeStartTime}
                 />
+                <InputGroup.Text>~</InputGroup.Text>
                 <Form.Control
                   type="time"
                   value={newEndTime}
@@ -379,7 +420,7 @@ function MyRoutine({
             </div>
             <div className={styles.activeToggle}>
               <div className={styles.activeToggleText}>
-                🌱 루틴 비활성화 / 활성화
+                🌱 루틴 활성화 / 비활성화
               </div>
               <Form.Check
                 type="switch"
@@ -409,11 +450,20 @@ function MyRoutine({
         </Form>
       </Modal>
       <Modal show={deleteModalShow} centered>
+        <Modal.Header className={styles.deleteModalHeader}>
+          <Modal.Title className={styles.deleteModalTitle}>
+            🌱 {routineName}
+          </Modal.Title>
+        </Modal.Header>
         <Modal.Body className={styles.deleteModalBody}>
-          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제할까요?</p>
+          <p className={styles.deleteModalBodyTitle}>루틴을 삭제할까요?</p>
           <p className={styles.deleteModalBodyContent}>
             루틴과 관련된 기록도 사라져요
           </p>
+          <p className={styles.deleteModalBodyContent}>
+            기록을 유지하고 싶거나 잠시 멈추고 싶다면
+          </p>
+          <p className={styles.deleteModalBodyContent}>비활성화를 권장해요</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button type="button" variant="secondary" onClick={closeDeleteModal}>

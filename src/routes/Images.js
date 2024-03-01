@@ -51,7 +51,7 @@ function Images() {
       <div className={styles.headerContainer}>
         <div className={styles.header}>
           <div className={styles.intro}>
-            <p>오늘의 인증 피드입니다🌱</p>
+            <p>{moment().format("M월 D일")} 인증 피드입니다🌱</p>
           </div>
           <div className={styles.headerIcon}>
             <img src={homeIcon} onClick={goToHome} alt="홈" />
@@ -84,9 +84,7 @@ function Images() {
                       <Card.Title>{result.routineName}</Card.Title>
                       <Card.Subtitle>{result.memberName}</Card.Subtitle>
                       <Card.Text>
-                        {moment(result.doneAt).format(
-                          "YYYY년 MM일 DD일 HH시 mm분"
-                        )}
+                        {moment(result.doneAt).format("YYYY년 M일 D일 H시 m분")}
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -95,8 +93,8 @@ function Images() {
             </Row>
           ) : (
             <div className={styles.noProof}>
-              <p>아직 루틴을 인증한 사람이 없어요😯</p>
-              <p>가장 먼저 인증해보세요!</p>
+              <p>아직 아무도 루틴을 인증하지 않았어요😯</p>
+              <p>가장 먼저 하루를 열어볼까요?</p>
             </div>
           )}
         </div>

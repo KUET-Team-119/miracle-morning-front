@@ -26,6 +26,7 @@
 
 .intro p {
   font-size: 19px;
+  font-weight: 500;
   margin: 0px;
 }
 
@@ -69,10 +70,12 @@
 
 .managingModalTitle {
   font-size: 19px;
+  font-weight: 500;
 }
 
 .managingModalBodyTitle {
   font-size: 17px;
+  font-weight: 500;
   margin-bottom: 9px;
 }
 

@@ -52,18 +52,33 @@
 
 .dayOfWeekBtn,
 .dayOfWeekBtn:hover,
-.dayOfWeekBtn:active {
+.dayOfWeekBtn:active,
+.dayOfWeekBtn:disabled {
   color: #6eb02a;
   background-color: white;
   border: none;
+  opacity: 1;
 }
 
 .selectedDayOfWeekBtn,
 .selectedDayOfWeekBtn:hover,
-.selectedDayOfWeekBtn:active {
+.selectedDayOfWeekBtn:active,
+.selectedDayOfWeekBtn:disabled {
   color: #6eb02a;
   background-color: #e4f6d2;
   border: none;
+  opacity: 1;
+}
+
+.selectedEveryDayBtn,
+.selectedEveryDayBtn:hover,
+.selectedEveryDayBtn:active,
+.selectedEveryDayBtn:disabled {
+  color: #6eb02a;
+  background-color: white;
+  font-weight: bold;
+  border: none;
+  opacity: 1;
 }
 
 .certificationCard {

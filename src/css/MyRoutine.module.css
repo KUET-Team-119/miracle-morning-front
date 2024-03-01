@@ -12,6 +12,10 @@
   font-size: 16px;
 }
 
+.deactivated {
+  margin-right: 8px;
+}
+
 .updateModalHeader {
   display: flex;
   justify-content: space-between;
@@ -49,18 +53,36 @@
 
 .dayOfWeekBtn,
 .dayOfWeekBtn:hover,
-.dayOfWeekBtn:active {
+.dayOfWeekBtn:active,
+.dayOfWeekBtn:disabled {
   color: #6eb02a;
   background-color: white;
   border: none;
+  opacity: 1;
 }
 
 .selectedDayOfWeekBtn,
 .selectedDayOfWeekBtn:hover,
-.selectedDayOfWeekBtn:active {
+.selectedDayOfWeekBtn:active,
+.selectedDayOfWeekBtn:disabled {
   color: #6eb02a;
   background-color: #e4f6d2;
   border: none;
+  opacity: 1;
+}
+
+.checkEveryDay {
+  display: flex;
+  align-items: center;
+}
+
+.checkEveryDay input {
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  margin-left: 4px;
+  display: inline-block;
+  accent-color: #8ec952;
 }
 
 .checkAllDay {
@@ -99,6 +121,15 @@
   border-color: #8ec952;
 }
 
+.deleteModalHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.deleteModalTitle {
+  font-size: 19px;
+}
+
 .deleteModalBody {
   display: flex;
   flex-direction: column;
@@ -108,8 +139,11 @@
 
 .deleteModalBody .deleteModalBodyTitle {
   font-size: 18px;
+  color: #e26862;
 }
 
 .deleteModalBody .deleteModalBodyContent {
   font-size: 15px;
+  text-align: center;
+  margin: 0px;
 }

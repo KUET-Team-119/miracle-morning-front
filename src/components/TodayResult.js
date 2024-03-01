@@ -10,7 +10,7 @@ function TodayResult({ routineName, doneAt }) {
         }
       />
       <div>{routineName}</div>
-      <div className="ms-auto">
+      <div className={`${styles.doneTime} ms-auto`}>
         {doneAt !== null
           ? `${moment(doneAt).format("HH:MM")}에 완료!`
           : `미달성`}

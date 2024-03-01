@@ -30,7 +30,7 @@ function Login({ setIsMember }) {
   };
 
   // 닉네임, 비밀번호 유효성 검사
-  const isValid = name !== "" && pw !== "" && !isClicked;
+  const isValid = name !== "" && pw !== "" && pw.length === 5 && !isClicked;
 
   // 닉네임, 비밀번호 담긴 객체를 json 형태로 변환
   const objToJson = () => {
@@ -96,6 +96,7 @@ function Login({ setIsMember }) {
             value={name}
             placeholder="닉네임"
             onChange={changeMemberName}
+            maxLength={10}
           />
         </InputGroup>
         <InputGroup className={styles.inputGroup}>
@@ -106,6 +107,7 @@ function Login({ setIsMember }) {
             value={pw}
             placeholder="비밀번호"
             onChange={changeMemberPw}
+            maxLength={5}
           />
         </InputGroup>
         <Button

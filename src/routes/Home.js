@@ -126,7 +126,9 @@ function Home() {
           <div>
             <Card className={styles.goalCard} body>
               {routinesCount === 0 ? (
-                <div className={styles.cheering}>모든 루틴을 달성했어요🔥</div>
+                <div className={styles.cheering}>
+                  모든 루틴을 달성했어요! 내일도 화이팅🔥
+                </div>
               ) : (
                 <div className={styles.cheering}>
                   완벽한 하루까지 <span>{routinesCount}개</span>의 루틴이
@@ -171,8 +173,8 @@ function Home() {
               ) : (
                 <div className={styles.noRoutine}>
                   <p>오늘 달성할 루틴이 없어요</p>
-                  <p>루틴 기록은 매일 자정에 생성됩니다</p>
-                  <p>루틴 관리에서 루틴을 만들어보세요!</p>
+                  <p>루틴 관리에서 루틴을 만들어보세요</p>
+                  <p>생성한 루틴은 매일 자정에 업데이트됩니다</p>
                   <Button onClick={goToRoutines}>루틴 관리로 이동</Button>
                 </div>
               )}

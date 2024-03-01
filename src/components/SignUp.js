@@ -35,7 +35,7 @@ function SignUp({ setIsMember }) {
   const objToJson = () => {
     setRequestData(
       JSON.stringify({
-        memberName: name,
+        memberName: name.trim(),
         password: pw,
       })
     );
@@ -85,11 +85,7 @@ function SignUp({ setIsMember }) {
   return (
     <div className={styles.container}>
       <Image className={styles.logo} src={logoIcon} alt="로고" rounded />
-      <h1 className={styles.title}>
-        나를 키우는 공간
-        <br />
-        미라클 농장🌱
-      </h1>
+      <h1 className={styles.title}>회원가입🌱</h1>
       <Card className={styles.infoCard}>
         <Card.Body>
           <Card.Text className={styles.cardContent}>
@@ -121,7 +117,7 @@ function SignUp({ setIsMember }) {
             className={styles.pwBtn}
             type="button"
             onClick={generatePassword}
-            disabled={pw !== "" ? true : false}
+            disabled={pw !== ""}
           >
             {pw !== "" ? "생성 완료" : "비밀번호 만들기"}
           </Button>
