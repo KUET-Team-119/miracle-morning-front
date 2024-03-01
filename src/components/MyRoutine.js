@@ -440,13 +440,18 @@ function MyRoutine({
         </Form>
       </Modal>
       <Modal show={deleteModalShow} centered>
+        <Modal.Header className={styles.deleteModalHeader}>
+          <Modal.Title className={styles.deleteModalTitle}>
+            🌱 {routineName}
+          </Modal.Title>
+        </Modal.Header>
         <Modal.Body className={styles.deleteModalBody}>
-          <p className={styles.deleteModalBodyTitle}>🌱 루틴을 삭제할까요?</p>
+          <p className={styles.deleteModalBodyTitle}>루틴을 삭제할까요?</p>
           <p className={styles.deleteModalBodyContent}>
             루틴과 관련된 기록도 사라져요
           </p>
           <p className={styles.deleteModalBodyContent}>
-            기록을 유지하고 싶거나 잠시 멈추고 싶은 루틴은
+            기록을 유지하고 싶거나 잠시 멈추고 싶다면
           </p>
           <p className={styles.deleteModalBodyContent}>비활성화를 권장해요</p>
         </Modal.Body>

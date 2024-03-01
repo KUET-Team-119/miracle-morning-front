@@ -121,6 +121,15 @@
   border-color: #8ec952;
 }
 
+.deleteModalHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.deleteModalTitle {
+  font-size: 19px;
+}
+
 .deleteModalBody {
   display: flex;
   flex-direction: column;
@@ -130,6 +139,7 @@
 
 .deleteModalBody .deleteModalBodyTitle {
   font-size: 18px;
+  color: #e26862;
 }
 
 .deleteModalBody .deleteModalBodyContent {
