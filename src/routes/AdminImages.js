@@ -130,12 +130,12 @@ function AdminImages() {
     }
   };
 
-  // 인증 철회 모달 열기
+  // 인증 취소 모달 열기
   const openProveModal = () => {
     setProveModalShow(true);
   };
 
-  // 인증 철회 모달 닫기
+  // 인증 취소 모달 닫기
   const closeProveModal = () => {
     setProveModalShow(false);
     setIsClicked(false);
@@ -199,7 +199,7 @@ function AdminImages() {
                           data-result-id={result.resultId}
                           data-routine-name={result.resultId}
                         >
-                          인증 철회
+                          인증 취소
                         </Button>
                       </Card.Body>
                     </Card>
@@ -216,7 +216,7 @@ function AdminImages() {
       </div>
       <Modal show={proveModalShow} centered>
         <Modal.Body className={styles.proveModalBody}>
-          <p className={styles.proveModalBodyTitle}>인증을 철회할까요?</p>
+          <p className={styles.proveModalBodyTitle}>인증을 취소할까요?</p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
           <Button variant="secondary" onClick={closeProveModal}>

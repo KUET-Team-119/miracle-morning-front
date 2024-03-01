@@ -303,7 +303,7 @@ function AdminMemberManaging() {
       <Modal show={checkModalShow} centered>
         <Modal.Body className={styles.checkModalBody}>
           <p className={styles.checkModalBodyTitle}>
-            {memberName}님이 강제 탈퇴할까요?
+            {memberName}님을 강제 탈퇴할까요?
           </p>
         </Modal.Body>
         <Modal.Footer className={styles.modalFooter}>
