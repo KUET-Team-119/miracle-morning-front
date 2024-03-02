@@ -39,11 +39,7 @@ function TodayRoutine({
   const [cancelProveModalShow, setCancelProveModalShow] = useState(false);
   const [data, setData] = useState("");
   const [file, setFile] = useState(null);
-  const [fileYear, setFileYear] = useState("");
-  const [fileMonth, setFileMonth] = useState("");
-  const [fileDay, setFileDay] = useState("");
   const [fileTime, setFileTime] = useState("");
-  const [fileSize, setFileSize] = useState("");
   const [isProveClicked, setIsProveClicked] = useState(false);
   const [isCancelClicked, setIsCancelClicked] = useState(false);
   const [isValid, setIsValid] = useState(NOT_SELECTED);
@@ -142,7 +138,6 @@ function TodayRoutine({
   };
 
   const uploadedFile = async (e) => {
-    setIsValid(INVALID_DATE);
     const fileData = e.target.files[0];
     const options = {
       maxSizeMB: 0.3, // 이미지 최대 용량
@@ -152,83 +147,126 @@ function TodayRoutine({
     // 파일이 선택되어야 함
     if (fileData !== undefined && fileData !== null) {
       try {
-        setModalNotice(
-          "※ 파일을 분석 중입니다. 이 작업은 시간이 약간 소요됩니다."
-        );
-        // 파일 압축
-        const compressedFile = await imageCompression(fileData, options);
-        setFile(compressedFile);
-
-        const lastModifiedTimestamp = fileData.lastModified;
-        const fileDateObj = new Date(lastModifiedTimestamp);
-        const fileYear = fileDateObj.getFullYear();
-        let fileMonth = fileDateObj.getMonth();
-        let fileDate = fileDateObj.getDate();
-        let fileHours = fileDateObj.getHours();
-        let fileMinutes = fileDateObj.getMinutes();
-        setFileYear(fileDateObj.getFullYear());
-        setFileMonth(fileDateObj.getMonth());
-        setFileDay(fileDateObj.getDate());
-        if (fileMonth + 1 <= 9) {
-          fileMonth = "0" + (fileMonth + 1);
+        // 파일 유효성 검사
+        const validationResult = validateFile(fileData);
+        if (validationResult.isValid) {
+          // 파일이 유효하면 압축 진행
+          await compressFile(fileData, options);
+          setIsValid(VALIDATE_FILE);
+        } else {
+          // 파일이 유효하지 않으면 에러 처리
+          handleValidationErrors(validationResult.errorType);
         }
-        if (fileDate <= 9) {
-          fileDate = "0" + fileDate;
-        }
-        if (fileHours <= 9) {
-          fileHours = "0" + fileHours;
-        }
-        if (fileMinutes <= 9) {
-          fileMinutes = "0" + fileMinutes;
-        }
-        setFileTime(
-          `${fileYear}-${fileMonth}-${fileDate}T${fileHours}:${fileMinutes}:00`
-        );
-        setFileSize(fileData.size);
       } catch (error) {
         console.log(error);
-        setFile(null);
-        setIsValid(COMPRESSION_ERROR);
-        setModalNotice("※ 파일 분석 중 오류가 발생했습니다. 다시 시도해주세요");
+        handleCompressionError();
       }
     } else {
-      setFile(null);
-      setIsValid(NOT_SELECTED);
-      setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
+      // 파일이 선택되지 않았을 때
+      handleFileNotSelected();
     }
   };
 
-  useEffect(() => {
-    const timeOnly = fileTime.substring(11, 19);
+  const validateFile = (fileData) => {
+    const fileSizeLimit = 5242880; // 5MB
+
+    const fileSize = fileData.size;
+    const lastModifiedTimestamp = fileData.lastModified;
+    const fileDateObj = new Date(lastModifiedTimestamp);
+    const fileYear = fileDateObj.getFullYear();
+    let fileMonth = fileDateObj.getMonth();
+    let fileDay = fileDateObj.getDate();
+    let fileHours = fileDateObj.getHours();
+    let fileMinutes = fileDateObj.getMinutes();
+    console.log(fileYear);
+    console.log(fileMonth);
+    console.log(fileDay);
+    console.log(fileHours);
+    console.log(fileMinutes);
+
+    // 파일 크기 확인
+    if (fileSize > fileSizeLimit) {
+      return { isValid: false, errorType: "INVALID_SIZE" };
+    }
+
+    // 오늘 날짜 확인
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth();
     const todayDay = today.getDate();
-
-    // 조건 1. 파일 날짜 === 오늘 날짜
     if (
-      fileYear === todayYear &&
-      fileMonth === todayMonth &&
-      fileDay === todayDay
+      fileYear !== todayYear ||
+      fileMonth !== todayMonth ||
+      fileDay !== todayDay
     ) {
-      // 조건 2. 파일 시간 <= 인증 시간
-      if (timeOnly <= endTime) {
-        // 조건 3. 파일 크기 <= 5MB
-        if (fileSize <= 5242880) {
-          setIsValid(VALIDATE_FILE);
-        } else {
-          setIsValid(INVALID_SIZE);
-          setModalNotice("※ 사진 크기가 5MB 이하여야 합니다");
-        }
-      } else {
+      return { isValid: false, errorType: "INVALID_DATE" };
+    }
+
+    // 시간 확인
+    if (fileDay <= 9) {
+      fileDay = "0" + fileDay;
+    }
+    if (fileHours <= 9) {
+      fileHours = "0" + fileHours;
+    }
+    if (fileMinutes <= 9) {
+      fileMinutes = "0" + fileMinutes;
+    }
+    const fileTime = fileHours + ":" + fileMinutes + ":00";
+    console.log(fileTime);
+    console.log(endTime);
+    if (fileTime > endTime) {
+      return { isValid: false, errorType: "INVALID_TIME" };
+    }
+
+    if (fileMonth + 1 <= 9) {
+      fileMonth = "0" + (fileMonth + 1);
+    }
+    setFileTime(
+      `${fileYear}-${fileMonth}-${fileDay}T${fileHours}:${fileMinutes}:00`
+    );
+
+    return { isValid: true };
+  };
+
+  const compressFile = async (fileData, options) => {
+    setIsValid(INVALID_DATE);
+    setModalNotice("※ 파일을 분석 중입니다. 이 작업은 시간이 약간 소요됩니다.");
+    const compressedFile = await imageCompression(fileData, options);
+    setFile(compressedFile);
+  };
+
+  const handleValidationErrors = (errorType) => {
+    switch (errorType) {
+      case "INVALID_SIZE":
+        setIsValid(INVALID_SIZE);
+        setModalNotice("※ 사진 크기가 5MB 이하여야 합니다");
+        break;
+      case "INVALID_TIME":
         setIsValid(INVALID_TIME);
         setModalNotice("※ 실천 시간 내에 촬영한 사진을 선택하세요");
-      }
-    } else {
-      setIsValid(INVALID_DATE);
-      setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
+        break;
+      case "INVALID_DATE":
+        setIsValid(INVALID_DATE);
+        setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
+        break;
+      default:
+        setModalNotice("※ 파일 분석 중 오류가 발생했습니다. 다시 시도해주세요");
+        break;
     }
-  }, [fileTime, fileSize]);
+  };
+
+  const handleCompressionError = () => {
+    setFile(null);
+    setIsValid(COMPRESSION_ERROR);
+    setModalNotice("※ 파일 분석 중 오류가 발생했습니다. 다시 시도해주세요");
+  };
+
+  const handleFileNotSelected = () => {
+    setFile(null);
+    setIsValid(NOT_SELECTED);
+    setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
+  };
 
   // 인증 모달 열기
   const openProveModal = () => {
@@ -239,11 +277,7 @@ function TodayRoutine({
   const closeProveModal = () => {
     setProveModalShow(false);
     setFile(null); // 파일 상태 초기화
-    setFileYear(""); // 파일 날짜 관련 상태 초기화
-    setFileMonth("");
-    setFileDay("");
     setFileTime("");
-    setFileSize("");
     setIsValid(NOT_SELECTED);
     setModalNotice("※ 오늘 날짜의 사진을 선택하세요");
     setIsProveClicked(false);
