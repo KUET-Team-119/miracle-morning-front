@@ -430,7 +430,7 @@ function TodayRoutine({
               <div className={styles.modalBodyTitle}>🌱 인증 사진</div>
               <Form.Control
                 type="file"
-                // accept="image/jpeg, image/png, image/heic"
+                accept="image/jpeg, image/png, image/heic"
                 onChange={uploadedFile}
               />
               {isValid !== VALIDATE_FILE ? (
