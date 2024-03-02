@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAxiosPost from "../hook/useAxiosPost";
-import { Button, Form, Image, InputGroup, Modal } from "react-bootstrap";
+import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import styles from "../css/Login.module.css";
 import logoIcon from "../images/logo.png";
 
@@ -81,7 +81,7 @@ function Login({ setIsMember }) {
 
   return (
     <div className={styles.container}>
-      <Image className={styles.logo} src={logoIcon} alt="로고" rounded />
+      <img className={styles.logo} src={logoIcon} alt="로고" />
       <h1 className={styles.title}>
         나를 키우는 공간
         <br />

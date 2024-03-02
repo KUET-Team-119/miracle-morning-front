@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Col, Image, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import styles from "../css/Introduce.module.css";
 import checkRoutineImage from "../images/home_check_routine.png";
 import manageImage from "../images/modify_routine.png";
@@ -14,7 +14,7 @@ function Introduce() {
 
   return (
     <div className={styles.container}>
-      <Image className={styles.logo} src={logoIcon} alt="로고" rounded />
+      <img className={styles.logo} src={logoIcon} alt="로고" />
       <h1 className={styles.title}>
         나를 키우는 공간
         <br />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import useAxiosPost from "../hook/useAxiosPost";
-import { Button, Card, Form, Image, InputGroup, Modal } from "react-bootstrap";
+import { Button, Card, Form, InputGroup, Modal } from "react-bootstrap";
 import styles from "../css/SignUp.module.css";
 import logoIcon from "../images/logo.png";
 
@@ -84,7 +84,7 @@ function SignUp({ setIsMember }) {
 
   return (
     <div className={styles.container}>
-      <Image className={styles.logo} src={logoIcon} alt="로고" rounded />
+      <img className={styles.logo} src={logoIcon} alt="로고" />
       <h1 className={styles.title}>회원가입🌱</h1>
       <Card className={styles.infoCard}>
         <Card.Body>
