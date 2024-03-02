@@ -78,7 +78,7 @@ function Images() {
                   <Card className={styles.card}>
                     <Card.Img
                       variant="top"
-                      src={`data:image;base64,${result.fileBase64}`}
+                      src={`data:image/*;base64,${result.fileBase64}`}
                     />
                     <Card.Body>
                       <Card.Title>{result.routineName}</Card.Title>
