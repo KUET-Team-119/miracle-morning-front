@@ -147,6 +147,7 @@ function TodayRoutine({
     // 파일이 선택되어야 함
     if (fileData !== undefined && fileData !== null) {
       try {
+        setIsValid(INVALID_DATE);
         // 파일 유효성 검사
         const validationResult = validateFile(fileData);
         if (validationResult.isValid) {
@@ -178,11 +179,6 @@ function TodayRoutine({
     let fileDay = fileDateObj.getDate();
     let fileHours = fileDateObj.getHours();
     let fileMinutes = fileDateObj.getMinutes();
-    console.log(fileYear);
-    console.log(fileMonth);
-    console.log(fileDay);
-    console.log(fileHours);
-    console.log(fileMinutes);
 
     // 파일 크기 확인
     if (fileSize > fileSizeLimit) {
@@ -213,8 +209,6 @@ function TodayRoutine({
       fileMinutes = "0" + fileMinutes;
     }
     const fileTime = fileHours + ":" + fileMinutes + ":00";
-    console.log(fileTime);
-    console.log(endTime);
     if (fileTime > endTime) {
       return { isValid: false, errorType: "INVALID_TIME" };
     }
@@ -230,7 +224,6 @@ function TodayRoutine({
   };
 
   const compressFile = async (fileData, options) => {
-    setIsValid(INVALID_DATE);
     setModalNotice("※ 파일을 분석 중입니다. 이 작업은 시간이 약간 소요됩니다.");
     const compressedFile = await imageCompression(fileData, options);
     setFile(compressedFile);
