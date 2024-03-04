@@ -209,9 +209,11 @@ function TodayRoutine({
       fileMinutes = "0" + fileMinutes;
     }
     const fileTime = fileHours + ":" + fileMinutes + ":00";
-    if (fileTime > endTime) {
-      return { isValid: false, errorType: "INVALID_TIME" };
-    }
+    // TODO 실천 시간 유효성 검사 임시로 제외함
+    // 일부 사용자 중에 사진 촬영 시간이 파일 업로드 시간으로 변경되는 문제 발생했음
+    // if (fileTime > endTime) {
+    //   return { isValid: false, errorType: "INVALID_TIME" };
+    // }
 
     if (fileMonth + 1 <= 9) {
       fileMonth = "0" + (fileMonth + 1);
