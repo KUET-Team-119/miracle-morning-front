@@ -208,9 +208,9 @@ function TodayRoutine({
     if (fileMinutes <= 9) {
       fileMinutes = "0" + fileMinutes;
     }
-    const fileTime = fileHours + ":" + fileMinutes + ":00";
     // TODO 실천 시간 유효성 검사 임시로 제외함
     // 일부 사용자 중에 사진 촬영 시간이 파일 업로드 시간으로 변경되는 문제 발생했음
+    // const fileTime = fileHours + ":" + fileMinutes + ":00";
     // if (fileTime > endTime) {
     //   return { isValid: false, errorType: "INVALID_TIME" };
     // }
