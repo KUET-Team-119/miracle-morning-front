@@ -1,6 +1,6 @@
-# 미라클 농장 링크
+# 미라클 농장 이용
 
-http://158.180.84.31/
+링크 : http://158.180.84.31/ \
 아이디 : 파카 / 비밀번호 : m9735로 로그인
 
 # Getting Started with Create React App
